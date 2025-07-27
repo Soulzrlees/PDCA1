@@ -9,6 +9,7 @@ package main;
  * @author fatehbhular
  */
 public class main {
-    //comment
-    
+    public static void main(String[] args) {
+        System.out.println("Hello Shawn");
+    }
 }
