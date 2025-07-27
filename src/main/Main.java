@@ -10,6 +10,28 @@ package main;
  */
 public class Main {
     public static void main(String[] args) {
-        System.out.println("This is our starting point.");
+        Scanner scanner = new Scanner(System.in);
+        String playerClass;
+        System.out.println("******** 2D RPG GAME ********");
+        
+        System.out.println("Select your class (1, 2, 3): \n1. Melee\n2. Ranger\n3. Mage");
+        int selection = scanner.nextInt();
+        switch (selection) {
+            case 1:
+                playerClass = "Melee";
+                System.out.println("You are a ... Melee!!!");
+                break;
+            case 2:
+                playerClass = "Ranger";
+                System.out.println("You are a ... Ranger!!!");
+                break;
+            case 3:
+                playerClass = "Mage";
+                System.out.println("You are a ... Mage!!!");
+                break;
+            default:
+                System.out.println("Invalid input, choose again!!!");
+                break;
+        }
     }
 }
