@@ -10,12 +10,6 @@ import java.util.Scanner;
  * @author fatehbhular
  */
 public class main {
-    //comment
-    public static void main(String[] args) {
-        System.out.println("Hello my nigerian brother.");
-        Scanner scanner = new Scanner(System.in);
-        int num = scanner.nextInt();
-        
-        System.out.println(num);
+
     }
 }
