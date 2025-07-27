@@ -3,13 +3,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package main;
-import java.util.Scanner;
 
 /**
  *
  * @author fatehbhular
  */
-public class main {
-
+public class Main {
+    public static void main(String[] args) {
+        System.out.println("This is our starting point.");
     }
 }
