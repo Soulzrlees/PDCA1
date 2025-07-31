@@ -39,8 +39,14 @@ public class Player extends Entity{
         return this.gold;
     }
     
+    //add exp to player
+    public void addExp(int exp){
+        this.exp += exp;
+    }
     
-
-    
+    //get the exp to the player
+    public int getExp(){
+        return this.exp;
+    }
     
 }
