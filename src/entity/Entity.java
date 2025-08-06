@@ -17,23 +17,24 @@ public class Entity {
     protected int maxHealth;
     protected int baseDmg;
     protected boolean isDefeated;
-    protected int distance;
-    
+    protected int position;
+
     // Variables used to calculate stats of the entity
     protected int baseHealthPerLevel;
     protected int baseDmgPerLevel;
-    
+
     public Entity (String name, int level, String entityClass) {
         this.name = name;
         this.level = level;
         this.entityClass = entityClass;
         this.isDefeated = false;
-        
+        this.position = 0;
+
         setClassStats();
         calculateStatsFromLevel();
     }
-    
-    // Sets the health and damage of the entity depending on its class
+
+    // Sets the health and damage to the entity depending on its class
     protected void setClassStats() {
         switch (entityClass.toLowerCase()) {
             case "melee":
@@ -54,11 +55,58 @@ public class Entity {
                 break;
         }
     }
-    
+
     // Calculates the health and damage of the entity depending on its level
     protected void calculateStatsFromLevel() {
         this.maxHealth = baseHealthPerLevel + (level * 5);
         this.health = maxHealth;
         this.baseDmg = baseDmgPerLevel + (level * 2);
     }
+
+    //Determines the health after damage is taken
+    public int damageCalculate(int damage) {
+        this.health -= damage;
+        if(this.health <= 0){
+            this.isDefeated = true;
+            this.health = 0;
+        }
+        return health;
+    }
+
+    public int getbaseDmg() {
+        return this.baseDmg;
+    }
+
+    public int getHealth() {
+        return this.health;
+    }
+
+    public int getMaxHealth() {
+        return this.maxHealth;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public int getPosition() {
+        return this.position;
+    }
+
+    public void setPosition(int position) {
+        this.position = position;
+    }
+
+    //Find the distance from the enemy.
+    public int calculateDistance(Entity a, Entity b) {
+        //If the position difference is lower than 0 then the position between each other would result in 0.
+        int position_difference  = Math.abs(a.getPosition() - b.getPosition());
+
+        //Capping the distance between each other to be 10.
+        if(position_difference > 10){
+            position_difference = 10;
+        }
+        return position_difference;
+    }
+
 }

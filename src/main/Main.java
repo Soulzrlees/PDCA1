@@ -3,66 +3,54 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package main;
-import entity.Player;
+
 import java.util.Scanner;
+
+import entity.Enemy;
+import entity.Entity;
+import action.EnemyAction;
 /**
  *
  * @author fatehbhular, ShawnLee
  */
 public class Main {
     public static void main(String[] args) {
+        // Setup variables
         Scanner scan = new Scanner(System.in);
-        Intro intro = new Intro();
+        AccessFile accessFile = new AccessFile();
         boolean gameStart;
         String playerName;
         String playerClass;
 
-        // Game Introduction + get Name and Class
-        clearScreen();
-        intro.printBanner();
-        intro.welcomeMessage();
-        gameStart = askForHelp(scan);
-        playerName = getPlayerName(scan);
-        System.out.println("\nGreetings to our world " + playerName + "!\n");
-        playerClass = getPlayerClass(scan);    
-        
-        scan.close();
-        
-    }
+        //Testing Area - Shawn:
 
-    public static boolean askForHelp(Scanner scan) {
-        System.out.println("Will you help us? (y/n): ");
-        String accept = scan.nextLine();
-        
-        if (accept.equalsIgnoreCase("y") || accept.equalsIgnoreCase("yes")) {
-            System.out.println("Wonderful news!!! I knew you were a hero when I saw you.");
-            clearScreen();
-            return true;
-        } else if (accept.equalsIgnoreCase("n") || accept.equalsIgnoreCase("no")) {
-            System.out.println("Are you sure? It doesn't look like you're doing anything important :/ (y/n): ");
-            accept = scan.nextLine();
-            if (accept.equalsIgnoreCase("y") || accept.equalsIgnoreCase("yes")) {
-                System.out.println("You are really mean :c");
-                clearScreen();
-                return false;
-            } else {
-                System.out.println("Great!!! Thank you for changing your mind brave person.");
-                clearScreen();
-                return true;
-            }
-        } else {
-            System.out.println("Oops, looks like you inputted the wrong key.");
-            clearScreen();
-            return askForHelp(scan);
-        }
+        Entity player = new Entity("Hero", 1, "melee");
+        Enemy goblin = new Enemy("Goblin", 3, "melee");
+        EnemyAction enemyAction = new EnemyAction();
+
+        goblin.Action(player, enemyAction);
+        player.setPosition(2);
+        goblin.setPosition(10);
+
+        //Testing area ends here...
+
+
+
+
+        //Testing Area - Fateh:
+
+        playerName = getPlayerName(scan);
+        accessFile.createPlayer(playerName);
+
+        //Testing area ends here...
+
+        scan.close();
     }
 
     public static String getPlayerName(Scanner scan) {
         System.out.println("What should we call our new hero?\n");
         String name = scan.nextLine();
-        clearScreen();
         return name;
-        
     }
 
     public static String getPlayerClass(Scanner scan) {
@@ -95,13 +83,6 @@ public class Main {
                     break;
             }
         }
-
-        clearScreen();
         return pClass;
-    }
-
-    public static void clearScreen() {
-        System.out.print("\033[H\033[2J");
-        System.out.flush();
     }
 }

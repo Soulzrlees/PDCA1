@@ -4,6 +4,7 @@
  */
 package entity;
 import java.util.Random;
+import action.EnemyAction;
 /**
  *
  * @author Shawn lee
@@ -19,18 +20,20 @@ public class Enemy extends Entity{
     }
 
     //The randomise action of different enemy types
-    public void Action(){
-        Random random = new Random();
+    public void Action(Entity target, EnemyAction enemyAction){
 
         switch(entityClass){
             case "melee":
                 int meleeAction = random.nextInt(100);
                 //35% change to attack, 35% chance to defend, 20% to heal, and 10% to dodge
                 if(meleeAction < 35){
-                    System.out.println("Attack");
+                    enemyAction.attack(target);
                 }
-                else if(meleeAction < 70){
-                    System.out.println("Moved");
+                else if(meleeAction < 55){
+                    enemyAction.moveForward(target, this);
+                }
+                else if(meleeAction < 75){
+                    System.out.println("Moving Backwards");
                 }
                 else if(meleeAction < 90){
                     System.out.println("Heal");
@@ -53,7 +56,7 @@ public class Enemy extends Entity{
                 }
                 else{
                     System.out.println("Dodge!");
-                } 
+                }
                 break;
             case "mage":
                 int mageAction = random.nextInt(100);
@@ -69,7 +72,7 @@ public class Enemy extends Entity{
                 }
                 else{
                     System.out.println("Dodge!");
-                } 
+                }
                 break;
             default:
                 System.out.println("Invalid Class.");
