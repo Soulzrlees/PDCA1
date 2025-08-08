@@ -24,23 +24,22 @@ public class Main {
 
         //Testing Area - Shawn:
 
-        Entity player = new Entity("Hero", 1, "melee");
-        Enemy goblin = new Enemy("Goblin", 3, "melee");
-        EnemyAction enemyAction = new EnemyAction();
+        //Entity player = new Entity("Hero", 1, "melee");
+        //Enemy goblin = new Enemy("Goblin", 3, "melee");
+        //EnemyAction enemyAction = new EnemyAction();
 
-        goblin.Action(player, enemyAction);
-        player.setPosition(2);
-        goblin.setPosition(10);
+        //goblin.Action(player, enemyAction);
+        //player.setPosition(2);
+        //goblin.setPosition(10);
 
         //Testing area ends here...
 
-
+        playerName = getPlayerName(scan);
+        accessFile.addPlayer(playerName);
 
 
         //Testing Area - Fateh:
 
-        playerName = getPlayerName(scan);
-        accessFile.createPlayer(playerName);
 
         //Testing area ends here...
 

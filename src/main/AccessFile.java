@@ -17,7 +17,6 @@ public class AccessFile {
     private BufferedWriter writer = null;
 
     ArraySet<Player> playerbase = new ArraySet<>();
-    ArraySet<Player> playerNames = new ArraySet<>();
 
     public void readPlayerBase() {
         String pName, pLevel, pClass;
@@ -49,6 +48,7 @@ public class AccessFile {
             String name = p.getName();
             if (name.equals(pName)) {
                 found = true;
+                System.out.println("Player already exists.");
             }
         }
         if (!found) {
@@ -56,8 +56,15 @@ public class AccessFile {
             try {
                 writer = new BufferedWriter(new FileWriter("src/resources/playerbase.txt", true));
                 writer.write(newPlayer.toString());
+                writer.newLine();
             } catch (IOException e) {
                 System.out.println("Error writing file: " + e.getMessage());
+            } finally {
+                try {
+                    if (writer != null) writer.close();
+                } catch (IOException e) {
+                    System.out.println("Error closing file: " + e.getMessage());
+                }
             }
         }
     }
