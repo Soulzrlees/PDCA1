@@ -20,87 +20,84 @@ public class Main {
         // Setup variables
         Scanner scan = new Scanner(System.in);
         AccessFile file = new AccessFile();
-        Entity player = null;
         
-        String playerName;
-        String playerClass;
-        
-        System.out.println("Select an option:\n1. Start new game\n2. Resume existing game");
-        String gameType = scan.nextLine();
-        
-        switch (gameType) {
-            case "1":
-                playerName = getPlayerName(scan);
-                playerClass = getPlayerClass(scan);
-                player = new Player(playerName, 1, playerClass);
-                file.addPlayer(playerName);
-                break;
-            case "2":
-                boolean loginComplete = false;
-                while (!loginComplete) {
-                    System.out.println("Enter your username:");
-                    String playerInput = scan.nextLine();
-                    try {
-                        player = file.loadExistingPlayer(playerInput);
-                        loginComplete = true;
-                    } catch (PlayerNotFoundException e) {
-                        System.out.println(e.getMessage());
-                        
-                        boolean isValidChoice = false;
-                        while (!isValidChoice) {
-                            System.out.println("Player not found. Would you like to:\n1. try again\n2. create a new player");
-                            String choice = scan.nextLine();
-                            
-                            if (choice.equals("1")) {
-                                System.out.println("Retrying player entry...");
-                                isValidChoice = true;
-                            } else if (choice.equals("2")) {
-                                playerName = getPlayerName(scan);
-                                playerClass = getPlayerClass(scan);
-                                player = new Player(playerName, 1, playerClass);
-                                file.addPlayer(playerName);
-                                loginComplete = true;
-                                isValidChoice = true;
-                            } else {
-                                System.out.println("Invalid choice. Enter 1 or 2.");
-                            }
-                        }
-                    }
-                }
-                break;
-            default:
-                System.out.println("Invalid option. Please restart and choose 1 or 2.");
-                break;
-        }
-        
-        
-
-        //Testing Area - Shawn:
-
-        //Entity player = new Entity("Hero", 1, "melee");
-        //Enemy goblin = new Enemy("Goblin", 3, "melee");
-        //EnemyAction enemyAction = new EnemyAction();
-
-        //goblin.Action(player, enemyAction);
-        //player.setPosition(2);
-        //goblin.setPosition(10);
-
-        //Testing area ends here...
-
-        
-
-
-        //Testing Area - Fateh:
-
-
-        //Testing area ends here...
+        Entity player = playerLoginScreen(scan, file);
 
         scan.close();
     }
+    
+    public static Entity playerLoginScreen(Scanner scan, AccessFile file) {
+        Entity player = null;
+        boolean validGameType = false;
+        while (!validGameType) {
+            System.out.println("Select an option:\n1. Start new game\n2. Resume existing game");
+            String gameType = scan.nextLine().trim();
+
+            switch (gameType) {
+                case "1":
+                    String playerName = getPlayerName(scan);
+                    String playerClass = getPlayerClass(scan);
+                    player = new Player(playerName, 1, playerClass);
+
+                    try {
+                        file.addPlayer(playerName);
+                    } catch (Exception e) {
+                        System.out.println("Could not save player to file: " + e.getMessage());
+                    }
+
+                    validGameType = true;
+                    break;
+                case "2":
+                    boolean loginComplete = false;
+                    while (!loginComplete) {
+                        System.out.println("Enter your username:");
+                        String playerInput = scan.nextLine().trim();
+                        try {
+                            player = file.loadExistingPlayer(playerInput);
+                            loginComplete = true;
+                        } catch (PlayerNotFoundException e) {
+                            System.out.println(e.getMessage());
+
+                            boolean isValidChoice = false;
+                            while (!isValidChoice) {
+                                System.out.println("Player not found. Would you like to:\n1. try again\n2. create a new player");
+                                String choice = scan.nextLine().trim();
+
+                                if (choice.equals("1")) {
+                                    System.out.println("Retrying player entry...");
+                                    isValidChoice = true;
+                                } else if (choice.equals("2")) {
+                                    playerName = getPlayerName(scan);
+                                    playerClass = getPlayerClass(scan);
+                                    player = new Player(playerName, 1, playerClass);
+                                    file.addPlayer(playerName);
+                                    loginComplete = true;
+                                    isValidChoice = true;
+                                } else {
+                                    System.out.println("Invalid choice. Enter 1 or 2.");
+                                }
+                            }
+                        }
+                    }
+                    validGameType = true;
+                    break;
+                default:
+                    System.out.println("Invalid option. Please choose 1 or 2.");
+                    break;
+            }
+        }
+        return player;
+    }
 
     public static String getPlayerName(Scanner scan) {
-        System.out.println("Please enter a name: \n");
-        String name = scan.nextLine();
+        String name = "";
+        do {
+            System.out.println("Please enter your name: ");
+            name = scan.nextLine().trim();
+            if(name.isEmpty()) {
+                System.out.println("Name cannot be empty, please enter valid name.");
+            }
+        } while(name.isEmpty());
         return name;
     }
 
