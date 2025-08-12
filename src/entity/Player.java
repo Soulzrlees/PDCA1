@@ -63,6 +63,10 @@ public class Player extends Entity{
             this.level ++;
         }
     }
+    
+    public void setLevel(int level) {
+        this.level = level;
+    }
 
     //Remove skillpoints from player
     public void removeSkillPoints(int points){

@@ -8,7 +8,9 @@ import java.util.Scanner;
 
 import entity.Enemy;
 import entity.Entity;
+import entity.Player;
 import action.EnemyAction;
+import main.exceptions.PlayerNotFoundException;
 /**
  *
  * @author fatehbhular, ShawnLee
@@ -17,10 +19,61 @@ public class Main {
     public static void main(String[] args) {
         // Setup variables
         Scanner scan = new Scanner(System.in);
-        AccessFile accessFile = new AccessFile();
-        boolean gameStart;
+        AccessFile file = new AccessFile();
+        Entity player = null;
+        
         String playerName;
         String playerClass;
+        
+        System.out.println("Select an option:\n1. Start new game\n2. Resume existing game");
+        String gameType = scan.nextLine();
+        
+        switch (gameType) {
+            case "1":
+                playerName = getPlayerName(scan);
+                playerClass = getPlayerClass(scan);
+                player = new Player(playerName, 1, playerClass);
+                file.addPlayer(playerName);
+                break;
+            case "2":
+                boolean loginComplete = false;
+                while (!loginComplete) {
+                    System.out.println("Enter your username:");
+                    String playerInput = scan.nextLine();
+                    try {
+                        player = file.loadExistingPlayer(playerInput);
+                        loginComplete = true;
+                    } catch (PlayerNotFoundException e) {
+                        System.out.println(e.getMessage());
+                        
+                        boolean isValidChoice = false;
+                        while (!isValidChoice) {
+                            System.out.println("Player not found. Would you like to:\n1. try again\n2. create a new player");
+                            String choice = scan.nextLine();
+                            
+                            if (choice.equals("1")) {
+                                System.out.println("Retrying player entry...");
+                                isValidChoice = true;
+                            } else if (choice.equals("2")) {
+                                playerName = getPlayerName(scan);
+                                playerClass = getPlayerClass(scan);
+                                player = new Player(playerName, 1, playerClass);
+                                file.addPlayer(playerName);
+                                loginComplete = true;
+                                isValidChoice = true;
+                            } else {
+                                System.out.println("Invalid choice. Enter 1 or 2.");
+                            }
+                        }
+                    }
+                }
+                break;
+            default:
+                System.out.println("Invalid option. Please restart and choose 1 or 2.");
+                break;
+        }
+        
+        
 
         //Testing Area - Shawn:
 
@@ -34,8 +87,7 @@ public class Main {
 
         //Testing area ends here...
 
-        playerName = getPlayerName(scan);
-        accessFile.addPlayer(playerName);
+        
 
 
         //Testing Area - Fateh:
@@ -47,7 +99,7 @@ public class Main {
     }
 
     public static String getPlayerName(Scanner scan) {
-        System.out.println("What should we call our new hero?\n");
+        System.out.println("Please enter a name: \n");
         String name = scan.nextLine();
         return name;
     }
@@ -57,7 +109,7 @@ public class Main {
         String pClass = "";
         boolean nameValid = false;
         
-        System.out.println("Please select a class so you can take our kingdom back from them! (1-3):");
+        System.out.println("Please select a class (1-3):");
         while (!nameValid) {
             System.out.println("1. Melee");
             System.out.println("2. Ranger");

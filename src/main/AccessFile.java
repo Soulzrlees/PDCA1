@@ -10,6 +10,7 @@ package main;
 
 import java.io.*;
 import entity.Player;
+import main.exceptions.PlayerNotFoundException;
 import collections.ArraySet;
 
 public class AccessFile {
@@ -17,9 +18,14 @@ public class AccessFile {
     private BufferedWriter writer = null;
 
     ArraySet<Player> playerbase = new ArraySet<>();
+    
+    public AccessFile() {
+        readPlayerBase(); // This will load the array when object is created in main
+    }
 
     public void readPlayerBase() {
         String pName, pLevel, pClass;
+        playerbase.clear(); 
         try {
             reader = new BufferedReader(new FileReader("src/resources/playerbase.txt"));
             String line;
@@ -49,6 +55,7 @@ public class AccessFile {
             if (name.equals(pName)) {
                 found = true;
                 System.out.println("Player already exists.");
+                break;
             }
         }
         if (!found) {
@@ -67,5 +74,49 @@ public class AccessFile {
                 }
             }
         }
+    }
+    
+    public void updatePlayerLevel(String playerName, int level) {
+        readPlayerBase();
+        boolean found = false;
+        int newLevel = level + 1;
+        
+        for(Player p : playerbase) {
+            if(p.getName().equals(playerName)) {
+                p.setLevel(newLevel);
+                found = true;
+            }
+        }
+        
+        if(!found) {
+            System.out.println("Player not found");
+            return;
+        }
+        
+        try {
+            BufferedWriter writer = new BufferedWriter(new FileWriter("src/resources/playerbase.txt"));
+            for (Player p : playerbase) {
+                writer.write(p.toString());
+                writer.newLine();
+            }
+        } catch (IOException e) {
+            System.out.println("Error updating the file: " + e.getMessage());
+        } finally {
+            try {
+                if (writer != null) writer.close();
+            } catch (IOException e) {
+                System.out.println("Error closing file: " + e.getMessage());
+            }
+        }
+    }
+    
+    public Player loadExistingPlayer(String playerName) throws PlayerNotFoundException {
+        readPlayerBase();
+        for (Player p : playerbase) {
+            if (p.getName().equals(playerName)) {
+                return p;
+            }
+        }
+        throw new PlayerNotFoundException("Player: " + playerName + " not found.");
     }
 }
