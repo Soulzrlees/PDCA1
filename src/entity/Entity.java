@@ -80,6 +80,10 @@ public class Entity {
     public int getHealth() {
         return this.health;
     }
+    
+    public void setHealth(int health){
+        this.health = health;
+    }
 
     public int getMaxHealth() {
         return this.maxHealth;

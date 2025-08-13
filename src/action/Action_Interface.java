@@ -11,14 +11,15 @@ package action;
 import entity.Entity;
 
 public interface Action_Interface {
-    void attack(Entity enemy);
+    
+    void attack(Entity entity);
 
-    void moveForward(Entity player, Entity enemy);
+    void moveForward(Entity entityattacker, Entity entity);
 
-    void moveBackward();
+    void moveBackward(Entity entityattacker, Entity entity);
 
-    void heal();
+    void heal(Entity entity);
 
-    void evade();
+    boolean evadetrue(Entity entity);
 }
 

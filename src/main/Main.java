@@ -21,8 +21,15 @@ public class Main {
         Scanner scan = new Scanner(System.in);
         AccessFile file = new AccessFile();
         
+        //Testing Shawn Lee
+        Enemy orc = new Enemy("Orc", 1, "ranger");
+        Player player1 = new Player("Shawn", 1, "melee");
+        EnemyAction orcAction = new EnemyAction();
+        orc.Action(player1, orcAction);
+        //end 
+        
         Entity player = playerLoginScreen(scan, file);
-
+        
         scan.close();
     }
     

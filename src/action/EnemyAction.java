@@ -16,20 +16,25 @@ public class EnemyAction implements Action_Interface{
 
     private Random randomDamage;
     private Random randomDistancef;
+    private Random randomDistanceb;
+    private Random randomheal;
 
     public EnemyAction(){
         this.randomDamage = new Random();
         this.randomDistancef = new Random();
+        this.randomDistanceb = new Random();
+        this.randomheal = new Random();     
     }
 
     //Prints out the stats of the enemy
     public void stats(Entity enemy){
         System.out.println("Name = " + enemy.getName());
         System.out.println("Enemy Health = " + enemy.getHealth() + " from " + enemy.getMaxHealth());
-        System.out.println("Enemy Position = " + enemy.getPosition());
+        System.out.println("Enemy Position = " + enemy.getPosition() + "m");
     }
 
     //Finds the total damage
+    @Override
     public void attack(Entity enemy){
         int totalDamage = enemy.getbaseDmg() + randomDamage.nextInt(10);
         System.out.println("You have dealt " + totalDamage + " damage !");
@@ -38,7 +43,8 @@ public class EnemyAction implements Action_Interface{
         stats(enemy);
     }
 
-    //Finds out the distance the enemy travelled forward
+    //Finds out the distance the enemy travelled forwards
+    @Override
     public void moveForward(Entity player, Entity enemy){
         int moveDistance = randomDistancef.nextInt(5) + 1;
         int newPosition = moveDistance + enemy.getPosition();
@@ -50,10 +56,48 @@ public class EnemyAction implements Action_Interface{
 
         int distance = enemy.calculateDistance(player, enemy);
         System.out.println("Distance to " + player.getName() + ": " + distance + "m");
-        stats(enemy);;
+        stats(enemy);
     }
+    
+    //Finds out the distance the enemy travelled backwards
+    @Override
+    public void moveBackward(Entity player, Entity enemy){
+        int moveDistancebackwards = randomDistanceb.nextInt(5) + 1;
+        int newPosition = enemy.getPosition() - moveDistancebackwards;
+        //Making sure that the new Position above 1 or at 1
+        if(newPosition <= 1){
+            newPosition = 1;
+        }
+        enemy.setPosition(newPosition);
 
-    public void moveBackward(){};
-    public void heal(){};
-    public void evade(){};
+        int distance = enemy.calculateDistance(player, enemy);
+        if(distance < 1){
+            distance = 1;
+        }
+        System.out.println("Distance to " + player.getName() + ": " + distance + "m");
+        stats(enemy);
+    }
+    
+    //Heals the enemy 
+    @Override
+    public void heal(Entity enemy) {
+        int healAmount = randomheal.nextInt(11) + 5;
+        // Increase health, but don't exceed max
+        int newHealth = enemy.getHealth() + healAmount;
+        if (newHealth > enemy.getMaxHealth()) {
+            newHealth = enemy.getMaxHealth();
+        }
+
+        enemy.setHealth(newHealth);
+        System.out.println(enemy.getName() + " HP healed " + newHealth + "+");
+        stats(enemy);
+    }
+    
+    //switch to true of evade is chosen
+    //Need to implement in the battle interface to check if evadetrue is selected than enemy damage is neglected.
+    @Override
+    public boolean evadetrue(Entity enemy) {
+        stats(enemy);
+        return true;
+    }
 }

@@ -25,53 +25,62 @@ public class Enemy extends Entity{
         switch(entityClass){
             case "melee":
                 int meleeAction = random.nextInt(100);
-                //35% change to attack, 35% chance to defend, 20% to heal, and 10% to dodge
-                if(meleeAction < 35){
+                //35% change to attack, 15% chance to moveforward, 15% chance to movebackward, 20% to heal, and 15% to dodge
+                if(meleeAction < 35){ //35
                     enemyAction.attack(target);
                 }
-                else if(meleeAction < 55){
+                else if(meleeAction < 50){ //50
                     enemyAction.moveForward(target, this);
                 }
-                else if(meleeAction < 75){
-                    System.out.println("Moving Backwards");
+                else if(meleeAction < 65){ //65
+                    enemyAction.moveBackward(target, this);
                 }
-                else if(meleeAction < 90){
-                    System.out.println("Heal");
+                else if(meleeAction < 85){ //85
+                    enemyAction.heal(this);
                 }
                 else{
-                    System.out.println("Dodge!");
+                    enemyAction.evadetrue(this);
+                    System.out.println("evadetrue");
                 }
                 break;
             case "ranger":
                 int rangerAction = random.nextInt(100);
-                //35% change to attack, 35% chance to defend, 20% to heal, and 10% to dodge
-                if(rangerAction < 35){
-                    System.out.println("Attack");
+                //35% change to attack, 15% chance to moveforward, 15% chance to movebackward, 20% to heal, and 15% to dodge
+                if(rangerAction < 35){ 
+                    enemyAction.attack(target);
                 }
-                else if(rangerAction < 70){
-                    System.out.println("Moved");
+                else if(rangerAction < 35){ 
+                    enemyAction.moveForward(target, this);
                 }
-                else if(rangerAction < 90){
-                    System.out.println("Heal");
+                else if(rangerAction < 75){ 
+                    enemyAction.moveBackward(target, this);
+                }
+                else if(rangerAction < 90){ 
+                    enemyAction.heal(this);
                 }
                 else{
-                    System.out.println("Dodge!");
+                    enemyAction.evadetrue(this);
+                    System.out.println("evadetrue");
                 }
                 break;
             case "mage":
                 int mageAction = random.nextInt(100);
-                //35% change to attack, 35% chance to defend, 20% to heal, and 10% to dodge
-                if(mageAction < 35){
-                    System.out.println("Attack");
+                //35% change to attack, 15% chance to moveforward, 15% chance to movebackward, 20% to heal, and 15% to dodge
+                if(mageAction < 35){ 
+                    enemyAction.attack(target);
                 }
-                else if(mageAction < 70){
-                    System.out.println("Moved");
+                else if(mageAction < 35){ 
+                    enemyAction.moveForward(target, this);
                 }
-                else if(mageAction < 90){
-                    System.out.println("Heal");
+                else if(mageAction < 75){ 
+                    enemyAction.moveBackward(target, this);
+                }
+                else if(mageAction < 90){ 
+                    enemyAction.heal(this);
                 }
                 else{
-                    System.out.println("Dodge!");
+                    enemyAction.evadetrue(this);
+                    System.out.println("evadetrue");
                 }
                 break;
             default:
