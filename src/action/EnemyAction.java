@@ -29,7 +29,7 @@ public class EnemyAction implements Action_Interface{
     //Prints out the stats of the enemy
     public void stats(Entity enemy){
         System.out.println("Name = " + enemy.getName());
-        System.out.println("Enemy Health = " + enemy.getHealth() + " from " + enemy.getMaxHealth());
+        System.out.println("Enemy Health = " + enemy.getMaxHealth() + "/" + enemy.getHealth());
         System.out.println("Enemy Position = " + enemy.getPosition() + "m");
     }
 
