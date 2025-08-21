@@ -1,1 +1,4 @@
-ShawnLee 1 default
+Soulzr 4 1000 1050 ranger
+Jectress 6 1570 550 melee
+AcidicHyper 5 1000 700 mage
+Connor 3 0 400 ranger

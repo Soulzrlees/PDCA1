@@ -28,7 +28,7 @@ public class Entity {
         this.level = level;
         this.entityClass = entityClass;
         this.isDefeated = false;
-        this.position = 0;
+        this.position = 1;
 
         setClassStats();
         calculateStatsFromLevel();
@@ -92,6 +92,12 @@ public class Entity {
     public String getName() {
         return this.name;
     }
+
+    public void setLevel(int level) {
+        this.level = level;
+    }
+
+    public int getLevel() { return this.level; }
 
     public int getPosition() {
         return this.position;

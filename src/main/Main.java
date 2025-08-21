@@ -10,7 +10,11 @@ import entity.Enemy;
 import entity.Entity;
 import entity.Player;
 import action.EnemyAction;
+import action.PlayerAction;
 import main.exceptions.PlayerNotFoundException;
+import player_management.AccessFile;
+import player_management.PlayerFileManager;
+
 /**
  *
  * @author fatehbhular, ShawnLee
@@ -20,17 +24,25 @@ public class Main {
         // Setup variables
         Scanner scan = new Scanner(System.in);
         AccessFile file = new AccessFile();
-        
+        /*
         //Testing Shawn Lee
         Enemy orc = new Enemy("Orc", 1, "ranger");
         Player player1 = new Player("Shawn", 1, "melee");
-        EnemyAction orcAction = new EnemyAction();
-        orc.Action(player1, orcAction);
-        //end 
-        
-        Entity player = playerLoginScreen(scan, file);
-        
-        scan.close();
+        PlayerAction player1Action = new PlayerAction();
+        player1Action.moveBackward(orc, player1);
+        //end
+        */
+
+        Player player = new Player("Shawn", 1, "melee");
+        Enemy orc = new Enemy("Orc", 1, "ranger");
+
+        Battle battle = new Battle(player, orc);
+        battle.battle_interface();
+
+        //Entity player = playerLoginScreen(scan, file);
+
+
+        scan.close();//uwu
     }
     
     public static Entity playerLoginScreen(Scanner scan, AccessFile file) {
@@ -47,7 +59,7 @@ public class Main {
                     player = new Player(playerName, 1, playerClass);
 
                     try {
-                        file.addPlayer(playerName);
+                        file.addPlayer(playerName, playerClass);
                     } catch (Exception e) {
                         System.out.println("Could not save player to file: " + e.getMessage());
                     }
@@ -77,7 +89,7 @@ public class Main {
                                     playerName = getPlayerName(scan);
                                     playerClass = getPlayerClass(scan);
                                     player = new Player(playerName, 1, playerClass);
-                                    file.addPlayer(playerName);
+                                    file.addPlayer(playerName, playerClass);
                                     loginComplete = true;
                                     isValidChoice = true;
                                 } else {

@@ -23,6 +23,13 @@ public class Player extends Entity{
         this.inventory = new ArrayList<>();
     }
 
+    public Player(String name, int level, int exp, int gold, String entityClass){
+        super(name, level, entityClass);
+        this.gold = gold;
+        this.exp = exp;
+
+    }
+
     //add gold to player
     public void addGold(int money) {
         this.gold += money;
@@ -36,7 +43,6 @@ public class Player extends Entity{
         else{
             System.out.println("Not enough gold to remove!");
         }
-
     }
     //get the gold to the player
     public int getGold(){
@@ -63,21 +69,12 @@ public class Player extends Entity{
             this.level ++;
         }
     }
-    
-    public void setLevel(int level) {
-        this.level = level;
-    }
 
     //Remove skillpoints from player
     public void removeSkillPoints(int points){
         if(this.skillpoints > 0){
             this.skillpoints -= points;
         }
-    }
-
-    //get skillpoints to the player
-    public int getSkillPoints(){
-        return this.skillpoints;
     }
 
     public void statsDisplay(){
@@ -91,7 +88,7 @@ public class Player extends Entity{
 
     @Override
     public String toString() {
-        return this.name + " " + this.level + " " + this.entityClass;
+        return this.name + " " + this.level + " " + this.exp + " " + this.gold + " " + this.entityClass;
     }
 
     @Override

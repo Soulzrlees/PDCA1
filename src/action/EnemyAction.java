@@ -14,29 +14,23 @@ import entity.Entity;
 
 public class EnemyAction implements Action_Interface{
 
-    private Random randomDamage;
-    private Random randomDistancef;
-    private Random randomDistanceb;
-    private Random randomheal;
+    private Random random;
 
     public EnemyAction(){
-        this.randomDamage = new Random();
-        this.randomDistancef = new Random();
-        this.randomDistanceb = new Random();
-        this.randomheal = new Random();     
+        this.random = new Random();
     }
 
     //Prints out the stats of the enemy
     public void stats(Entity enemy){
         System.out.println("Name = " + enemy.getName());
-        System.out.println("Enemy Health = " + enemy.getMaxHealth() + "/" + enemy.getHealth());
+        System.out.println("Enemy Health = " + enemy.getHealth() + "/" + enemy.getMaxHealth());
         System.out.println("Enemy Position = " + enemy.getPosition() + "m");
     }
 
     //Finds the total damage
     @Override
     public void attack(Entity enemy){
-        int totalDamage = enemy.getbaseDmg() + randomDamage.nextInt(10);
+        int totalDamage = enemy.getbaseDmg() + random.nextInt(10);
         System.out.println("You have dealt " + totalDamage + " damage !");
 
         enemy.damageCalculate(totalDamage);
@@ -46,7 +40,7 @@ public class EnemyAction implements Action_Interface{
     //Finds out the distance the enemy travelled forwards
     @Override
     public void moveForward(Entity player, Entity enemy){
-        int moveDistance = randomDistancef.nextInt(5) + 1;
+        int moveDistance = random.nextInt(5) + 1;
         int newPosition = moveDistance + enemy.getPosition();
         //Making sure that the new Position is under or at 10
         if(newPosition > 10){
@@ -58,11 +52,11 @@ public class EnemyAction implements Action_Interface{
         System.out.println("Distance to " + player.getName() + ": " + distance + "m");
         stats(enemy);
     }
-    
+
     //Finds out the distance the enemy travelled backwards
     @Override
     public void moveBackward(Entity player, Entity enemy){
-        int moveDistancebackwards = randomDistanceb.nextInt(5) + 1;
+        int moveDistancebackwards = random.nextInt(5) + 1;
         int newPosition = enemy.getPosition() - moveDistancebackwards;
         //Making sure that the new Position above 1 or at 1
         if(newPosition <= 1){
@@ -81,7 +75,7 @@ public class EnemyAction implements Action_Interface{
     //Heals the enemy 
     @Override
     public void heal(Entity enemy) {
-        int healAmount = randomheal.nextInt(11) + 5;
+        int healAmount = random.nextInt(11) + 5;
         // Increase health, but don't exceed max
         int newHealth = enemy.getHealth() + healAmount;
         if (newHealth > enemy.getMaxHealth()) {
