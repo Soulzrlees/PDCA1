@@ -4,6 +4,7 @@
  */
 package entity;
 
+import java.util.Random;
 /**
  *
  * @author fatehbhular
@@ -18,6 +19,9 @@ public class Entity {
     protected int baseDmg;
     protected boolean isDefeated;
     protected int position;
+    protected boolean evade;
+    private Random random;
+
 
     // Variables used to calculate stats of the entity
     protected int baseHealthPerLevel;
@@ -29,6 +33,7 @@ public class Entity {
         this.entityClass = entityClass;
         this.isDefeated = false;
         this.position = 1;
+        this.random = new Random();
 
         setClassStats();
         calculateStatsFromLevel();
@@ -105,6 +110,19 @@ public class Entity {
 
     public void setPosition(int position) {
         this.position = position;
+    }
+
+    public void setEvade(boolean evade){
+        this.evade  = evade;
+    }
+
+    public boolean getEvade(){
+        int chanceToEvade = random.nextInt(99) + 1;
+        if(chanceToEvade < 40){
+            return true;
+        } else {
+            return false;
+        }
     }
 
     //Find the distance from the enemy.

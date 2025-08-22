@@ -12,7 +12,7 @@ import entity.Entity;
 
 public interface Action_Interface {
     
-    void attack(Entity entity);
+    void attack(Entity user, Entity target);
 
     void moveForward(Entity entityattacker, Entity entity);
 
@@ -20,6 +20,5 @@ public interface Action_Interface {
 
     void heal(Entity entity);
 
-    boolean evadetrue(Entity entity);
 }
 

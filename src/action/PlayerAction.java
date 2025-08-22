@@ -17,24 +17,21 @@ public class PlayerAction implements Action_Interface{
         this.healCount = 0;
     }
 
-    public void stats(Entity player){
-        System.out.println("Name = " + player.getName());
-        System.out.println("Enemy Health = " + player.getHealth() + "/" + player.getMaxHealth());
-        System.out.println("Enemy Position = " + player.getPosition() + "m");
-    }
-
     //Finds the total damage
     @Override
-    public void attack(Entity player){
-        int totalDamage = player.getbaseDmg() + random.nextInt(10);
-        System.out.println("You have dealt " + totalDamage + " damage !");
-
-        player.damageCalculate(totalDamage);
-        stats(player);
+    public void attack(Entity enemy, Entity player){
+        if(enemy.getEvade()){
+            System.out.println("Enemy has dodged the attack!");
+        }
+        else {
+            int totalDamage = player.getbaseDmg() + random.nextInt(10);
+            System.out.println("You dealt " + totalDamage + " damage to the enemy!");
+            enemy.damageCalculate(totalDamage);
+        }
     }
 
     @Override
-    public void moveForward(Entity enemy, Entity player){
+    public void moveBackward(Entity enemy, Entity player){
         int moveDistance = random.nextInt(5) + 1;
         int newPosition = moveDistance + player.getPosition();
         //Making sure that the new Position is under or at 10
@@ -44,12 +41,11 @@ public class PlayerAction implements Action_Interface{
         player.setPosition(newPosition);
 
         int distance = player.calculateDistance(enemy, player);
-        System.out.println("Distance to " + player.getName() + ": " + distance + "m");
-        stats(player);
+        System.out.println("Distance to " + player.getName() + ": " + distance + "m\n");
     }
     //Finds out the distance the enemy travelled backwards
     @Override
-    public void moveBackward(Entity enemy, Entity player){
+    public void moveForward(Entity enemy, Entity player){
         int moveDistancebackwards = random.nextInt(5) + 1;
         int newPosition = player.getPosition() - moveDistancebackwards;
         //Making sure that the new Position above 1 or at 1
@@ -62,27 +58,28 @@ public class PlayerAction implements Action_Interface{
         if(distance < 1){
             distance = 1;
         }
-        System.out.println("Distance to " + enemy.getName() + ": " + distance + "m");
-        stats(player);
+        System.out.println("Distance to " + enemy.getName() + ": " + distance + "m\n");
     }
 
     public void heal(Entity player) {
         int newHealth = player.getHealth();
-        if (healCount > 2){
+        int healAmount = 0;
+        if (healCount >= 2){
             System.out.println("You have used all your heals!");
         }
         else{
-            int healAmount = random.nextInt(11) + 5;
+            healAmount = random.nextInt(11) + 5;
             newHealth = player.getHealth() + healAmount;
             healCount++;
             // Increase health, but don't exceed max
             if (newHealth > player.getMaxHealth()) {
                 newHealth = player.getMaxHealth();
+            } else {
+                player.setHealth(newHealth);
             }
         }
 
-        System.out.println(player.getName() + " HP healed " + newHealth + "+");
-        stats(player);
+        System.out.println(player.getName() + " HP healed " + healAmount + "+");
 
     }
 
