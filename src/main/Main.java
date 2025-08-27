@@ -34,7 +34,7 @@ public class Main {
 
 
         Player player = new Player("Shawn", 1, "melee");
-        Enemy orc = new Enemy("Orc", 1, "ranger");
+        Enemy orc = new Enemy("Orc", 1, "melee");
 
         Battle battle = new Battle(player, orc);
         battle.battle_interface();

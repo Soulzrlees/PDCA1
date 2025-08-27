@@ -2,6 +2,7 @@ package action;
 
 import java.util.Random;
 import entity.Entity;
+import main.Battle;
 
 /**
  *
@@ -19,9 +20,14 @@ public class PlayerAction implements Action_Interface{
 
     //Finds the total damage
     @Override
-    public void attack(Entity enemy, Entity player){
-        if(enemy.getEvade()){
-            System.out.println("Enemy has dodged the attack!");
+    public void attack(Entity enemy, Entity player, int round){
+        //Based on the position of the player to the enemy, if it range is less than the Position than attack does not hit.
+        if(Entity.calculateDistance(player, enemy) > player.getAttackRange()){
+            System.out.println("Attack missed due to distance!");
+        }
+        //If getEvade is valid than attack will be dodged so no damage taken.
+        else if(player.getEvade() && round != 1){
+            System.out.println("You have dodged the attack!");
         }
         else {
             int totalDamage = player.getbaseDmg() + random.nextInt(10);
@@ -37,28 +43,31 @@ public class PlayerAction implements Action_Interface{
         //Making sure that the new Position is under or at 10
         if(newPosition > 10){
             newPosition = 10;
+            System.out.println("You can't move further in this direction");
         }
         player.setPosition(newPosition);
 
-        int distance = player.calculateDistance(enemy, player);
-        System.out.println("Distance to " + player.getName() + ": " + distance + "m\n");
+        int distance = Entity.calculateDistance(player, enemy);
+        System.out.println("Moved " + distance + "m");
     }
+    
     //Finds out the distance the enemy travelled backwards
     @Override
     public void moveForward(Entity enemy, Entity player){
-        int moveDistancebackwards = random.nextInt(5) + 1;
-        int newPosition = player.getPosition() - moveDistancebackwards;
+        int  moveDistance = random.nextInt(5) + 1;
+        int newPosition = player.getPosition() -  moveDistance;
         //Making sure that the new Position above 1 or at 1
         if(newPosition <= 1){
             newPosition = 1;
+            System.out.println("You can't move further in this direction");
         }
         player.setPosition(newPosition);
 
-        int distance = enemy.calculateDistance(player, enemy);
+        int distance = Entity.calculateDistance(player, enemy);
         if(distance < 1){
             distance = 1;
         }
-        System.out.println("Distance to " + enemy.getName() + ": " + distance + "m\n");
+        System.out.println("Moved " + distance + "m");
     }
 
     public void heal(Entity player) {

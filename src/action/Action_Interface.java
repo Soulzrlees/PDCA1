@@ -12,7 +12,7 @@ import entity.Entity;
 
 public interface Action_Interface {
     
-    void attack(Entity user, Entity target);
+    void attack(Entity user, Entity target, int round);
 
     void moveForward(Entity entityattacker, Entity entity);
 

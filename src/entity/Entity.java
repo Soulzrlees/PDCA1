@@ -20,6 +20,7 @@ public class Entity {
     protected boolean isDefeated;
     protected int position;
     protected boolean evade;
+    protected int attackRange;
     private Random random;
 
 
@@ -34,7 +35,16 @@ public class Entity {
         this.isDefeated = false;
         this.position = 1;
         this.random = new Random();
-
+        switch(entityClass){ //Sets the attack range that the entity can attack based on their class
+            case "melee":
+                this.attackRange = 3;
+            case "ranger":
+                this.attackRange = 6;
+            case "mage":
+                this.attackRange = 8;
+            default:
+                this.attackRange = 1;
+        }
         setClassStats();
         calculateStatsFromLevel();
     }
@@ -115,6 +125,10 @@ public class Entity {
     public void setEvade(boolean evade){
         this.evade  = evade;
     }
+    
+    public int getAttackRange(){
+        return this.attackRange;
+    }
 
     public boolean getEvade(){
         int chanceToEvade = random.nextInt(99) + 1;
@@ -124,17 +138,17 @@ public class Entity {
             return false;
         }
     }
-
+    
     //Find the distance from the enemy.
-    public int calculateDistance(Entity a, Entity b) {
+    public static int calculateDistance(Entity a, Entity b) {
         //If the position difference is lower than 0 then the position between each other would result in 0.
-        int position_difference  = Math.abs(a.getPosition() - b.getPosition());
+        int positionDifference = Math.abs(a.getPosition() - b.getPosition());
 
-        //Capping the distance between each other to be 10.
-        if(position_difference > 10){
-            position_difference = 10;
+        // Cap max distance at 10
+        if(positionDifference > 10) {
+            positionDifference = 10;
         }
-        return position_difference;
-    }
 
+        return positionDifference;
+    }
 }
