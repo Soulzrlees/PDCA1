@@ -13,6 +13,7 @@ import action.EnemyAction;
 import action.PlayerAction;
 import main.exceptions.PlayerNotFoundException;
 import player_management.AccessFile;
+import collections.LinkedList;
 import player_management.PlayerFileManager;
 
 /**
@@ -25,24 +26,19 @@ public class Main {
         Scanner scan = new Scanner(System.in);
         AccessFile file = new AccessFile();
 
-        //Testing Shawn Lee
-        //Enemy orc = new Enemy("Orc", 1, "ranger");
-        //Player player1 = new Player("Shawn", 1, "melee");
-        //PlayerAction player1Action = new PlayerAction();
-        //player1Action.moveBackward(orc, player1);
-        //end
-
-
+        
+        
         Player player = new Player("Shawn", 1, "melee");
         Enemy orc = new Enemy("Orc", 1, "melee");
 
         Battle battle = new Battle(player, orc);
         battle.battle_interface();
-
+        
+        
         //Entity player = playerLoginScreen(scan, file);
 
 
-        scan.close();//uwu
+        scan.close();
     }
     
     public static Entity playerLoginScreen(Scanner scan, AccessFile file) {
