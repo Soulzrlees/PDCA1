@@ -27,12 +27,12 @@ public class EnemyAction implements Action_Interface{
         if(Entity.calculateDistance(player, enemy) > player.getAttackRange()){
             System.out.println("Attack missed due to distance!");
         }
-        //If getEvade is valid than attack will be dodged so no damage taken.
+        //If getEvade return true then attack will be dodged so no damage taken.
         else if(player.getEvade() && round != 1){
-            System.out.println("You have dodged the attack!");
+            System.out.println(player.getName() + " has dodged the attack!");
         }
         else {
-            int totalDamage = enemy.getbaseDmg() + random.nextInt(10);
+            int totalDamage = enemy.getbaseDmg() + random.nextInt(5);
             System.out.println("Enemy dealt " + totalDamage + " damage to you!");
             player.damageCalculate(totalDamage);
         }

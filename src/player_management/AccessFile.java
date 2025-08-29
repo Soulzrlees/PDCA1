@@ -16,22 +16,27 @@ public class AccessFile {
 
     public void addPlayer(String playerName, String playerClass) {
         playerStorage.addPlayer(playerName, playerClass);
+        writeToPlayerBase();
     }
 
     public void updatePlayerLevel(String playerName) {
         playerService.updateLevel(playerName);
+        writeToPlayerBase();
     }
 
     public void updatePlayerExperience(String playerName, int experienceToAdd) {
         playerService.updateExperience(playerName, experienceToAdd);
+        writeToPlayerBase();
     }
 
     public void addPlayerGold(String playerName, int goldToAdd) {
         playerService.addGold(playerName, goldToAdd);
+        writeToPlayerBase();
     }
 
     public void removePlayerGold(String playerName, int goldToRemove) {
         playerService.removeGold(playerName, goldToRemove);
+        writeToPlayerBase();
     }
 
     public Player loadExistingPlayer(String playerName) throws PlayerNotFoundException {

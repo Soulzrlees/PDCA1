@@ -38,12 +38,15 @@ public class Entity {
         switch(entityClass){ //Sets the attack range that the entity can attack based on their class
             case "melee":
                 this.attackRange = 3;
+                break;
             case "ranger":
                 this.attackRange = 6;
+                break;
             case "mage":
                 this.attackRange = 8;
+                break;
             default:
-                this.attackRange = 1;
+
         }
         setClassStats();
         calculateStatsFromLevel();
@@ -92,6 +95,10 @@ public class Entity {
         return this.baseDmg;
     }
 
+    public void setbaseDmg(int baseDmg){
+        this.baseDmg = baseDmg;
+    }
+
     public int getHealth() {
         return this.health;
     }
@@ -121,20 +128,21 @@ public class Entity {
     public void setPosition(int position) {
         this.position = position;
     }
-
-    public void setEvade(boolean evade){
-        this.evade  = evade;
-    }
     
     public int getAttackRange(){
         return this.attackRange;
+    }
+
+    public void setAttackRange(int range){
+        this.attackRange = range;
     }
 
     public boolean getEvade(){
         int chanceToEvade = random.nextInt(99) + 1;
         if(chanceToEvade < 40){
             return true;
-        } else {
+        }
+        else {
             return false;
         }
     }

@@ -77,13 +77,14 @@ public class Player extends Entity{
         }
     }
 
-    public void statsDisplay(){
+    public void statsDisplay(Player player){
         System.out.println("__________" + this.name + "__________");
         System.out.println("          Exp: " + this.exp);
         System.out.println("        Level: " + this.level);
         System.out.println("  Skillpoints: " + this.skillpoints);
         System.out.println("         Gold: " + this.gold);
         System.out.println("        Class: " + this.entityClass);
+        System.out.println();
     }
 
     @Override

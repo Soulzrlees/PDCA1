@@ -52,6 +52,7 @@ public class PlayerFileManager {
             for (Player p : playerbase) {
                 writer.write(p.toString());
                 writer.newLine();
+                writer.flush();
             }
         } catch (IOException e) {
             System.out.println("Error writing file: " + e.getMessage());

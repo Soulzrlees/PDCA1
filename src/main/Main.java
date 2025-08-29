@@ -7,14 +7,9 @@ package main;
 import java.util.Scanner;
 
 import entity.Enemy;
-import entity.Entity;
 import entity.Player;
-import action.EnemyAction;
-import action.PlayerAction;
 import main.exceptions.PlayerNotFoundException;
 import player_management.AccessFile;
-import collections.LinkedList;
-import player_management.PlayerFileManager;
 
 /**
  *
@@ -22,40 +17,78 @@ import player_management.PlayerFileManager;
  */
 public class Main {
     public static void main(String[] args) {
-        // Setup variables
-        Scanner scan = new Scanner(System.in);
+        // Setup variables for scanning and accessing file
+        Scanner scanner = new Scanner(System.in);
         AccessFile file = new AccessFile();
 
-        
-        
-        Player player = new Player("Shawn", 1, "melee");
-        Enemy orc = new Enemy("Orc", 1, "melee");
+        // boolean for main game loop
+        boolean gameRunning = true;
 
-        Battle battle = new Battle(player, orc);
-        battle.battle_interface();
-        
-        
-        //Entity player = playerLoginScreen(scan, file);
+        // Method gets the player to input their username
+        Player player = playerLoginScreen(scanner, file);
+        System.out.println("Welcome to the GAME " + player.getName() + "!");
 
+        while (gameRunning) {
+            System.out.println("Select an option:\n1. Battle\n2. Inventory\n3. Stats\n4. Exit\n");
+            int threadChoice = scanner.nextInt();
+            scanner.nextLine();
 
-        scan.close();
+            // Player can choose whether to battle, check their inventory, check their stats, or exit the game
+            switch (threadChoice) {
+                case 1:
+                    // starts the battle interface from Battle class
+                    System.out.println("You have chosen to battle!");
+                    Enemy enemy = Enemy.createEnemy(player);
+                    Battle battle = new Battle(player, enemy, scanner);
+                    boolean result = battle.battle_interface();
+                    // rewards players based on if they won or lost
+                    if (result) {
+                        giveRewards(player, true, scanner, file);
+                    } else {
+                        giveRewards(player, false, scanner, file);
+                    }
+
+                    break;
+                case 2:
+                    System.out.println("Entering inventory: ");
+                    // print inventory
+                    System.out.println("enter any key to EXIT the inventory.");
+                    String exitKey = scanner.nextLine();
+                    break;
+                case 3:
+                    // prints out the players stats
+                    System.out.println(player.getName() + "'s stats:\n");
+                    player.statsDisplay(player);
+                    break;
+                case 4:
+                    // exits the gameloop thus ending game
+                    System.out.println("Game saved. Goodbye!");
+                    gameRunning = false;
+                    break;
+            }
+        }
+        scanner.close();
     }
     
-    public static Entity playerLoginScreen(Scanner scan, AccessFile file) {
-        Entity player = null;
+    public static Player playerLoginScreen(Scanner scan, AccessFile file) {
+        // create the player template
+        Player player = null;
         boolean validGameType = false;
         while (!validGameType) {
             System.out.println("Select an option:\n1. Start new game\n2. Resume existing game");
             String gameType = scan.nextLine().trim();
 
+            // entire loop to get correct input for username and class
             switch (gameType) {
                 case "1":
+                    // for creating new account
                     String playerName = getPlayerName(scan);
                     String playerClass = getPlayerClass(scan);
                     player = new Player(playerName, 1, playerClass);
 
                     try {
                         file.addPlayer(playerName, playerClass);
+                        file.writeToPlayerBase();
                     } catch (Exception e) {
                         System.out.println("Could not save player to file: " + e.getMessage());
                     }
@@ -63,6 +96,7 @@ public class Main {
                     validGameType = true;
                     break;
                 case "2":
+                    // for logging into existing account
                     boolean loginComplete = false;
                     while (!loginComplete) {
                         System.out.println("Enter your username:");
@@ -104,11 +138,13 @@ public class Main {
         return player;
     }
 
+    // ask for a valid username and return it
     public static String getPlayerName(Scanner scan) {
         String name = "";
         do {
             System.out.println("Please enter your name: ");
             name = scan.nextLine().trim();
+            // makes sure name is not empty
             if(name.isEmpty()) {
                 System.out.println("Name cannot be empty, please enter valid name.");
             }
@@ -116,6 +152,7 @@ public class Main {
         return name;
     }
 
+    // ask for userclass and return it
     public static String getPlayerClass(Scanner scan) {
         String choice = "";
         String pClass = "";
@@ -128,6 +165,7 @@ public class Main {
             System.out.println("3. Mage\n");
             choice = scan.nextLine();
 
+            // returns the user's choice of class
             switch (choice) {
                 case "1":
                     pClass = "melee";
@@ -147,5 +185,15 @@ public class Main {
             }
         }
         return pClass;
+    }
+
+    // update the player's stats based on their previous win or lose
+    public static void giveRewards(Player player, boolean wonBattle, Scanner scanner, AccessFile file) {
+        if (wonBattle) {
+            file.updatePlayerExperience(player.getName(), 100);
+            file.addPlayerGold(player.getName(), 20);
+        } else {
+            file.removePlayerGold(player.getName(), 20);
+        }
     }
 }

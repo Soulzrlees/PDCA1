@@ -5,6 +5,7 @@
 package entity;
 import java.util.Random;
 import action.EnemyAction;
+import entity.Player;
 /**
  *
  * @author Shawn lee
@@ -16,6 +17,35 @@ public class Enemy extends Entity{
     public Enemy(String name, int level, String entityClass) {
         super(name, level, entityClass);
         this.random = new Random();
+    }
+
+    // This method generates a random enemy for the player to battle
+    public static Enemy createEnemy(Player player) {
+        Random random = new Random();
+        int levelToAdd = random.nextInt(3);
+        int level = player.getLevel() + levelToAdd;
+        int classNum = random.nextInt(3) + 1;
+
+        String enemyClass = "";
+        String enemyName = "";
+
+        switch (classNum) {
+            case 1:
+                enemyClass = "melee";
+                enemyName = "High Orc";
+                break;
+            case 2:
+                enemyClass = "ranger";
+                enemyName = "Undead Shooter";
+                break;
+            case 3:
+                enemyClass = "mage";
+                enemyName = "Ice Elf";
+                break;
+            default:
+                break;
+        }
+        return new Enemy(enemyName, level, enemyClass);
     }
 
     //The randomise action of different enemy types

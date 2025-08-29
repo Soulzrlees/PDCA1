@@ -26,11 +26,11 @@ public class PlayerAction implements Action_Interface{
             System.out.println("Attack missed due to distance!");
         }
         //If getEvade is valid than attack will be dodged so no damage taken.
-        else if(player.getEvade() && round != 1){
-            System.out.println("You have dodged the attack!");
+        else if(enemy.getEvade() && round != 1){
+            System.out.println("Enemy has dodged the attack!");
         }
         else {
-            int totalDamage = player.getbaseDmg() + random.nextInt(10);
+            int totalDamage = player.getbaseDmg() + random.nextInt(5);
             System.out.println("You dealt " + totalDamage + " damage to the enemy!");
             enemy.damageCalculate(totalDamage);
         }
@@ -50,7 +50,7 @@ public class PlayerAction implements Action_Interface{
         int distance = Entity.calculateDistance(player, enemy);
         System.out.println("Moved " + distance + "m");
     }
-    
+
     //Finds out the distance the enemy travelled backwards
     @Override
     public void moveForward(Entity enemy, Entity player){
@@ -90,15 +90,5 @@ public class PlayerAction implements Action_Interface{
 
         System.out.println(player.getName() + " HP healed " + healAmount + "+");
 
-    }
-
-    public boolean evadetrue(Entity entity){
-        int evadeProbability = random.nextInt(100);
-        if(evadeProbability > 70){ //30% chance to evade
-            return true;
-        }
-        else{
-            return false;
-        }
     }
 }

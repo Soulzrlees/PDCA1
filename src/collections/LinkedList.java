@@ -4,6 +4,9 @@
  */
 package collections;
 
+
+import entity.Potion;
+
 /**
  *
  * @author Shawn lee
@@ -15,7 +18,7 @@ public class LinkedList <T>{
     
     
     //addTail method is used when a potion is added into the inventory
-    public void addTail(T data) {     
+    public void addTail(T data) {
         Node<T> newTail = new Node<>(data);          
         
         newTail.next = null;
@@ -59,10 +62,12 @@ public class LinkedList <T>{
         else{
             tail = current.prev;
         }
-        
+        size--;
         return Potion;
     }
-    
+
+
+
     //Display Inventory potions
     public void displayInventory(){
         Node<T> current = head;
