@@ -10,12 +10,53 @@ import entity.Enemy;
 import entity.Player;
 import main.exceptions.PlayerNotFoundException;
 import player_management.AccessFile;
+import java.util.InputMismatchException;
 
 /**
  *
  * @author fatehbhular, ShawnLee
  */
+
+
+
 public class Main {
+    //Checks which base stats the skillpoint would increase
+    public static void CheckSkillPoints(Player player, Scanner scanner){
+        while(player.getSkillPoints() > 0){ // only enter if player has skill points
+            System.out.print("Skillpoints (" + player.getSkillPoints() + " avialable) [-1 to exit]: ");
+            int input;
+            
+            try {
+                input = scanner.nextInt();
+                
+                //Exit the stats interface if input is -1
+                if(input == -1){
+                    break;
+                }
+                
+                //Depending of the input number it adds either damage, health or range
+                switch(input){
+                    case 1 -> player.skillpointIncreaseDamage();
+                    case 2 -> player.skillpointIncreaseHealth();
+                    case 3 -> player.skillpointIncreaseRange();
+                    default -> System.out.println("Invalid input! Enter 1, 2, or 3.\n");
+                }
+
+            } catch(InputMismatchException e){
+                System.out.println("Invalid input! Please enter a number.\n");
+                scanner.next(); // clear invalid input
+            }
+        }
+        
+        //Exit when theres no skillpoints avialable
+        if(player.getSkillPoints() == 0){
+            System.out.println("No skill points remaining!\n");
+        }
+    }
+
+    
+    
+    
     public static void main(String[] args) {
         // Setup variables for scanning and accessing file
         Scanner scanner = new Scanner(System.in);
@@ -59,6 +100,8 @@ public class Main {
                     // prints out the players stats
                     System.out.println(player.getName() + "'s stats:\n");
                     player.statsDisplay(player);
+                    CheckSkillPoints(player, scanner);
+                    
                     break;
                 case 4:
                     // exits the gameloop thus ending game

@@ -110,6 +110,10 @@ public class Entity {
     public int getMaxHealth() {
         return this.maxHealth;
     }
+    
+    public void setMaxHealth(int health){
+        this.maxHealth = health;
+    }
 
     public String getName() {
         return this.name;

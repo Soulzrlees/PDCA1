@@ -153,7 +153,7 @@ public class Battle implements Runnable{
                             System.out.println(battleStats());
                             if (this.enemy.getHealth() == 0) {
                                 System.out.println("You have defeated " + this.enemy.getName() + ". Battle over!!!\n");
-                                //Resets player health to max and reset players base damage to the orginal, and range, entity positions
+                                //Resets player health to max and reset players base damage to the orginal, and range, entity position
                                 this.player.setHealth(player.getMaxHealth());
                                 this.player.setbaseDmg(originalBaseDamage);
                                 this.player.setAttackRange(originalAttackRange);
@@ -202,7 +202,6 @@ public class Battle implements Runnable{
                 System.out.println(battleStats());
                 if (this.player.getHealth() == 0) { //Checks if the player health is 0 than the battle is ended
                     System.out.println("Enemy has defeated you. Battle over!!!\n");
-
                     //Resets player health to max and reset players base damage to the original, and range, entity positions
                     this.player.setHealth(player.getMaxHealth());
                     this.player.setbaseDmg(originalBaseDamage);

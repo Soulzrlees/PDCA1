@@ -13,14 +13,12 @@ public class Player extends Entity{
     private int gold;
     private int exp;
     private int skillpoints;
-    private ArrayList<String> inventory;
 
     public Player(String name, int level, String entityClass){
         super(name, level, entityClass);
         this.gold = 0;
         this.exp = 0;
         this.skillpoints = 0;
-        this.inventory = new ArrayList<>();
     }
 
     public Player(String name, int level, int exp, int gold, String entityClass){
@@ -66,8 +64,9 @@ public class Player extends Entity{
         if (this.exp >= expNeeded){
             this.skillpoints++;
             this.exp = 0;
-            this.level ++;
+            this.level++;
         }
+        this.skillpoints++;
     }
 
     //Remove skillpoints from player
@@ -76,15 +75,26 @@ public class Player extends Entity{
             this.skillpoints -= points;
         }
     }
+    
+    public int getSkillPoints(){
+        return this.skillpoints;
+    }
 
     public void statsDisplay(Player player){
         System.out.println("__________" + this.name + "__________");
         System.out.println("          Exp: " + this.exp);
         System.out.println("        Level: " + this.level);
-        System.out.println("  Skillpoints: " + this.skillpoints);
         System.out.println("         Gold: " + this.gold);
         System.out.println("        Class: " + this.entityClass);
         System.out.println();
+        
+        System.out.println("       Damage: " + player.getbaseDmg() + " (type 1 to add skillpoints)");
+        System.out.println("           HP: " + player.getMaxHealth() + " (type 2 to add skillpoints)");
+        System.out.println("        Range: " + player.getAttackRange() + " (type 3 to add skillpoints)");
+        System.out.println();
+        
+        
+        
     }
 
     @Override
@@ -104,6 +114,44 @@ public class Player extends Entity{
     public int hashCode() {
         return this.name.hashCode();
     }
+    
+   //Increase base damage after using a skillpoint 
+   public void skillpointIncreaseDamage(){
+       if(this.skillpoints > 0){
+           this.setbaseDmg(1 + this.getbaseDmg());
+           this.removeSkillPoints(1);
+       }
+       else{
+           System.out.println("Not enough skillpoints\n");
+       }
+   }
+   
+   //Increase base max health after using a skillpoint 
+    public void skillpointIncreaseHealth(){
+       if(this.skillpoints > 0){
+           this.setMaxHealth(1 + this.getMaxHealth());
+           this.removeSkillPoints(1);
+       }
+       else{
+           System.out.println("Not enough skillpoints\n");
+       }
+    }
+    
+    //Increase base attack range after using a skillpoint 
+    public void skillpointIncreaseRange(){
+        if(this.skillpoints > 0){
+           if(this.getAttackRange() < 8){
+                this.setAttackRange(1 + this.getAttackRange());
+                this.removeSkillPoints(1);
+           }
+           else{
+               System.out.println("Max base attack Range reached!\n");
+           }
+       }
+       else{
+           System.out.println("Not enough skillpoints\n");
+       }
+   }
 
 
 }
