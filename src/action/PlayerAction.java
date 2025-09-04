@@ -2,7 +2,6 @@ package action;
 
 import java.util.Random;
 import entity.Entity;
-import main.Battle;
 
 /**
  *

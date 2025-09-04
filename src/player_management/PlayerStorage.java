@@ -8,25 +8,26 @@ public class PlayerStorage {
     private ArraySet<Player> playerbase;
     private PlayerFileManager fileManager;
 
-    public PlayerStorage(PlayerFileManager playerFileManager) {
-        this.fileManager = playerFileManager;
+    public PlayerStorage(PlayerFileManager fileManager) {
+        this.fileManager = fileManager;
         this.playerbase = fileManager.readPlayerBase();
     }
 
-    public void addPlayer(String playerName, String playerClass) {
+    public boolean addPlayer(String playerName, String playerClass) {
         boolean found = false;
         for (Player p : playerbase) {
             String name = p.getName();
             if (name.equals(playerName)) {
                 found = true;
                 System.out.println("Player already exists.");
-                break;
+                return false;
             }
         }
         if (!found) {
             Player newPlayer = new Player(playerName, 1, 10, 100, playerClass);
             playerbase.add(newPlayer);
         }
+        return true;
     }
 
     public Player loadExistingPlayer(String playerName) throws PlayerNotFoundException {

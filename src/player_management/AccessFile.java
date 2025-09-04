@@ -1,22 +1,30 @@
 package player_management;
 
 import entity.Player;
+import entity.PlayerStats;
 import main.exceptions.PlayerNotFoundException;
 
 public class AccessFile {
     private PlayerFileManager playerFileManager;
     private PlayerStorage playerStorage;
     private PlayerService playerService;
+    private PlayerStatsStorage playerStatsStorage;
+    private PlayerStatsService playerStatsService;
+
 
     public AccessFile() { // This constructor was made by AI
         this.playerFileManager = new PlayerFileManager();
         this.playerStorage = new PlayerStorage(playerFileManager);
         this.playerService = new PlayerService(playerStorage);
+        this.playerStatsStorage = new PlayerStatsStorage(playerFileManager);
+        this.playerStatsService = new PlayerStatsService(playerStatsStorage);
     }
 
-    public void addPlayer(String playerName, String playerClass) {
-        playerStorage.addPlayer(playerName, playerClass);
+    // Playerbase methods
+    public boolean addPlayer(String playerName, String playerClass) {
+        boolean success = playerStorage.addPlayer(playerName, playerClass);
         writeToPlayerBase();
+        return success;
     }
 
     public void updatePlayerLevel(String playerName) {
@@ -46,4 +54,35 @@ public class AccessFile {
     public void writeToPlayerBase() {
         playerStorage.saveChanges();
     }
+
+
+    // Playerstats methods
+    public void addPlayerStats(String playerName) {
+        playerStatsStorage.addPlayerStats(playerName);
+        writeToPlayerStats();
+    }
+
+    public void updateDamagePoints(String playerName) {
+        playerStatsService.updateDamagePoints(playerName);
+        writeToPlayerStats();
+    }
+    
+    public void updateHealthPoints(String playerName) {
+        playerStatsService.updateHealthPoints(playerName);
+        writeToPlayerStats();
+    }
+
+    public void updateRangePoints(String playerName) {
+        playerStatsService.updateRangePoints(playerName);
+        writeToPlayerStats();
+    }
+
+    public PlayerStats loadPlayerStats(String playerName) {
+        return playerStatsStorage.loadExistingStats(playerName);
+    }
+
+    public void writeToPlayerStats() {
+        playerStatsStorage.saveChanges();
+    }
+
 }

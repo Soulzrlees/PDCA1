@@ -1,5 +1,1 @@
-Jectress 2 0 120 melee
-Shawn 4 1100 580 melee
-Leo 2 100 60 mage
-asd 3 300 240 melee
-qwe 2 100 140 melee
+cookie 2 0 100 mage

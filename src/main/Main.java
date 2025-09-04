@@ -20,42 +20,6 @@ import java.util.InputMismatchException;
 
 
 public class Main {
-    //Checks which base stats the skillpoint would increase
-    public static void CheckSkillPoints(Player player, Scanner scanner){
-        while(player.getSkillPoints() > 0){ // only enter if player has skill points
-            System.out.print("Skillpoints (" + player.getSkillPoints() + " avialable) [-1 to exit]: ");
-            int input;
-            
-            try {
-                input = scanner.nextInt();
-                
-                //Exit the stats interface if input is -1
-                if(input == -1){
-                    break;
-                }
-                
-                //Depending of the input number it adds either damage, health or range
-                switch(input){
-                    case 1 -> player.skillpointIncreaseDamage();
-                    case 2 -> player.skillpointIncreaseHealth();
-                    case 3 -> player.skillpointIncreaseRange();
-                    default -> System.out.println("Invalid input! Enter 1, 2, or 3.\n");
-                }
-
-            } catch(InputMismatchException e){
-                System.out.println("Invalid input! Please enter a number.\n");
-                scanner.next(); // clear invalid input
-            }
-        }
-        
-        //Exit when theres no skillpoints avialable
-        if(player.getSkillPoints() == 0){
-            System.out.println("No skill points remaining!\n");
-        }
-    }
-
-    
-    
     
     public static void main(String[] args) {
         // Setup variables for scanning and accessing file
@@ -98,9 +62,10 @@ public class Main {
                     break;
                 case 3:
                     // prints out the players stats
+                    player.loadPlayerStats(file);
                     System.out.println(player.getName() + "'s stats:\n");
                     player.statsDisplay(player);
-                    CheckSkillPoints(player, scanner);
+                    player.CheckSkillPoints(player, scanner, file);
                     
                     break;
                 case 4:
@@ -130,8 +95,14 @@ public class Main {
                     player = new Player(playerName, 1, playerClass);
 
                     try {
-                        file.addPlayer(playerName, playerClass);
+                        boolean success = file.addPlayer(playerName, playerClass);
+                        if (!success) {
+                            continue;
+                        }
+                        file.addPlayerStats(playerName);
                         file.writeToPlayerBase();
+                        file.writeToPlayerStats();
+                        player.loadPlayerStats(file);
                     } catch (Exception e) {
                         System.out.println("Could not save player to file: " + e.getMessage());
                     }
@@ -146,6 +117,7 @@ public class Main {
                         String playerInput = scan.nextLine().trim();
                         try {
                             player = file.loadExistingPlayer(playerInput);
+                            player.loadPlayerStats(file);
                             loginComplete = true;
                         } catch (PlayerNotFoundException e) {
                             System.out.println(e.getMessage());
@@ -162,7 +134,14 @@ public class Main {
                                     playerName = getPlayerName(scan);
                                     playerClass = getPlayerClass(scan);
                                     player = new Player(playerName, 1, playerClass);
-                                    file.addPlayer(playerName, playerClass);
+                                    boolean success = file.addPlayer(playerName, playerClass);
+                                    if (!success) {
+                                        continue;
+                                    }
+                                    file.addPlayerStats(playerName);
+                                    file.writeToPlayerBase();
+                                    file.writeToPlayerStats();
+                                    player.loadPlayerStats(file);
                                     loginComplete = true;
                                     isValidChoice = true;
                                 } else {
