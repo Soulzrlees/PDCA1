@@ -1,7 +1,8 @@
 # PDCA1
 This is a project for Program Design and Construction course in AUT. This project is a about a command line turn based rpg game.
 
-RPG turn-based game (command line program):
+Base idea:
+RPG turn-based game (command line program)
 Firstly, the title page of the RPG would be printed to show that the game has started.
 Prompts the user for their name.
 Allow them to select from 3 different classes (mage, ranger, melee)
