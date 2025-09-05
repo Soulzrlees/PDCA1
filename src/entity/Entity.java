@@ -33,7 +33,7 @@ public class Entity {
         this.level = level;
         this.entityClass = entityClass;
         this.isDefeated = false;
-        this.position = 1;
+        this.position = 10;
         this.random = new Random();
         switch(entityClass){ //Sets the attack range that the entity can attack based on their class
             case "melee":
@@ -152,13 +152,13 @@ public class Entity {
     }
     
     //Find the distance from the enemy.
-    public static int calculateDistance(Entity a, Entity b) {
+    public static int calculateDistance(Entity enemy, Entity player) {
         //If the position difference is lower than 0 then the position between each other would result in 0.
-        int positionDifference = Math.abs(a.getPosition() - b.getPosition());
+        int positionDifference = enemy.getPosition() - player.getPosition();
 
-        // Cap max distance at 10
-        if(positionDifference > 10) {
-            positionDifference = 10;
+        // Cap max distance at 20
+        if(positionDifference > 20) {
+            positionDifference = 20;
         }
 
         return positionDifference;

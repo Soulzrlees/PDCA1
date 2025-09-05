@@ -76,18 +76,18 @@ public class Battle implements Runnable{
     //Creates a visual representation of distance difference
     public String drawDistanceBar(int distance) {
         StringBuilder bar = new StringBuilder();
-        bar.append("&"); 
+        bar.append("P");
         for (int i = 0; i < distance; i++) {
             bar.append("_"); // underscore for each unit of distance
         }
-        bar.append("&");
+        bar.append("E");
         return bar.toString();
     }
 
     
     //Returns the stats of the enemy health, player health and distance difference of the two entity
     public String battleStats(){
-        int distance = Entity.calculateDistance(player, enemy); 
+        int distance = Entity.calculateDistance(enemy, player);
         String distanceBar = drawDistanceBar(distance);
         return "\n=========Stats=========\nYour health: " + this.player.getHealth() + "/" + this.player.getMaxHealth() + "\n" +
                "Enemy Health: " + this.enemy.getHealth() + "/" + this.enemy.getMaxHealth() + "\n" +
@@ -157,8 +157,8 @@ public class Battle implements Runnable{
                                 this.player.setHealth(player.getMaxHealth());
                                 this.player.setbaseDmg(originalBaseDamage);
                                 this.player.setAttackRange(originalAttackRange);
-                                this.player.setPosition(1);
-                                this.enemy.setPosition(1);
+                                this.player.setPosition(10);
+                                this.enemy.setPosition(10);
 
                                 battleEnded = true;
                                 return true;
@@ -167,11 +167,13 @@ public class Battle implements Runnable{
                             break;
                         case 2://Moving forward
                             this.playerAction.moveForward(enemy, player);
+                            System.out.println(player.getPosition() + " " + enemy.getPosition());
                             playerturn = !playerturn;
                             break;
                         case 3: //Moving backwards
                             this.playerAction.moveBackward(enemy, player);
                             playerturn = !playerturn;
+                            System.out.println(player.getPosition() + " " + enemy.getPosition());
                             break;
                         case 4://healing the player
                             this.playerAction.heal(this.player);
@@ -206,8 +208,8 @@ public class Battle implements Runnable{
                     this.player.setHealth(player.getMaxHealth());
                     this.player.setbaseDmg(originalBaseDamage);
                     this.player.setAttackRange(originalAttackRange);
-                    this.player.setPosition(1);
-                    this.enemy.setPosition(1);
+                    this.player.setPosition(10);
+                    this.enemy.setPosition(10);
 
                     battleEnded = true;
                     return false;

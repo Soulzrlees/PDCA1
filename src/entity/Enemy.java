@@ -56,10 +56,10 @@ public class Enemy extends Entity{
                 if(meleeAction < 55){ //55
                     enemyAction.attack(this, target, round);
                 }
-                else if(meleeAction < 70){ //70
+                else if(meleeAction < 80){ //80
                     enemyAction.moveForward(target, this);
                 }
-                else if(meleeAction < 75){ //75
+                else if(meleeAction < 82){ //82
                     enemyAction.moveBackward(target, this);
                 }
                 else{ //100
@@ -72,11 +72,11 @@ public class Enemy extends Entity{
                 if(rangerAction < 50){ //50
                     enemyAction.attack(this, target, round);
                 }
-                else if(rangerAction < 55){ //55
+                else if(rangerAction < 65){ //65
                     enemyAction.moveForward(target, this);
 
                 }
-                else if(rangerAction < 75){ //75
+                else if(rangerAction < 80){ //80
                     enemyAction.moveBackward(target, this);
                 }
                 else{ //100
@@ -89,7 +89,7 @@ public class Enemy extends Entity{
                 if(mageAction < 50){ //50
                     enemyAction.attack(this, target, round);
                 }
-                else if(mageAction < 52){ //52
+                else if(mageAction < 60){ //60
                     enemyAction.moveForward(target, this);
                 }
                 else if(mageAction < 85){ //85

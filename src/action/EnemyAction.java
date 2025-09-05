@@ -42,15 +42,15 @@ public class EnemyAction implements Action_Interface{
     @Override
     public void moveBackward(Entity player, Entity enemy){
         int moveDistance = random.nextInt(5) + 1;
-        int newPosition = moveDistance + enemy.getPosition();
+        int newPosition = enemy.getPosition() + moveDistance;
         //Making sure that the new Position is under or at 10
-        if(newPosition > 10){
-            newPosition = 10;
+        if(newPosition > 20){
+            newPosition = 20;
         }
         enemy.setPosition(newPosition);
-
+        System.out.println(player.getPosition() + " " + enemy.getPosition());
         int distance = Entity.calculateDistance(player, enemy);
-        System.out.println("Moved " + distance + "m");
+        System.out.println("Moved Backwards " + moveDistance + "m");
     }
 
     //Finds out the distance the enemy travelled backwards
@@ -59,16 +59,34 @@ public class EnemyAction implements Action_Interface{
         int moveDistance = random.nextInt(5) + 1;
         int newPosition = enemy.getPosition() - moveDistance;
         //Making sure that the new Position above 1 or at 1
-        if(newPosition <= 1){
-            newPosition = 1;
+        if(newPosition < player.getPosition()){
+            int difference = enemy.getPosition() - player.getPosition();
+            int toMove = moveDistance - difference;
+            int temp = player.getPosition();
+            enemy.setPosition(temp);
+            int playerPosition = player.getPosition() - toMove;
+            player.setPosition(playerPosition);
+            if (player.getPosition() < 0) {
+                player.setPosition(0);
+                System.out.println("Enemy has pushed you to the edge of the arena!");
+                if (enemy.getPosition() < 1) {
+                    enemy.setPosition(1);
+                    System.out.println("Enemy has cornered you");
+                } else {
+                    System.out.println("Enemy moved towards you by " + difference + "m");
+                }
+            } else {
+                System.out.println("Enemy has pushed you backwards by: " + toMove + "m");
+                System.out.println("Enemy moved towards you by: " + difference + "m");
+            }
+        } else {
+            enemy.setPosition(newPosition);
+            int distance = Entity.calculateDistance(player, enemy);
+            if (distance < 1) {
+                distance = 1;
+            }
+            System.out.println("Moved Forwards " + moveDistance + "m");
         }
-        enemy.setPosition(newPosition);
-
-        int distance = Entity.calculateDistance(player, enemy);
-        if(distance < 1){
-            distance = 1;
-        }
-        System.out.println("Moved " + distance + "m");
     }
     
     //Heals the enemy 
