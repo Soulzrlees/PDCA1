@@ -5,7 +5,6 @@
 package entity;
 import java.util.Random;
 import action.EnemyAction;
-import entity.Player;
 /**
  *
  * @author Shawn lee
@@ -54,49 +53,49 @@ public class Enemy extends Entity{
             case "melee":
                 int meleeAction = random.nextInt(100);
                 //35% change to attack, 15% chance to moveforward, 15% chance to movebackward, 20% to heal, and 15% to dodge
-                if(meleeAction < 35){ //35
+                if(meleeAction < 55){ //55
                     enemyAction.attack(this, target, round);
                 }
-                else if(meleeAction < 50){ //50
+                else if(meleeAction < 70){ //70
                     enemyAction.moveForward(target, this);
                 }
-                else if(meleeAction < 65){ //65
+                else if(meleeAction < 75){ //75
                     enemyAction.moveBackward(target, this);
                 }
-                else{ //85
+                else{ //100
                     enemyAction.heal(this);
                 }
                 break;
             case "ranger":
                 int rangerAction = random.nextInt(100);
                 //35% change to attack, 15% chance to moveforward, 15% chance to movebackward, 20% to heal, and 15% to dodge
-                if(rangerAction < 50){
+                if(rangerAction < 50){ //50
                     enemyAction.attack(this, target, round);
                 }
-                else if(rangerAction < 75){
+                else if(rangerAction < 55){ //55
                     enemyAction.moveForward(target, this);
 
                 }
-                else if(rangerAction < 85){
+                else if(rangerAction < 75){ //75
                     enemyAction.moveBackward(target, this);
                 }
-                else{
+                else{ //100
                     enemyAction.heal(this);
                 }
                 break;
             case "mage":
                 int mageAction = random.nextInt(100);
                 //35% change to attack, 15% chance to moveforward, 15% chance to movebackward, 20% to heal, and 15% to dodge
-                if(mageAction < 50){
+                if(mageAction < 50){ //50
                     enemyAction.attack(this, target, round);
                 }
-                else if(mageAction < 75){
+                else if(mageAction < 52){ //52
                     enemyAction.moveForward(target, this);
                 }
-                else if(mageAction < 85){
+                else if(mageAction < 85){ //85
                     enemyAction.moveBackward(target, this);
                 }
-                else{
+                else{ //100
                     enemyAction.heal(this);
                 }
                 break;

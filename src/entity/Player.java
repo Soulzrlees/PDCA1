@@ -6,6 +6,7 @@ package entity;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+import main.exceptions.PlayerNotFoundException;
 import player_management.AccessFile;
 
 /**
@@ -87,25 +88,24 @@ public class Player extends Entity{
         }
     }
 
-    public int getSkillPoints(){
-        return (this.level - playerstats.getUsedSkillPoints());
+    public int getSkillPoints(Player player) throws PlayerNotFoundException {
+        player = file.loadExistingPlayer(this.name);
+        return (player.level - playerstats.getUsedSkillPoints());
     }
 
-    public void statsDisplay(Player player){
+    public void statsDisplay(Player player) throws PlayerNotFoundException {
+        player = file.loadExistingPlayer(this.name);
         System.out.println("__________" + this.name + "__________");
-        System.out.println("          Exp: " + this.exp);
-        System.out.println("        Level: " + this.level);
-        System.out.println("         Gold: " + this.gold);
-        System.out.println("        Class: " + this.entityClass);
+        System.out.println("          Exp: " + player.exp);
+        System.out.println("        Level: " + player.level);
+        System.out.println("         Gold: " + player.gold);
+        System.out.println("        Class: " + player.entityClass);
         System.out.println();
 
-        System.out.println("       Damage: " + player.getbaseDmg() + "[" + this.playerstats.getDamageSkillPoints() + "+] (type 1 to add skillpoints)");
-        System.out.println("           HP: " + player.getMaxHealth() + "[" + this.playerstats.getHealthSkillPoints() + "+] (type 2 to add skillpoints)");
-        System.out.println("        Range: " + player.getAttackRange() + "[" + this.playerstats.getRangeSkillPoints() + "+] (type 3 to add skillpoints)");
+        System.out.println("       Damage: " + this.getbaseDmg() + "[" + this.playerstats.getDamageSkillPoints() + "+] (type 1 to add skillpoints)");
+        System.out.println("           HP: " + this.getMaxHealth() + "[" + this.playerstats.getHealthSkillPoints() + "+] (type 2 to add skillpoints)");
+        System.out.println("        Range: " + this.getAttackRange() + "[" + this.playerstats.getRangeSkillPoints() + "+] (type 3 to add skillpoints)");
         System.out.println();
-
-
-
     }
 
     @Override
@@ -171,9 +171,9 @@ public class Player extends Entity{
    }
 
     //Checks which base stats the skill point would increase
-    public void CheckSkillPoints(Player player, Scanner scanner, AccessFile file){
-        while(getSkillPoints() > 0){ // only enter if player has skill points
-            System.out.print("Skillpoints (" + getSkillPoints() + " available) [-1 to exit]: ");
+    public void CheckSkillPoints(Player player, Scanner scanner, AccessFile file) throws PlayerNotFoundException {
+        while(getSkillPoints(file.loadExistingPlayer(this.getName())) > 0){ // only enter if player has skill points
+            System.out.print("Skillpoints (" + getSkillPoints(file.loadExistingPlayer(this.getName())) + " available) [-1 to exit]: ");
             int input;
 
             try {
@@ -199,7 +199,7 @@ public class Player extends Entity{
         }
 
         //Exit when theres no skillpoints avialable
-        if(getSkillPoints() == 0){
+        if(getSkillPoints(file.loadExistingPlayer(this.getName())) == 0){
             System.out.println("No skill points remaining!\n");
         }
     }

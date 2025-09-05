@@ -10,7 +10,6 @@ import entity.Enemy;
 import entity.Player;
 import main.exceptions.PlayerNotFoundException;
 import player_management.AccessFile;
-import java.util.InputMismatchException;
 
 /**
  *
@@ -21,7 +20,7 @@ import java.util.InputMismatchException;
 
 public class Main {
     
-    public static void main(String[] args) {
+    public static void main(String[] args) throws PlayerNotFoundException {
         // Setup variables for scanning and accessing file
         Scanner scanner = new Scanner(System.in);
         AccessFile file = new AccessFile();
@@ -33,6 +32,7 @@ public class Main {
         Player player = playerLoginScreen(scanner, file);
         System.out.println("Welcome to the GAME " + player.getName() + "!");
 
+        // This is the main interface of the game, where the player can choose to battle, view stats, view inventory, or exit the game
         while (gameRunning) {
             System.out.println("Select an option:\n1. Battle\n2. Inventory\n3. Stats\n4. Exit\n");
             int threadChoice = scanner.nextInt();
@@ -60,7 +60,7 @@ public class Main {
                     break;
                 case 3:
                     // prints out the players stats
-                    player.loadPlayerStats(file);
+                    player.loadPlayerStats(file); // reads from the playerbase to get updated stats
                     System.out.println(player.getName() + "'s stats:\n");
                     player.statsDisplay(player);
                     player.CheckSkillPoints(player, scanner, file);

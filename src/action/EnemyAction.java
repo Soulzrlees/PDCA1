@@ -24,7 +24,7 @@ public class EnemyAction implements Action_Interface{
     @Override
     public void attack(Entity enemy, Entity player, int round){
         //Based on the position of the player to the enemy, if it range is less than the Position than attack does not hit.
-        if(Entity.calculateDistance(player, enemy) > player.getAttackRange()){
+        if(Entity.calculateDistance(enemy, player) > enemy.getAttackRange()){
             System.out.println("Attack missed due to distance!");
         }
         //If getEvade return true then attack will be dodged so no damage taken.
@@ -74,7 +74,7 @@ public class EnemyAction implements Action_Interface{
     //Heals the enemy 
     @Override
     public void heal(Entity enemy) {
-        int healAmount = random.nextInt(11) + 5;
+        int healAmount = random.nextInt(20) + 10;
         // Increase health, but don't exceed max
         int newHealth = enemy.getHealth() + healAmount;
         if (newHealth > enemy.getMaxHealth()) {

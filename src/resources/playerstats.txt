@@ -1,3 +1,3 @@
-cookie 1 1 0
-shawn 2 0 0
-pasd 0 0 0
+Shawn 2 0 0
+Jectress 2 1 0
+Way 0 1 0
