@@ -55,10 +55,8 @@ public class Main {
 
                     break;
                 case 2:
-                    System.out.println("Entering inventory: ");
-                    // print inventory
-                    System.out.println("enter any key to EXIT the inventory.");
-                    String exitKey = scanner.nextLine();
+                    // print inventory Not working
+                    System.out.println("To be worked on later on project 2!\n");
                     break;
                 case 3:
                     // prints out the players stats

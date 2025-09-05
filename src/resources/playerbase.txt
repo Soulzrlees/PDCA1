@@ -1,1 +1,3 @@
-cookie 2 0 100 mage
+cookie 2 100 0 mage
+shawn 2 300 180 melee
+pasd 1 10 100 melee
