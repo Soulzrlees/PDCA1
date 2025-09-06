@@ -16,7 +16,7 @@ public class ArraySet<E> extends AbstractSet<E>{
     protected E[] elements;
     protected int numElements;
     private static final int INITIAL_CAPACITY = 16;
-
+    
     public ArraySet() {
         super();
         numElements = 0;
@@ -29,7 +29,7 @@ public class ArraySet<E> extends AbstractSet<E>{
             add(element);
         }
     }
-
+    // adds an object to the arrayset
     @Override
     public boolean add(E o) {
         if (contains(o)) return false;
@@ -40,7 +40,7 @@ public class ArraySet<E> extends AbstractSet<E>{
         numElements++;
         return true;
     }
-
+    // removes an object from the arrayset
     @Override
     public boolean remove(Object o) {
         int index = 0;
@@ -59,7 +59,7 @@ public class ArraySet<E> extends AbstractSet<E>{
         }
         return found;
     }
-
+    // iterator methods
     @Override
     public Iterator<E> iterator() {
         return new Iterator<E>() {
@@ -84,12 +84,12 @@ public class ArraySet<E> extends AbstractSet<E>{
             }
         };
     }
-
+    // returns number of elements in the arrayset
     @Override
     public int size() {
         return numElements;
     }
-
+    // removes every element in the arrayset
     @Override
     public void clear() {
         for (int i = 0; i < numElements; i++) {
@@ -97,7 +97,7 @@ public class ArraySet<E> extends AbstractSet<E>{
         }
         numElements = 0;
     }
-
+    // doubles the arrayset's capacity
     private void expandCapacity() {
         E[] largerArray = (E[])(new Object[elements.length * 2]);
         for (int i = 0; i < numElements; i++) {

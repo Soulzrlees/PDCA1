@@ -9,7 +9,7 @@ public class PlayerStatsService {
     public PlayerStatsService(PlayerStatsStorage statsStorage) {
         this.statsStorage = statsStorage;
     }
-
+    // increments the player's damage skillpoints in the file
     public void updateDamagePoints(String playerName) {
         PlayerStats playerStat = statsStorage.getPlayer(playerName);
 
@@ -20,7 +20,7 @@ public class PlayerStatsService {
             System.out.println("Player not found");
         }
     }
-
+    // increments the player's health skillpoints in the file
     public void updateHealthPoints(String playerName) {
         PlayerStats playerStat = statsStorage.getPlayer(playerName);
 
@@ -31,7 +31,7 @@ public class PlayerStatsService {
             System.out.println("Player not found");
         }
     }
-
+    // increments the player's range skillpoints in the file
     public void updateRangePoints(String playerName) {
         PlayerStats playerStat = statsStorage.getPlayer(playerName);
 

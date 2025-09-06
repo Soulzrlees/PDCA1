@@ -38,12 +38,12 @@ public class EnemyAction implements Action_Interface{
         }
     }
 
-    //Finds out the distance the enemy travelled forwards
+    //Finds out the distance the enemy travelled away from player
     @Override
     public void moveBackward(Entity player, Entity enemy){
         int moveDistance = random.nextInt(5) + 1;
         int newPosition = enemy.getPosition() + moveDistance;
-        //Making sure that the new Position is under or at 10
+        //Making sure that the new Position is under or at 20
         if(newPosition > 20){
             newPosition = 20;
         }
@@ -53,12 +53,12 @@ public class EnemyAction implements Action_Interface{
         System.out.println("Moved Backwards " + moveDistance + "m");
     }
 
-    //Finds out the distance the enemy travelled backwards
+    //Finds out the distance the enemy travelled towards player
     @Override
     public void moveForward(Entity player, Entity enemy){
         int moveDistance = random.nextInt(5) + 1;
         int newPosition = enemy.getPosition() - moveDistance;
-        //Making sure that the new Position above 1 or at 1
+        //Making sure that the new Position is in front of player or above 1
         if(newPosition < player.getPosition()){
             int difference = enemy.getPosition() - player.getPosition();
             int toMove = moveDistance - difference;

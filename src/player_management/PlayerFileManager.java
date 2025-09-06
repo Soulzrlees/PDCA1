@@ -11,6 +11,7 @@ public class PlayerFileManager {
     private static String filePath = "src/resources/playerbase.txt";
     private static String filePath2 = "src/resources/playerstats.txt";
 
+    // reads the entire playerbase file and puts it into an arrayset
     public ArraySet<Player> readPlayerBase() {
         String playerName, playerLevel, playerExperience, playerGold, playerClass;
         ArraySet<Player> playerbase = new ArraySet<>();
@@ -47,7 +48,7 @@ public class PlayerFileManager {
 
         return playerbase;
     }
-
+    // writes the entire arrayset of players into the playerbase file
     public void writePlayerBase(ArraySet<Player> playerbase) {
         try {
             writer = new BufferedWriter(new FileWriter(filePath));
@@ -66,7 +67,7 @@ public class PlayerFileManager {
             }
         }
     }
-
+    // returns an arrayset of all players' skillpoints
     public ArraySet<PlayerStats> readPlayerStats() {
         String playerName, damagePoints, healthPoints, rangePoints;
         ArraySet<PlayerStats> playerstats = new ArraySet<>();
@@ -101,7 +102,7 @@ public class PlayerFileManager {
         }
         return playerstats;
     }
-
+    // writes the arrayset of players' skillpoints into the playerstat's file
     public void writePlayerStats(ArraySet<PlayerStats> playerstats) {
         try {
             writer = new BufferedWriter(new FileWriter(filePath2));

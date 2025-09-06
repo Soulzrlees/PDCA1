@@ -1,1 +1,2 @@
-Jectress 2 0 120 ranger
+Fateh 2 0 120 melee
+Shawn 2 0 120 ranger

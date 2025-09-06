@@ -35,11 +35,12 @@ public class PlayerAction implements Action_Interface{
         }
     }
 
+    // calculates distance the player moved away from enemy
     @Override
     public void moveBackward(Entity enemy, Entity player){
         int moveDistance = random.nextInt(5) + 1;
         int newPosition = player.getPosition() - moveDistance;
-        //Making sure that the new Position is under or at 10
+        //Making sure that the new Position is under or at 10:
         if(newPosition < 0){
             newPosition = 0;
             System.out.println("You can't move further in this direction");
@@ -84,7 +85,7 @@ public class PlayerAction implements Action_Interface{
             System.out.println("Moved forwards " + moveDistance + "m");
         }
     }
-
+    // heals the player (only 2 times allowed)
     public void heal(Entity player) {
         int newHealth = player.getHealth();
         int healAmount = 0;

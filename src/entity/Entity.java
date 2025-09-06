@@ -91,6 +91,7 @@ public class Entity {
         return health;
     }
 
+    //get and set methods for entity variables
     public int getbaseDmg() {
         return this.baseDmg;
     }
@@ -141,6 +142,7 @@ public class Entity {
         this.attackRange = range;
     }
 
+    // generates random change for the entity to dodge the opponent's attack
     public boolean getEvade(){
         int chanceToEvade = random.nextInt(99) + 1;
         if(chanceToEvade < 40){

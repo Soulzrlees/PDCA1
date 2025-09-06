@@ -12,7 +12,7 @@ public class PlayerStatsStorage {
         this.fileManager = fileManager;
         this.playerStats = fileManager.readPlayerStats();
     }
-
+    // adds a new player and their stats into the playerstats file
     public void addPlayerStats(String playerName) {
         boolean found = false;
         for (PlayerStats ps : playerStats) {
@@ -28,7 +28,7 @@ public class PlayerStatsStorage {
             playerStats.add(newPlayerStats);
         }
     }
-
+    // loads a player's stats from the playerstats file
     public PlayerStats loadExistingStats(String playerName) {
         playerStats = fileManager.readPlayerStats();
         for (PlayerStats ps : playerStats) {
@@ -38,15 +38,15 @@ public class PlayerStatsStorage {
         }
         return new PlayerStats(playerName, 0, 0, 0);
     }
-
+    // returns the arrayset of players' stats from the playerstats file
     public ArraySet<PlayerStats> getPlayerStats() {
         return playerStats;
     }
-
+    // writes the updated changes to a player's stats into playerstats file
     public void saveChanges() {
         fileManager.writePlayerStats(playerStats);
     }
-
+    // returns a player from the playerstats file
     public PlayerStats getPlayer(String playerName) {
         for (PlayerStats ps : playerStats) {
             if (ps.getPlayerName().equals(playerName)) {

@@ -168,7 +168,10 @@ public class Main {
             if(name.isEmpty()) {
                 System.out.println("Name cannot be empty, please enter valid name.");
             }
-        } while(name.isEmpty());
+            if(name.contains(" ")) {
+                System.out.println("Name cannot have spaces.");
+            }
+        } while(name.isEmpty() || name.contains(" "));
         return name;
     }
 

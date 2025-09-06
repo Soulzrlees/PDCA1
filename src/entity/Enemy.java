@@ -12,7 +12,7 @@ import action.EnemyAction;
 
 public class Enemy extends Entity{
     private Random random;
-
+    // enemy constructor
     public Enemy(String name, int level, String entityClass) {
         super(name, level, entityClass);
         this.random = new Random();
@@ -52,7 +52,7 @@ public class Enemy extends Entity{
         switch(entityClass){
             case "melee":
                 int meleeAction = random.nextInt(100);
-                //35% change to attack, 15% chance to moveforward, 15% chance to movebackward, 20% to heal, and 15% to dodge
+                //55% change to attack, 25% chance to moveforward, 2% chance to movebackward, 18% to heal
                 if(meleeAction < 55){ //55
                     enemyAction.attack(this, target, round);
                 }
@@ -68,7 +68,7 @@ public class Enemy extends Entity{
                 break;
             case "ranger":
                 int rangerAction = random.nextInt(100);
-                //35% change to attack, 15% chance to moveforward, 15% chance to movebackward, 20% to heal, and 15% to dodge
+                //50% change to attack, 15% chance to moveforward, 15% chance to movebackward, 20% to heal
                 if(rangerAction < 50){ //50
                     enemyAction.attack(this, target, round);
                 }
@@ -85,7 +85,7 @@ public class Enemy extends Entity{
                 break;
             case "mage":
                 int mageAction = random.nextInt(100);
-                //35% change to attack, 15% chance to moveforward, 15% chance to movebackward, 20% to heal, and 15% to dodge
+                //50% change to attack, 10% chance to moveforward, 25% chance to movebackward, 15% to heal
                 if(mageAction < 50){ //50
                     enemyAction.attack(this, target, round);
                 }

@@ -36,7 +36,7 @@ public class Player extends Entity{
         this.playerstats = new PlayerStats(this.name, 0, 0, 0);
         this.skillpoints = this.level - this.playerstats.getUsedSkillPoints();
     }
-
+    // loads current player's stats from the player storage
     public void loadPlayerStats(AccessFile file) {
         this.file = file;
         this.playerstats = file.loadPlayerStats(this.name);
@@ -87,12 +87,12 @@ public class Player extends Entity{
             this.skillpoints -= points;
         }
     }
-
+    // gets the skillpoints of the current player from the playerstats storage
     public int getSkillPoints(Player player) throws PlayerNotFoundException {
         player = file.loadExistingPlayer(this.name);
         return (player.level - playerstats.getUsedSkillPoints());
     }
-
+    // displays the player's stats and upgrades
     public void statsDisplay(Player player) throws PlayerNotFoundException {
         player = file.loadExistingPlayer(this.name);
         System.out.println("__________" + this.name + "__________");
@@ -107,12 +107,12 @@ public class Player extends Entity{
         System.out.println("        Range: " + this.getAttackRange() + "[" + this.playerstats.getRangeSkillPoints() + "+] (type 3 to add skillpoints)");
         System.out.println();
     }
-
+    // used for file i/o
     @Override
     public String toString() {
         return this.name + " " + this.level + " " + this.exp + " " + this.gold + " " + this.entityClass;
     }
-
+    // equals and hashcode is used to compare when making new players
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

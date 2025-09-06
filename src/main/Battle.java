@@ -49,7 +49,7 @@ public class Battle implements Runnable{
 
         this.scanner = scanner;
     }
-
+    // randomises the player's inventory during a battle sequence
     public static void randomiseInventory(LinkedList<Potion> inventory) {
         Random random = new Random();
         int numOfPotions = Potion.potionType.values().length - 1;
@@ -95,7 +95,7 @@ public class Battle implements Runnable{
                 
     }
    
-    
+    // returns the cuurent round
     public int getRound(){
         return this.round;
     }
@@ -167,13 +167,11 @@ public class Battle implements Runnable{
                             break;
                         case 2://Moving forward
                             this.playerAction.moveForward(enemy, player);
-                            System.out.println(player.getPosition() + " " + enemy.getPosition());
                             playerturn = !playerturn;
                             break;
                         case 3: //Moving backwards
                             this.playerAction.moveBackward(enemy, player);
                             playerturn = !playerturn;
-                            System.out.println(player.getPosition() + " " + enemy.getPosition());
                             break;
                         case 4://healing the player
                             this.playerAction.heal(this.player);
