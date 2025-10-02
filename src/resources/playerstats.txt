@@ -1,2 +1,2 @@
-Fateh 1 0 1
-Shawn 0 2 0
+Fateh 0 0 0
+Shawn 0 0 0

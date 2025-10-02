@@ -1,2 +1,2 @@
-Fateh 2 0 120 melee
-Shawn 2 0 120 ranger
+Fateh 1 10 80 melee
+Shawn 1 10 100 ranger

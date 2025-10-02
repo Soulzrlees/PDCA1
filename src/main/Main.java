@@ -10,6 +10,7 @@ import entity.Enemy;
 import entity.Player;
 import main.exceptions.PlayerNotFoundException;
 import player_management.AccessFile;
+import java.util.InputMismatchException;
 
 /**
  *
@@ -20,7 +21,7 @@ import player_management.AccessFile;
 
 public class Main {
     
-    public static void main(String[] args) throws PlayerNotFoundException {
+    public static void main(String[] args) throws PlayerNotFoundException, InputMismatchException {
         // Setup variables for scanning and accessing file
         Scanner scanner = new Scanner(System.in);
         AccessFile file = new AccessFile();
@@ -34,9 +35,16 @@ public class Main {
 
         // This is the main interface of the game, where the player can choose to battle, view stats, view inventory, or exit the game
         while (gameRunning) {
-            System.out.println("Select an option:\n1. Battle\n2. Inventory\n3. Stats\n4. Exit\n");
-            int threadChoice = scanner.nextInt();
-            scanner.nextLine();
+            System.out.println("Select an option (1-4):\n1. Battle\n2. Inventory\n3. Stats\n4. Exit\n");
+            int threadChoice = -1;
+            if (scanner.hasNextInt()) {
+                threadChoice = scanner.nextInt();
+                scanner.nextLine();
+            } else {
+                System.out.println("Invalid input, please choose a number 1-4.");
+                scanner.nextLine();
+                continue;
+            }
 
             // Player can choose whether to battle, check their inventory, check their stats, or exit the game
             switch (threadChoice) {
@@ -71,6 +79,8 @@ public class Main {
                     System.out.println("Game saved. Goodbye!");
                     gameRunning = false;
                     break;
+                default:
+                    System.out.println("Please enter a number from 1-4");
             }
         }
         scanner.close();
