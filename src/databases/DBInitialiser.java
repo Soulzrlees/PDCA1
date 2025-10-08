@@ -7,6 +7,7 @@ package databases;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.DriverManager;
 
 /**
  *
@@ -21,10 +22,26 @@ public class DBInitialiser {
         initialiseAccountsDB();
         initialiseStatsDB();
         System.out.println("Initialisation complete!");
+        
+        try {
+            DriverManager.getConnection(AccountsDB_URL + ";shutdown=true");
+        } catch (SQLException e) {
+            if (e.getErrorCode() == 50000) {
+                System.out.println("Accounts DB shut down successfully.");
+            }
+        }
+
+        try {
+            DriverManager.getConnection(StatsDB_URL + ";shutdown=true");
+        } catch (SQLException e) {
+            if (e.getErrorCode() == 50000) {
+                System.out.println("Stats DB shut down successfully.");
+            }
+        }
     }
     
     public static void initialiseAccountsDB() {
-        DBManager dbManager = new DBManager(AccountsDB_URL, "pdc", "pdc");
+        DBManager dbManager = new DBManager(AccountsDB_URL, null, null);
         
         try {
             Connection conn = dbManager.getConnection();
@@ -51,7 +68,7 @@ public class DBInitialiser {
     }
     
     public static void initialiseStatsDB() {
-        DBManager dbManager = new DBManager(StatsDB_URL, "pdc", "pdc");
+        DBManager dbManager = new DBManager(StatsDB_URL, null, null);
         
         try {
             Connection conn = dbManager.getConnection();

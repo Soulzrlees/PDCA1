@@ -34,7 +34,17 @@ public class DBManager {
     
     public void close() {
         try {
-            if (conn != null) conn.close();
+            if (conn != null) {
+                if (!conn.getAutoCommit()) {
+                    try {
+                        conn.rollback(); // Rollback if commit fails
+                    } catch (SQLException e) {
+                        System.err.println("Commit failed, rolling back: " + e.getMessage());
+                    }
+                }
+                conn.close();
+                System.out.println("Connection closed successfully.");
+            }
         } catch (SQLException e) {
             System.err.println("Error closing connection: " + e.getMessage());
         }
