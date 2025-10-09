@@ -9,17 +9,40 @@ import databases.DBOperation;
 import entity.Player;
 import java.sql.SQLException;
 import java.sql.DriverManager;
+import java.io.File;
 
 public class DBTesting {
     public static void main(String[] args) {
-        String basePath = "/Users/fatehbhular/NetBeansProjects/P12_23217987_23204035/";
+        String basePath = System.getProperty("user.dir") + File.separator;
         
-        DBManager accountDatabase = new DBManager("jdbc:derby:" + basePath + "ACCOUNTDATABASE_Ebd;create=true", null, null);
-        DBManager statsDatabase = new DBManager("jdbc:derby:" + basePath + "STATSDATABASE_Ebd;create=true", null, null);
+        String accountDBPath = basePath + "ACCOUNTDATABASE_Ebd";
+        String statsDBPath = basePath + "STATSDATABASE_Ebd";
+        
+        String accountURL = "";
+        String statsURL = "";
+        
+        boolean accountDBExists = new File(accountDBPath).exists();
+        boolean statsDBExists = new File(statsDBPath).exists();
+        
+        if (accountDBExists) {
+            accountURL = "jdbc:derby:" + accountDBPath;
+        } else {
+            accountURL = "jdbc:derby:" + accountDBPath + ";create=true";
+        }
+        
+        if (statsDBExists) {
+            statsURL = "jdbc:derby:" + statsDBPath;
+        } else {
+            statsURL = "jdbc:derby:" + statsDBPath + ";create=true";
+        }
+        
+        DBManager accountDatabase = new DBManager(accountURL, null, null);
+        DBManager statsDatabase = new DBManager(statsURL, null, null);
         
         try {
             DBOperation operation = new DBOperation(accountDatabase);
-            operation.addPlayer("Shawn", 10, 0, 100, "melee");
+            Player player = new Player("Shawn", 20, 5, 100, "mage");
+            operation.updatePlayer(player);
             operation.DisplayDB();
         } finally {
             accountDatabase.close();
