@@ -54,7 +54,15 @@ public class MainInterface implements ActionListener {
         button.setContentAreaFilled(true);
         button.setBorderPainted(false);
         button.setPreferredSize(new Dimension(BUTTON_WIDTH, BUTTON_HEIGHT));
-        button.setHorizontalTextPosition(rightAlign ? JButton.RIGHT : JButton.CENTER);
+        // Set text alignment for the button
+        int horizontalPosition;
+        if (rightAlign) {
+            horizontalPosition = JButton.RIGHT;
+        } 
+        else {
+            horizontalPosition = JButton.CENTER;
+        }
+        button.setHorizontalTextPosition(horizontalPosition);
         button.setVerticalTextPosition(JButton.CENTER);
         button.addActionListener(this);
         button.setBackground(BUTTON_COLOR);
@@ -94,7 +102,8 @@ public class MainInterface implements ActionListener {
             Timer timer = new Timer(30, e -> updateBounce());
             timer.start();
         }
-
+        
+        //Paint the Background panel and character onto the Background Panel
         @Override
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
@@ -103,7 +112,7 @@ public class MainInterface implements ActionListener {
             int panelHeight = getHeight();
 
             g.drawImage(backgroundImage, 0, 0, panelWidth, panelHeight, this);
-
+            //Gets the relative window size and determines the ratio
             int charWidth = panelWidth / 4;
             int charHeight = panelHeight / 2;
             int x = (panelWidth - charWidth) / 2;
@@ -111,61 +120,60 @@ public class MainInterface implements ActionListener {
 
             g.drawImage(characterImage, x, y, charWidth, charHeight, this);
         }
-
+        
+        //This method is used for the speed of the animation of the character
         private void updateBounce() {
             yOffset += dy;
             if (yOffset > maxBounce || yOffset < -maxBounce) dy = -dy;
             repaint();
         }
     }
-
+    
     private void createBackground() {
-        backgroundPanel = new BackgroundPanel(); // assign to field
-        backgroundPanel.setLayout(null); // for custom overlays
+        backgroundPanel = new BackgroundPanel(); 
+        backgroundPanel.setLayout(null); 
         frame.add(backgroundPanel, BorderLayout.CENTER);
     }
 
-    // ===== Stats Panel Overlay =====
-    private void createStatsPanel(JPanel backgroundPanel) {
-        JPanel skillPanel = new JPanel(new FlowLayout());
+    
+private void StatsPanel() {
+    if (skillPanel == null) {
+        skillPanel = new JPanel(new FlowLayout());
         skillPanel.setBackground(new Color(100, 200, 100, 180));
-        skillPanel.setBounds(750, 200, 450, 500); // x, y, width, height
+
+        // Compute position and size relative to backgroundPanel
+        int panelWidth = (int) (backgroundPanel.getWidth() * 0.3);   // 40% of width
+        int panelHeight = (int) (backgroundPanel.getHeight() * 0.6); // 60% of height
+        int x = backgroundPanel.getWidth() - panelWidth - 50;        // 50 px padding from right
+        int y = backgroundPanel.getHeight() / 5;                     // 20% from top
+
+        skillPanel.setBounds(x, y, panelWidth, panelHeight);
+        skillPanel.setVisible(true);
         backgroundPanel.add(skillPanel);
         backgroundPanel.repaint();
+        return;
     }
 
-    private void toggleStatsPanel() {
-        if (skillPanel == null) {
-            // First time creation
-            skillPanel = new JPanel(new FlowLayout());
-            skillPanel.setBackground(new Color(100, 200, 100, 180));
-            skillPanel.setBounds(750, 200, 450, 500); // x, y, width, height
-            backgroundPanel.add(skillPanel);
-        }
+    // Toggle visibility
+    skillPanel.setVisible(!skillPanel.isVisible());
+    backgroundPanel.repaint();
+}
 
-        // Toggle visibility
-        skillPanel.setVisible(!skillPanel.isVisible());
-        backgroundPanel.repaint();
-    }
 
     // ===== Action Listener =====
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == inventoryButton) {
-            System.out.println("Inventory clicked!");
         } else if (e.getSource() == battleButton) {
-            System.out.println("Battle clicked!");
             new BattleInterface().createBattleInterface();
         }
         else if (e.getSource() == statsButton) {
-            toggleStatsPanel(); // toggle on/off
+            StatsPanel(); // toggle on and off the stats display
         }
         else if (e.getSource() == exitButton) {
             System.exit(0);
         }
     }
-
-
 
     // ===== Main Interface =====
     public void createMainInterface() {
@@ -173,10 +181,13 @@ public class MainInterface implements ActionListener {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         frame.setLayout(new BorderLayout(0, 0));
-        frame.setVisible(true);
-
+        frame.setResizable(false);
+        frame.setUndecorated(true);
+        
+        
         createMenuBar();
         createBackground();
+        frame.setVisible(true);
 
     }
 }

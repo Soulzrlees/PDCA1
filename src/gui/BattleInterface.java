@@ -12,8 +12,8 @@ public class BattleInterface implements ActionListener {
     public void createBattleInterface() {
         JFrame frame = new JFrame("Battle");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(800, 600);
-        frame.setResizable(true);
+        frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        frame.setResizable(false);
         frame.setLayout(new BorderLayout(10, 10));
         frame.getContentPane().setBackground(Color.BLACK);
 
@@ -37,7 +37,7 @@ public class BattleInterface implements ActionListener {
         JProgressBar playerHealthBar = new JProgressBar();
         playerHealthBar.setStringPainted(true);
         playerHealthBar.setValue(80);
-        playerHealthBar.setForeground(Color.RED);
+        playerHealthBar.setForeground(Color.GREEN);
         playerHealthBar.setBackground(Color.WHITE);
         playerHealthBar.setFocusable(false);
         playerHealthBar.setBorder(BorderFactory.createEmptyBorder());
@@ -51,7 +51,7 @@ public class BattleInterface implements ActionListener {
         JProgressBar enemyHealthBar = new JProgressBar();
         enemyHealthBar.setStringPainted(true);
         enemyHealthBar.setValue(65);
-        enemyHealthBar.setForeground(Color.RED);
+        enemyHealthBar.setForeground(Color.GREEN);
         enemyHealthBar.setBackground(Color.WHITE);
         enemyHealthBar.setFocusable(false);
         enemyHealthBar.setBorder(BorderFactory.createEmptyBorder());
