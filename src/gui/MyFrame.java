@@ -4,12 +4,14 @@
  */
 package gui;
 
+import main.Battle;
 import javax.swing.*;
 import java.awt.*;
 
 public class MyFrame {
     public static void main(String[] args) {
         MainInterface main = new MainInterface();
+        BattleInterface battle = new BattleInterface();
         main.createMainInterface();
     }
 }
