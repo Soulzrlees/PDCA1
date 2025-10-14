@@ -42,6 +42,31 @@ public class Player extends Entity{
         this.playerstats = file.loadPlayerStats(this.name);
     }
 
+    public String getName(){
+        return this.name;
+    }
+    
+    public String getClasses(){
+        return this.entityClass;
+    }
+    //get the gold to the player
+    public int getGold(){
+        return this.gold;
+    }
+    
+    //get the exp to the player
+    public int getExp(){
+        return this.exp;
+    }
+    
+    public int getLevel(){
+        return this.level;
+    }
+    
+    public int getskillPoints(){
+        return this.skillpoints;
+    }
+    
     //add gold to player
     public void addGold(int money) {
         this.gold += money;
@@ -56,20 +81,11 @@ public class Player extends Entity{
             System.out.println("Not enough gold to remove!");
         }
     }
-    //get the gold to the player
-    public int getGold(){
-        return this.gold;
-    }
 
     //add exp to player
     public void addExp(int exp){
         this.exp += exp;
         addLevel();
-    }
-
-    //get the exp to the player
-    public int getExp(){
-        return this.exp;
     }
 
     //Skillpoint scalling when leveling up, results exp and adds level
