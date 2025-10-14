@@ -59,9 +59,11 @@ public class StatsPanel extends JPanel {
         add(healthButton);
         add(rangeButton);
 
-        // Initial bounds
+        // Initialize the Position of widgets
         updateBounds();
     }
+    
+    //Updates where the position of the widgets would be based on the width and height of the users screen
     public void updateBounds() {
         int panelWidth = (int) (backgroundPanel.getWidth() * 0.3);
         int panelHeight = (int) (backgroundPanel.getHeight() * 0.6);
@@ -72,7 +74,7 @@ public class StatsPanel extends JPanel {
 
         int lineHeight = 70; // space between labels
 
-        // Position labels with spacing
+        //set the Position of all widgets on the stats panel
         nameLabel.setBounds(50, 0, panelWidth, 30);
         expLabel.setBounds(50, lineHeight * 1, panelWidth, 30);
         levelLabel.setBounds(50, lineHeight * 2, panelWidth, 30);
@@ -84,12 +86,12 @@ public class StatsPanel extends JPanel {
         rangeLabel.setBounds(50, lineHeight * 7, 250, 25);
         skillPointsLeft.setBounds(50, lineHeight* 8, 400, 25);
 
-        // Position buttons next to stats
         damageButton.setBounds(300, lineHeight * 5, 32, 32);
         healthButton.setBounds(300, lineHeight * 6, 32, 32);
         rangeButton.setBounds(300, lineHeight * 7, 32, 32);
     }
     
+     //Setup base specifications of the labels on the stats panel
     private JLabel createLabel(String text) {
         JLabel label = new JLabel(text);
         label.setFont(new Font("Monospaced", Font.PLAIN, 25));
@@ -97,6 +99,7 @@ public class StatsPanel extends JPanel {
         return label;
     }
 
+    //Setup base specifications of the buttons on the stats panel
     private JButton createButton(String iconPath) {
         ImageIcon icon = (iconPath != null) ? new ImageIcon(iconPath) : null;
         JButton button = new JButton(icon);
@@ -107,6 +110,7 @@ public class StatsPanel extends JPanel {
         return button;
     }
     
+    //Updates the label when user interracts with the stats panel
     public void updatePlayerStats() {
         // Update basic info
         nameLabel.setText("__________" + player.getName() + "__________");
@@ -128,6 +132,7 @@ public class StatsPanel extends JPanel {
     }
     
     
+    //Get methods for the button
     public JButton getdamageButton() { return damageButton; }
     public JButton gethealthButton() { return healthButton; }
     public JButton getRangeButton() { return rangeButton; }

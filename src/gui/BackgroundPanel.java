@@ -29,6 +29,7 @@ public class BackgroundPanel extends JPanel {
     }
 
     @Override
+    //Paint the background image, character image and the logo onto the background panel on main interface
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         int panelWidth = getWidth();
@@ -51,6 +52,7 @@ public class BackgroundPanel extends JPanel {
         
     }
 
+    //The Animation for the character moving vertically down and up
     private void updateBounce() {
         yOffset += dy;
         if (yOffset > maxBounce || yOffset < -maxBounce) dy = -dy;

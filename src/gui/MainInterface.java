@@ -16,6 +16,7 @@ public class MainInterface {
         createMainInterface(player, playerstats);
     }
 
+    //Setup of the MainInterface
     private void createMainInterface(Player player, PlayerStats playerstats) {
         // Frame setup
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -24,10 +25,10 @@ public class MainInterface {
         frame.setResizable(false);
         frame.setUndecorated(true);
 
-        // Menu panel
         MenuPanel menuPanel = new MenuPanel(this);
         frame.add(menuPanel, BorderLayout.WEST);
         
+        //Switch the character image displayed on the main interface depending on the users class
         String Image_Character;
         if(player.getClasses() == "melee"){
             Image_Character = "images/Knight_player.png";
@@ -60,9 +61,10 @@ public class MainInterface {
         frame.setVisible(true);
     }
 
+    //Toggle open and close of Stats Panel
     public void toggleStatsPanel() {
         if (statsPanel != null) {
-            statsPanel.updateBounds(); // update size/position before showing
+            statsPanel.updateBounds(); // update size, position before showing
             statsPanel.setVisible(!statsPanel.isVisible());
             backgroundPanel.revalidate();
             backgroundPanel.repaint();
@@ -77,8 +79,9 @@ public class MainInterface {
         return statsPanel;
     }
 
+    //Testing purposes
     public static void main(String[] args) {
-        Player player = new Player("Fateh", 10, "mage"); // make sure Player class exists
+        Player player = new Player("Fateh", 10, "mage"); 
         PlayerStats playerstats = new PlayerStats("Fateh",2,2,2);
         new MainInterface(player, playerstats);
     }

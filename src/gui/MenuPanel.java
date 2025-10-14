@@ -22,7 +22,7 @@ public class MenuPanel extends JPanel {
         setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
         setPreferredSize(new Dimension(300, 0));
 
-        // Create buttons
+        // Create buttons on menu panel
         battleButton = createButton("Battle", "images/battle_icon.png");
         inventoryButton = createButton("Inventory", "images/inventory_icon.png");
         statsButton = createButton("Stats", "images/skill_points_icon.png");
@@ -34,13 +34,15 @@ public class MenuPanel extends JPanel {
         inventoryButton.addActionListener(listener);
         statsButton.addActionListener(listener);
         exitButton.addActionListener(listener);
-
+        
+        //Add the buttons to the panel
         add(battleButton);
         add(inventoryButton);
         add(statsButton);
         add(exitButton);
     }
 
+    //Setup based specifications of the buttons
     private JButton createButton(String text, String iconPath) {
         ImageIcon icon = (iconPath != null) ? new ImageIcon(iconPath) : null;
         JButton button = new JButton(text, icon);
@@ -48,6 +50,7 @@ public class MenuPanel extends JPanel {
         button.setOpaque(true);
         button.setBackground(Color.GRAY);
 
+        //Set custom font to the text of the button
         try {
             InputStream is = getClass().getResourceAsStream("/fonts/Jersey10-Regular.ttf");
             Font customFont = Font.createFont(Font.TRUETYPE_FONT, is).deriveFont(25f);

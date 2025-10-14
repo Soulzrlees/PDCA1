@@ -28,24 +28,24 @@ public class StatsPanelAction implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         Object source = e.getSource();
 
-        if (player.getskillPoints() > 0) {  // ✅ Only spend if available
+        if (player.getskillPoints() > 0) {//Only allow the user to add skillpoints if there is avaliable skillpoints
             if (source == statsPanel.getdamageButton()) {
-                playerStats.setDamageSkillPoints(playerStats.getDamageSkillPoints() + 1);
+                playerStats.setDamageSkillPoints(playerStats.getDamageSkillPoints() + 1); //Add 1 to damage Skillpoint
                 player.removeSkillPoints(1);
             } 
             else if (source == statsPanel.gethealthButton()) {
-                playerStats.setHealthSkillPoints(playerStats.getHealthSkillPoints() + 1);
+                playerStats.setHealthSkillPoints(playerStats.getHealthSkillPoints() + 1); //Add 1 to health Skillpoint
                 player.removeSkillPoints(1);
             } 
             else if (source == statsPanel.getRangeButton()) {
-                playerStats.setRangeSkillPoints(playerStats.getRangeSkillPoints() + 1);
+                playerStats.setRangeSkillPoints(playerStats.getRangeSkillPoints() + 1);//Add 1 to range Skillpoint
                 player.removeSkillPoints(1);
             }
-        } else {
-            System.out.println("No skill points left!");
+        } 
+        else {
         }
 
-        // ✅ Refresh display
+        //Refresh display
         statsPanel.updatePlayerStats();
     }
 }
