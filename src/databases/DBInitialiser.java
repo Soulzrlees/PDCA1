@@ -14,8 +14,8 @@ import java.sql.DriverManager;
  * @author fatehbhular
  */
 public class DBInitialiser {
-    private static final String AccountsDB_URL = "jdbc:derby:/Users/fatehbhular/NetBeansProjects/P12_23217987_23204035/ACCOUNTDATABASE_Ebd;create=true";
-    private static final String StatsDB_URL = "jdbc:derby:/Users/fatehbhular/NetBeansProjects/P12_23217987_23204035/STATSDATABASE_Ebd;create=true";
+    private static final String AccountsDB_URL = "jdbc:derby:ACCOUNTDATABASE_Ebd;create=true";
+    private static final String StatsDB_URL = "jdbc:derby:STATSDATABASE_Ebd;create=true";
     
     public static void main(String[] args) {
         System.out.println("Initialising Database...");
@@ -91,5 +91,13 @@ public class DBInitialiser {
         } finally {
             dbManager.close();
         }
+    }
+
+    public String getAccountsDB_URL() {
+        return AccountsDB_URL;
+    }
+    
+    public String getStatsDB_URL() {
+        return StatsDB_URL;
     }
 }

@@ -16,7 +16,7 @@ import player_management.AccessFile;
  * @author Shawn lee
  */
 
-public class Battle implements Runnable{
+public class Battle implements Runnable {
     private Entity player;
     private Enemy enemy;
     private boolean playerturn;
@@ -49,6 +49,25 @@ public class Battle implements Runnable{
 
         this.scanner = scanner;
     }
+
+    public Battle() {
+        this.player = player;
+        this.enemy = enemy;
+        this.enemyAction = new EnemyAction();
+        this.playerAction = new PlayerAction();
+        playerturn = true;
+        this.round = 1;
+        //When playerturn is true the player attacks, if the entity turn is true the enemy attack
+        //Determines if the battle ended
+        battleEnded = false;
+        this.originalBaseDamage = player.getbaseDmg();
+        this.originalAttackRange = player.getAttackRange();
+        //Testing purposes
+        this.inventory = new LinkedList<>();
+        randomiseInventory(this.inventory);
+
+    }
+
     // randomises the player's inventory during a battle sequence
     public static void randomiseInventory(LinkedList<Potion> inventory) {
         Random random = new Random();

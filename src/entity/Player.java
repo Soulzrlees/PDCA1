@@ -45,7 +45,7 @@ public class Player extends Entity{
     public String getName(){
         return this.name;
     }
-    
+
     public String getClasses(){
         return this.entityClass;
     }
@@ -214,11 +214,19 @@ public class Player extends Entity{
             }
         }
 
-        //Exit when theres no skillpoints avialable
+        //Exit when there's no skillpoints avialable
         if(getSkillPoints(file.loadExistingPlayer(this.getName())) == 0){
             System.out.println("No skill points remaining!\n");
         }
     }
 
-
+    public String getPlayerImage(Player player) {
+        String pClass = player.getClasses();
+        return switch (pClass) {
+            case "melee" -> "images/Knight_player.png";
+            case "range" -> "images/Ranger_player.png";
+            case "mage" -> "images/Mage_player.png";
+            default -> "-1";
+        };
+    }
 }

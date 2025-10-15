@@ -2,6 +2,8 @@ package gui;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Objects;
+
 import entity.Player;
 import entity.PlayerStats;
 
@@ -30,10 +32,10 @@ public class MainInterface {
         
         //Switch the character image displayed on the main interface depending on the users class
         String Image_Character;
-        if(player.getClasses() == "melee"){
+        if(Objects.equals(player.getClasses(), "melee")){
             Image_Character = "images/Knight_player.png";
         }
-        else if(player.getClasses() == "ranger"){
+        else if(Objects.equals(player.getClasses(), "ranger")){
             Image_Character = "images/Ranger_player.png";
         }
         else{

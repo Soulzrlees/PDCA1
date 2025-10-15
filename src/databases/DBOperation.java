@@ -42,6 +42,36 @@ public class DBOperation {
             }
         }
     }
+    
+    public void addPlayerStats(String username, int damage_points, int health_points, int range_points) {
+        if (playerExists(username)) {
+            System.out.println("Player already exists: " + username);
+            return;
+        }
+        
+        String sql_statement = "INSERT INTO STATS (USERNAME, DAMAGE_POINTS, HEALTH_POINTS, RANGE_POINTS) VALUES (?, ?, ?, ?)";
+        
+        try {
+            Connection conn = db.getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(sql_statement);
+            
+            pstmt.setString(1, username);
+            pstmt.setInt(2, damage_points);
+            pstmt.setInt(3, health_points);
+            pstmt.setInt(4, range_points);
+            
+            pstmt.executeUpdate();
+            conn.commit();
+            System.out.println("PlayerStats <" + username + "> added to database");
+        } catch (SQLException e) {
+            System.err.println("Error adding player: " + e.getMessage());
+            try {
+                db.getConnection().rollback();
+            } catch (SQLException ex) {
+                System.err.println("Error rolling back: " + ex.getMessage());
+            }
+        }
+    }
 
     //This methods updates the player data (Level, Exp and gold) to the database
     public void updatePlayer(Player player) {

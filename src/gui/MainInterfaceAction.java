@@ -3,6 +3,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package gui;
+import entity.Player;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 /**
@@ -26,6 +28,7 @@ public class MainInterfaceAction implements ActionListener {
         if (source == menu.getInventoryButton()) {
             // TODO: Inventory logic
             System.out.println("Inventory clicked");
+            new LoginInterface();
         } else if (source == menu.getBattleButton()) {
             new BattleInterface().createBattleInterface();
         } else if (source == menu.getStatsButton()) {

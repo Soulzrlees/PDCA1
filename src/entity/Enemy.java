@@ -104,4 +104,23 @@ public class Enemy extends Entity{
                 break;
         }
     }
+
+    public String getEnemyImage(Enemy enemy) {
+        switch (enemy.getName()) {
+            case "Sleleton":
+                return "images/Skeleton_enemy.png";
+            case "Orc":
+                return "images/Orc_enemy.png";
+            case "Assassin":
+                return "images/Assassin_enemy.png";
+            case "Monkey":
+                return "images/Monkey_enemy.png";
+            case "Devil":
+                return "images/Devil_enemy.png";
+            case "Witch":
+                return "images/Witch_enemy.png";
+            default:
+                return null;
+        }
+    }
 }
