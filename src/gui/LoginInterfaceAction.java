@@ -24,6 +24,8 @@ public class LoginInterfaceAction implements ActionListener {
     public LoginInterfaceAction(LoginInterface loginInterface) {
         this.loginInterface = loginInterface;
         this.dbInitialiser = new DBInitialiser();
+
+        
         this.dbManagerAccounts = new DBManager(dbInitialiser.getAccountsDB_URL(), null, null);
         this.dbManagerStats = new DBManager(dbInitialiser.getStatsDB_URL(), null, null);
         this.dbOperationAccounts = new DBOperation(dbManagerAccounts);
@@ -42,6 +44,9 @@ public class LoginInterfaceAction implements ActionListener {
                 System.out.println("Logged in");
                 Player player = dbOperationAccounts.getPlayer(result);
                 PlayerStats playerStats = dbOperationStats.getPlayerStats(result);
+                //Testing purposes
+                dbOperationAccounts.displayAccounts();
+                dbOperationStats.displayStats();
                 new MainInterface(player, playerStats);
             }
         }
@@ -53,11 +58,13 @@ public class LoginInterfaceAction implements ActionListener {
                 System.out.println("Nothing to login");
                 JOptionPane.showMessageDialog(null, "Please enter a name.", "User has not entered a name!", JOptionPane.ERROR_MESSAGE);
             } else {
-                System.out.println("added");
                 dbOperationAccounts.addPlayer(nameResult, 1, 10, 100, classResult);
                 dbOperationStats.addPlayerStats(nameResult, 0, 0, 0);
                 Player player = dbOperationAccounts.getPlayer(nameResult);
                 PlayerStats playerStats = dbOperationStats.getPlayerStats(nameResult);
+                //Testing purposes
+                dbOperationAccounts.displayAccounts();
+                dbOperationStats.displayStats();
                 new MainInterface(player, playerStats);
             }
 

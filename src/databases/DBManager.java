@@ -13,40 +13,63 @@ import java.sql.SQLException;
  * @author fatehbhular
  */
 public class DBManager {
+    private final String dbURL;
+    private final String user;
+    private final String password;
     private Connection conn;
-    
-    public DBManager(String jdbcURL, String username, String password) {
+
+    public DBManager(String dbURL, String user, String password) {
+        this.dbURL = dbURL;
+        this.user = user;
+        this.password = password;
+        connect();
+    }
+
+    private void connect() {
         try {
-            Class.forName("org.apache.derby.jdbc.EmbeddedDriver");
-            conn = DriverManager.getConnection(jdbcURL, username, password);
-            conn.setAutoCommit(false);
-            System.out.println("Connected to: " + jdbcURL);
-        } catch (ClassNotFoundException e) {
-            System.err.println("Derby driver not found: " + e.getMessage());
+            conn = DriverManager.getConnection(dbURL, user, password);
+            conn.setAutoCommit(false); // we manually commit transactions
+            System.out.println("Connected to: " + dbURL);
         } catch (SQLException e) {
-            System.err.println("Connection failed: " + e.getMessage());
+            throw new RuntimeException("Failed to connect to DB: " + e.getMessage(), e);
         }
     }
-    
+
     public Connection getConnection() {
-        return conn;
-    }
-    
-    public void close() {
         try {
-            if (conn != null) {
-                if (!conn.getAutoCommit()) {
-                    try {
-                        conn.rollback(); // Rollback if commit fails
-                    } catch (SQLException e) {
-                        System.err.println("Commit failed, rolling back: " + e.getMessage());
-                    }
-                }
-                conn.close();
-                System.out.println("Connection closed successfully.");
+            if (conn == null || conn.isClosed()) {
+                connect();
             }
         } catch (SQLException e) {
-            System.err.println("Error closing connection: " + e.getMessage());
+            throw new RuntimeException("Connection check failed: " + e.getMessage(), e);
+        }
+        return conn;
+    }
+
+    public void close() {
+        try {
+            if (conn != null && !conn.isClosed()) {
+                conn.close();
+                System.out.println("Connection closed: " + dbURL);
+            }
+        } catch (SQLException e) {
+            System.err.println("Failed to close connection: " + e.getMessage());
+        }
+    }
+
+    public void commit() {
+        try {
+            if (conn != null && !conn.isClosed()) conn.commit();
+        } catch (SQLException e) {
+            throw new RuntimeException("Commit failed: " + e.getMessage(), e);
+        }
+    }
+
+    public void rollback() {
+        try {
+            if (conn != null && !conn.isClosed()) conn.rollback();
+        } catch (SQLException e) {
+            System.err.println("Rollback failed: " + e.getMessage());
         }
     }
 }

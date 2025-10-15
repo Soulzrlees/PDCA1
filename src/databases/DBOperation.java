@@ -6,7 +6,7 @@ import entity.Player;
 import entity.PlayerStats;
 
 public class DBOperation {
-    private DBManager db;
+    private final DBManager db;
 
     public DBOperation(DBManager db) {
         this.db = db;
@@ -17,12 +17,11 @@ public class DBOperation {
             System.out.println("Player already exists: " + username);
             return;
         }
-        
-        String sql_statement = "INSERT INTO ACCOUNTS (USERNAME, LEVEL, EXP, GOLD, CLASS) VALUES (?, ?, ?, ?, ?)";
 
+        String sql = "INSERT INTO ACCOUNTS (USERNAME, LEVEL, EXP, GOLD, CLASS) VALUES (?, ?, ?, ?, ?)";
         try {
             Connection conn = db.getConnection();
-            PreparedStatement pstmt = conn.prepareStatement(sql_statement);
+            PreparedStatement pstmt = conn.prepareStatement(sql);
 
             pstmt.setString(1, username);
             pstmt.setInt(2, level);
@@ -32,54 +31,47 @@ public class DBOperation {
 
             pstmt.executeUpdate();
             conn.commit();
+            pstmt.close();
+
             System.out.println("Player <" + username + "> added to database.");
         } catch (SQLException e) {
             System.err.println("Error adding player: " + e.getMessage());
-            try {
-                db.getConnection().rollback();
-            } catch (SQLException ex) {
-                System.err.println("Error rolling back: " + ex.getMessage());
-            }
+            rollback();
         }
     }
-    
+
     public void addPlayerStats(String username, int damage_points, int health_points, int range_points) {
-        if (playerExists(username)) {
-            System.out.println("Player already exists: " + username);
+        if (playerStatsExists(username)) {
+            System.out.println("Player stats already exist for: " + username);
             return;
         }
-        
-        String sql_statement = "INSERT INTO STATS (USERNAME, DAMAGE_POINTS, HEALTH_POINTS, RANGE_POINTS) VALUES (?, ?, ?, ?)";
-        
+
+        String sql = "INSERT INTO STATS (USERNAME, DAMAGE_POINTS, HEALTH_POINTS, RANGE_POINTS) VALUES (?, ?, ?, ?)";
         try {
             Connection conn = db.getConnection();
-            PreparedStatement pstmt = conn.prepareStatement(sql_statement);
-            
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+
             pstmt.setString(1, username);
             pstmt.setInt(2, damage_points);
             pstmt.setInt(3, health_points);
             pstmt.setInt(4, range_points);
-            
+
             pstmt.executeUpdate();
             conn.commit();
-            System.out.println("PlayerStats <" + username + "> added to database");
+            pstmt.close();
+
+            System.out.println("PlayerStats <" + username + "> added to database.");
         } catch (SQLException e) {
-            System.err.println("Error adding player: " + e.getMessage());
-            try {
-                db.getConnection().rollback();
-            } catch (SQLException ex) {
-                System.err.println("Error rolling back: " + ex.getMessage());
-            }
+            System.err.println("Error adding player stats: " + e.getMessage());
+            rollback();
         }
     }
 
-    //This methods updates the player data (Level, Exp and gold) to the database
     public void updatePlayer(Player player) {
-        String sql_statement = "UPDATE ACCOUNTS SET lEVEL = ?, EXP = ?, GOLD = ? WHERE USERNAME = ?";
-        try{
+        String sql = "UPDATE ACCOUNTS SET LEVEL = ?, EXP = ?, GOLD = ? WHERE USERNAME = ?";
+        try {
             Connection conn = db.getConnection();
-            PreparedStatement pstmt = conn.prepareStatement(sql_statement);
-
+            PreparedStatement pstmt = conn.prepareStatement(sql);
 
             pstmt.setInt(1, player.getLevel());
             pstmt.setInt(2, player.getExp());
@@ -88,19 +80,19 @@ public class DBOperation {
 
             pstmt.executeUpdate();
             conn.commit();
-            System.out.println("Successfully updated!");
-        }
-        catch (SQLException e) {
+            pstmt.close();
+
+            System.out.println("Player successfully updated!");
+        } catch (SQLException e) {
             throw new RuntimeException("Update failed: " + e.getMessage(), e);
         }
     }
 
-    //This method updates the player skillpoint stats to the database
     public void updatePlayerStats(PlayerStats player) {
-        String sql_statement = "UPDATE STATS SET DAMANGE_POINTS = ?, HEALTH_POINTS = ?, RANGE_POINTS = ? WHERE USERNAME = ?";
-        try{
+        String sql = "UPDATE STATS SET DAMAGE_POINTS = ?, HEALTH_POINTS = ?, RANGE_POINTS = ? WHERE USERNAME = ?";
+        try {
             Connection conn = db.getConnection();
-            PreparedStatement pstmt = conn.prepareStatement(sql_statement);
+            PreparedStatement pstmt = conn.prepareStatement(sql);
 
             pstmt.setInt(1, player.getDamageSkillPoints());
             pstmt.setInt(2, player.getHealthSkillPoints());
@@ -109,116 +101,157 @@ public class DBOperation {
 
             pstmt.executeUpdate();
             conn.commit();
-            System.out.println("Successfully updated!");
+            pstmt.close();
 
+            System.out.println("PlayerStats successfully updated!");
         } catch (SQLException e) {
             throw new RuntimeException("Update failed: " + e.getMessage(), e);
         }
     }
 
-    //This method gets the player account data from the database
-    public Player getPlayer(String username){
-        String sql_statement = "SELECT * FROM ACCOUNTS WHERE USERNAME = ?";
-
-        try{
+    public Player getPlayer(String username) {
+        String sql = "SELECT * FROM ACCOUNTS WHERE USERNAME = ?";
+        try {
             Connection conn = db.getConnection();
-            PreparedStatement pstmt = conn.prepareStatement(sql_statement);
+            PreparedStatement pstmt = conn.prepareStatement(sql);
 
             pstmt.setString(1, username);
-
             ResultSet rs = pstmt.executeQuery();
-            if(rs.next()) {
-                Player player = new Player(rs.getString("USERNAME"),
+
+            Player player = null;
+            if (rs.next()) {
+                player = new Player(
+                        rs.getString("USERNAME"),
                         rs.getInt("LEVEL"),
                         rs.getInt("EXP"),
                         rs.getInt("GOLD"),
-                        rs.getString("CLASS"));
+                        rs.getString("CLASS")
+                );
                 System.out.println("Player successfully loaded!");
-                return player;
-            }
-            else{
-                return null;
             }
 
+            rs.close();
+            pstmt.close();
+            return player;
         } catch (SQLException e) {
             throw new RuntimeException("Query failed: " + e.getMessage(), e);
         }
     }
 
-    //This method gets the player skill points data from the database
-    public PlayerStats getPlayerStats(String username){
-        String sql_statement = "SELECT * FROM STATS WHERE USERNAME = ?";
-
-        try{
+    public PlayerStats getPlayerStats(String username) {
+        String sql = "SELECT * FROM STATS WHERE USERNAME = ?";
+        try {
             Connection conn = db.getConnection();
-            PreparedStatement pstmt = conn.prepareStatement(sql_statement);
+            PreparedStatement pstmt = conn.prepareStatement(sql);
 
             pstmt.setString(1, username);
-
             ResultSet rs = pstmt.executeQuery();
-            if(rs.next()) {
-                PlayerStats playerstats = new PlayerStats(rs.getString("USERNAME"),
-                        rs.getInt("DAMANGE_POINTS"),
+
+            PlayerStats stats = null;
+            if (rs.next()) {
+                stats = new PlayerStats(
+                        rs.getString("USERNAME"),
+                        rs.getInt("DAMAGE_POINTS"),
                         rs.getInt("HEALTH_POINTS"),
-                        rs.getInt("RANGE_POINTS"));
+                        rs.getInt("RANGE_POINTS")
+                );
                 System.out.println("PlayerStats successfully loaded!");
-                return playerstats;
-            }
-            else{
-                return null;
             }
 
+            rs.close();
+            pstmt.close();
+            return stats;
         } catch (SQLException e) {
             throw new RuntimeException("Query failed: " + e.getMessage(), e);
         }
     }
 
-    public void DisplayDB(){
-        String sql = "SELECT * FROM ACCOUNTS";
-
-        try{
+    public boolean playerExists(String username) {
+        String sql = "SELECT 1 FROM ACCOUNTS WHERE USERNAME = ?";
+        try {
             Connection conn = db.getConnection();
-            Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery(sql);
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, username);
+            ResultSet rs = stmt.executeQuery();
+            boolean exists = rs.next();
+            rs.close();
+            stmt.close();
+            return exists;
+        } catch (SQLException e) {
+            System.err.println("Check failed (ACCOUNTS): " + e.getMessage());
+            return false;
+        }
+    }
+
+    public boolean playerStatsExists(String username) {
+        String sql = "SELECT 1 FROM STATS WHERE USERNAME = ?";
+        try {
+            Connection conn = db.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, username);
+            ResultSet rs = stmt.executeQuery();
+            boolean exists = rs.next();
+            rs.close();
+            stmt.close();
+            return exists;
+        } catch (SQLException e) {
+            System.err.println("Check failed (STATS): " + e.getMessage());
+            return false;
+        }
+    }
+
+    private void rollback() {
+        try {
+            db.getConnection().rollback();
+        } catch (SQLException ex) {
+            System.err.println("Rollback failed: " + ex.getMessage());
+        }
+    }
+
+    public void displayAccounts() {
+        String sql = "SELECT * FROM ACCOUNTS";
+        try (Connection conn = db.getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
 
             System.out.println("________ACCOUNTS________");
             System.out.println("username | level | exp | gold | class");
-            while(rs.next()){
+
+            while (rs.next()) {
                 String username = rs.getString("USERNAME");
                 int level = rs.getInt("LEVEL");
                 int exp = rs.getInt("EXP");
                 int gold = rs.getInt("GOLD");
-                String classes = rs.getString("CLASS");
+                String className = rs.getString("CLASS");
 
-                System.out.println(username + " | " + level + " | " + exp + " | " + gold + " | " + classes);
+                System.out.println(username + " | " + level + " | " + exp + " | " + gold + " | " + className);
             }
 
-        }
-        catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException e) {
+            System.err.println("Error displaying accounts: " + e.getMessage());
         }
     }
-    
-    public boolean playerExists(String username) {
-        String sql = "SELECT 1 FROM ACCOUNTS WHERE USERNAME = ?";
-        Connection conn = null; // declare here
-        PreparedStatement stmt = null;
-        ResultSet rs = null;
-        try {
-            conn = db.getConnection();
-            stmt = conn.prepareStatement(sql);
-            stmt.setString(1, username);
-            rs = stmt.executeQuery();
-            return rs.next();
+
+    public void displayStats() {
+        String sql = "SELECT * FROM STATS";
+        try (Connection conn = db.getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+
+            System.out.println("________STATS________");
+            System.out.println("username | damage | health | range");
+
+            while (rs.next()) {
+                String username = rs.getString("USERNAME");
+                int damage = rs.getInt("DAMAGE_POINTS");
+                int health = rs.getInt("HEALTH_POINTS");
+                int range = rs.getInt("RANGE_POINTS");
+
+                System.out.println(username + " | " + damage + " | " + health + " | " + range);
+            }
+
         } catch (SQLException e) {
-            System.err.println("Check failed: " + e.getMessage());
-            return false;
-        } finally {
-            try {
-                if (conn != null && !conn.getAutoCommit()) {
-                    conn.rollback(); // rollback leftover read transaction
-                }
-            } catch (SQLException ignored) {}
+            System.err.println("Error displaying stats: " + e.getMessage());
         }
     }
 }

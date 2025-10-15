@@ -10,7 +10,7 @@ import entity.PlayerStats;
 public class MainInterface {
 
     private final JFrame frame;
-    private BackgroundPanel backgroundPanel;
+    private BackgroundPanel backgroundPanel;    
     private StatsPanel statsPanel;
 
     public MainInterface(Player player, PlayerStats playerstats) {
@@ -82,9 +82,10 @@ public class MainInterface {
     }
 
     //Testing purposes
-    public static void main(String[] args) {
+   /* public static void main(String[] args) {
         Player player = new Player("Fateh", 10, "mage"); 
         PlayerStats playerstats = new PlayerStats("Fateh",2,2,2);
         new MainInterface(player, playerstats);
     }
+    */
 }

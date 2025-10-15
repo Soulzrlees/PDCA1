@@ -43,7 +43,6 @@ public class DBTesting {
             DBOperation operation = new DBOperation(accountDatabase);
             Player player = new Player("Shawn", 20, 5, 100, "mage");
             operation.updatePlayer(player);
-            operation.DisplayDB();
         } finally {
             accountDatabase.close();
             statsDatabase.close();

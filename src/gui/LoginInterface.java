@@ -134,4 +134,9 @@ public class LoginInterface {
     public JTextField getTextField1() { return TextField1; }
     public JTextField getTextField2() { return TextField2; }
     public String getSelectedComboBox() { return (String) ComboBox.getSelectedItem(); }
+    
+    
+    public static void main(String[] args) {
+        new LoginInterface();
+    }
 }
