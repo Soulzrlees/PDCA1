@@ -38,8 +38,14 @@ public class StatsPanelAction implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         // Debug: show that this method is being triggered, and from where
 
-        if (e.getSource().equals(statsPanel.getdamageButton())) {
-            System.out.println("Hellloasd");
-        } 
+        if(player.getskillPoints() > 0){
+            if (e.getSource().equals(statsPanel.getdamageButton())) {
+                playerStats.setDamageSkillPoints(playerStats.getDamageSkillPoints() + 1);
+                player.removeSkillPoints(1);
+            } 
+        }
+        dbOperationStats.updatePlayerStats(playerStats);
+        statsPanel.updatePlayerStats();
+         
     }
 }
