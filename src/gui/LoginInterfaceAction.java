@@ -40,7 +40,12 @@ public class LoginInterfaceAction implements ActionListener {
             if (result.equals("")) {
                 System.out.println("Nothing to login");
                 JOptionPane.showMessageDialog(null, "Please enter a name.", "User has not entered a name!", JOptionPane.ERROR_MESSAGE);
-            } else {
+            } 
+            else if(!dbOperationAccounts.playerExists(result)){
+                System.out.println("Player does not exist");
+            }
+                    
+            else {
                 System.out.println("Logged in");
                 Player player = dbOperationAccounts.getPlayer(result);
                 PlayerStats playerStats = dbOperationStats.getPlayerStats(result);
