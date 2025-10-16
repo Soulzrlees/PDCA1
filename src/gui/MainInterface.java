@@ -80,12 +80,4 @@ public class MainInterface {
     public StatsPanel getStatsPanel() {
         return statsPanel;
     }
-
-    //Testing purposes
-   /* public static void main(String[] args) {
-        Player player = new Player("Fateh", 10, "mage"); 
-        PlayerStats playerstats = new PlayerStats("Fateh",2,2,2);
-        new MainInterface(player, playerstats);
-    }
-    */
 }

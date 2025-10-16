@@ -50,8 +50,9 @@ public class LoginInterfaceAction implements ActionListener {
                 Player player = dbOperationAccounts.getPlayer(result);
                 PlayerStats playerStats = dbOperationStats.getPlayerStats(result);
                 //Testing purposes
-                dbOperationAccounts.displayAccounts();
-                dbOperationStats.displayStats();
+                System.out.println("Before click: Damage = " + playerStats.getDamageSkillPoints());
+                System.out.println(player);
+                System.out.println(playerStats);
                 new MainInterface(player, playerStats);
             }
         }
@@ -71,9 +72,9 @@ public class LoginInterfaceAction implements ActionListener {
                 dbOperationStats.addPlayerStats(nameResult, 0, 0, 0);
                 Player player = dbOperationAccounts.getPlayer(nameResult);
                 PlayerStats playerStats = dbOperationStats.getPlayerStats(nameResult);
-                //Testing purposes
-                dbOperationAccounts.displayAccounts();
-                dbOperationStats.displayStats();
+                System.out.println("Before click: Damage = " + playerStats.getDamageSkillPoints());
+                System.out.println(player);
+                System.out.println(playerStats);
                 new MainInterface(player, playerStats);
             }
 

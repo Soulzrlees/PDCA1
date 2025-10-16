@@ -8,6 +8,9 @@ import java.awt.event.ActionListener;
 import entity.Player;
 import entity.PlayerStats;
 
+import databases.DBInitialiser;
+import databases.DBManager;
+import databases.DBOperation;
 /**
  *
  * @author Shawn lee
@@ -17,35 +20,26 @@ public class StatsPanelAction implements ActionListener {
     private final StatsPanel statsPanel;
     private Player player;
     private PlayerStats playerStats;
+    private DBManager dbManagerStats;
+    private DBOperation dbOperationStats;
+    private DBInitialiser dbInitialiser;
 
     public StatsPanelAction(StatsPanel statsPanel, Player player, PlayerStats playerStats) {
         this.statsPanel = statsPanel;
         this.player = player;
         this.playerStats = playerStats;
+        
+        this.dbInitialiser = new DBInitialiser();
+        this.dbManagerStats = new DBManager(dbInitialiser.getStatsDB_URL(), null, null);
+        this.dbOperationStats = new DBOperation(dbManagerStats);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        Object source = e.getSource();
+        // Debug: show that this method is being triggered, and from where
 
-        if (player.getskillPoints() > 0) {//Only allow the user to add skillpoints if there is avaliable skillpoints
-            if (source == statsPanel.getdamageButton()) {
-                playerStats.setDamageSkillPoints(playerStats.getDamageSkillPoints() + 1); //Add 1 to damage Skillpoint
-                player.removeSkillPoints(1);
-            } 
-            else if (source == statsPanel.gethealthButton()) {
-                playerStats.setHealthSkillPoints(playerStats.getHealthSkillPoints() + 1); //Add 1 to health Skillpoint
-                player.removeSkillPoints(1);
-            } 
-            else if (source == statsPanel.getRangeButton()) {
-                playerStats.setRangeSkillPoints(playerStats.getRangeSkillPoints() + 1);//Add 1 to range Skillpoint
-                player.removeSkillPoints(1);
-            }
+        if (e.getSource().equals(statsPanel.getdamageButton())) {
+            System.out.println("Hellloasd");
         } 
-        else {
-        }
-
-        //Refresh display
-        statsPanel.updatePlayerStats();
     }
 }

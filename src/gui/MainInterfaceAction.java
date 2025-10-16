@@ -28,7 +28,6 @@ public class MainInterfaceAction implements ActionListener {
         if (source == menu.getInventoryButton()) {
             // TODO: Inventory logic
             System.out.println("Inventory clicked");
-            new LoginInterface();
         } else if (source == menu.getBattleButton()) {
             new BattleInterface().createBattleInterface();
         } else if (source == menu.getStatsButton()) {

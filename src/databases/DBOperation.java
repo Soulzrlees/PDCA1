@@ -209,52 +209,5 @@ public class DBOperation {
             System.err.println("Rollback failed: " + ex.getMessage());
         }
     }
-
-    public void displayAccounts() {
-        String sql = "SELECT * FROM ACCOUNTS";
-        try (Connection conn = db.getConnection();
-             Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(sql)) {
-
-            System.out.println("________ACCOUNTS________");
-            System.out.println("username | level | exp | gold | class");
-
-            while (rs.next()) {
-                String username = rs.getString("USERNAME");
-                int level = rs.getInt("LEVEL");
-                int exp = rs.getInt("EXP");
-                int gold = rs.getInt("GOLD");
-                String className = rs.getString("CLASS");
-
-                System.out.println(username + " | " + level + " | " + exp + " | " + gold + " | " + className);
-            }
-
-        } catch (SQLException e) {
-            System.err.println("Error displaying accounts: " + e.getMessage());
-        }
-    }
-
-    public void displayStats() {
-        String sql = "SELECT * FROM STATS";
-        try (Connection conn = db.getConnection();
-             Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(sql)) {
-
-            System.out.println("________STATS________");
-            System.out.println("username | damage | health | range");
-
-            while (rs.next()) {
-                String username = rs.getString("USERNAME");
-                int damage = rs.getInt("DAMAGE_POINTS");
-                int health = rs.getInt("HEALTH_POINTS");
-                int range = rs.getInt("RANGE_POINTS");
-
-                System.out.println(username + " | " + damage + " | " + health + " | " + range);
-            }
-
-        } catch (SQLException e) {
-            System.err.println("Error displaying stats: " + e.getMessage());
-        }
-    }
 }
 
