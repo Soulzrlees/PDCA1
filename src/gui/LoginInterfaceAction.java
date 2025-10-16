@@ -43,8 +43,8 @@ public class LoginInterfaceAction implements ActionListener {
             } 
             else if(!dbOperationAccounts.playerExists(result)){
                 System.out.println("Player does not exist");
+                JOptionPane.showMessageDialog(null, "There is not accound with that username.", "User has not entered a valid username!", JOptionPane.ERROR_MESSAGE);
             }
-                    
             else {
                 System.out.println("Logged in");
                 Player player = dbOperationAccounts.getPlayer(result);
@@ -62,7 +62,11 @@ public class LoginInterfaceAction implements ActionListener {
             if (nameResult.equals("")){
                 System.out.println("Nothing to login");
                 JOptionPane.showMessageDialog(null, "Please enter a name.", "User has not entered a name!", JOptionPane.ERROR_MESSAGE);
-            } else {
+            } else if (dbOperationAccounts.playerExists(nameResult)) {
+                System.out.println("Player already exists.");
+                JOptionPane.showMessageDialog(null, "Username already exists.", "User has entered name already in use!", JOptionPane.ERROR_MESSAGE);
+            }
+            else {
                 dbOperationAccounts.addPlayer(nameResult, 1, 10, 100, classResult);
                 dbOperationStats.addPlayerStats(nameResult, 0, 0, 0);
                 Player player = dbOperationAccounts.getPlayer(nameResult);

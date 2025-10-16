@@ -22,6 +22,7 @@ public class LoginInterface {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         frame.setResizable(false);
+        frame.setTitle("BT Realms");
         frame.getContentPane().setBackground(Color.DARK_GRAY);
         frame.setLayout(new GridBagLayout()); // center panel in frame
 

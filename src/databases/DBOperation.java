@@ -5,6 +5,8 @@ import java.sql.*;
 import entity.Player;
 import entity.PlayerStats;
 
+import java.sql.SQLException;
+
 public class DBOperation {
     private final DBManager db;
 
