@@ -25,116 +25,87 @@ public class StatsPanel extends JPanel {
         this.playerStats = stats;
         this.player = player;
         this.backgroundPanel = backgroundPanel;
-        setLayout(null); 
+        setLayout(new GridBagLayout()); 
         setBackground(Color.GRAY);
 
+        //Create labels
+        nameLabel = createLabel(player.getName(), 0, 0, 2);
+        expLabel = createLabel("Exp: " + player.getExp(), 0, 1, 1);
+        levelLabel = createLabel("level:" + player.getLevel(), 0, 2, 1);
+        goldLabel = createLabel("Class: " + player.getGold(), 0, 3, 1);
+        classLabel = createLabel("Class: " + player.getClasses(), 0, 4, 1);
+        
+        damageLabel = createLabel("BaseDamage: " + player.getbaseDmg() + " [+" + stats.getDamageSkillPoints() + "]",  0, 5, 1);
+        hpLabel = createLabel("BaseHealth: " + player.getMaxHealth() + " [+" + stats.getHealthSkillPoints() + "]",  0, 6, 1);
+        rangeLabel = createLabel("BaseRange: " + player.getAttackRange() + " [+" + stats.getRangeSkillPoints() + "]",  0, 7, 1);
+        skillPointsLeft  = createLabel("Skillpoints Left: " + (player.getskillPoints()), 0, 8, 1);
+        
         // Create buttons
-        damageButton = createButton("images/SkillPoints.png");
-        healthButton = createButton("images/SkillPoints.png");
-        rangeButton = createButton("images/SkillPoints.png");
-
-       //Create Labels
-        nameLabel = createLabel("__________" + player.getName() +"__________");
-        expLabel = createLabel("Exp: " + player.getExp());
-        levelLabel = createLabel("Level: " + player.getLevel());
-        goldLabel = createLabel("Gold: " + player.getGold());
-        classLabel = createLabel("Class: " + player.getClasses());
-
-        damageLabel = createLabel("Damage: " + player.getbaseDmg() + "[" + playerStats.getDamageSkillPoints() + "]");
-        hpLabel = createLabel("HP: " + player.getMaxHealth() + "[" + playerStats.getHealthSkillPoints() + "]");
-        rangeLabel = createLabel("Range: " + player.getAttackRange() + "[" + playerStats.getRangeSkillPoints() + "]");
-        skillPointsLeft = createLabel("SkillpointsLeft: " + player. getskillPoints());
+        damageButton = createButton("images/SkillPoints.png", 1, 5, 1);
+        healthButton = createButton("images/SkillPoints.png", 1, 6, 1);
+        rangeButton = createButton("images/SkillPoints.png", 1 , 7, 1);
         
-        add(nameLabel);
-        add(expLabel);
-        add(levelLabel);
-        add(goldLabel);
-        add(classLabel);
-        add(damageLabel);
-        add(hpLabel);
-        add(rangeLabel);
-        add(skillPointsLeft);
-        
-        add(damageButton);
-        add(healthButton);
-        add(rangeButton);
-
-        // Initialize the Position of widgets
-        updateBounds();
     }
-    
-    //Updates where the position of the widgets would be based on the width and height of the users screen
-    public void updateBounds() {
-        int panelWidth = (int) (backgroundPanel.getWidth() * 0.3);
-        int panelHeight = (int) (backgroundPanel.getHeight() * 0.6);
-        int x = backgroundPanel.getWidth() - panelWidth - 50;
-        int y = backgroundPanel.getHeight() / 5;
-
-        setBounds(x, y, panelWidth, panelHeight);
-
-        int lineHeight = 70; // space between labels
-
-        //set the Position of all widgets on the stats panel
-        nameLabel.setBounds(50, 0, panelWidth, 30);
-        expLabel.setBounds(50, lineHeight * 1, panelWidth, 30);
-        levelLabel.setBounds(50, lineHeight * 2, panelWidth, 30);
-        goldLabel.setBounds(50, lineHeight * 3, panelWidth, 30);
-        classLabel.setBounds(50, lineHeight * 4, panelWidth, 30);
-
-        damageLabel.setBounds(50, lineHeight * 5, 250, 25);
-        hpLabel.setBounds(50, lineHeight * 6, 250, 25);
-        rangeLabel.setBounds(50, lineHeight * 7, 250, 25);
-        skillPointsLeft.setBounds(50, lineHeight* 8, 400, 25);
-
-        damageButton.setBounds(300, lineHeight * 5, 32, 32);
-        healthButton.setBounds(300, lineHeight * 6, 32, 32);
-        rangeButton.setBounds(300, lineHeight * 7, 32, 32);
-    }
-    
+   
      //Setup base specifications of the labels on the stats panel
-    private JLabel createLabel(String text) {
+    private JLabel createLabel(String text, int x, int y, int gridWidth) {
         JLabel label = new JLabel(text);
         label.setFont(new Font("Monospaced", Font.PLAIN, 25));
         label.setForeground(Color.WHITE);
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = x;
+        gbc.gridy = y;
+        gbc.gridwidth = gridWidth;
+        gbc.insets = new Insets(10, 10, 25, 10);
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        this.add(label, gbc);
+        
         return label;
     }
-
+    
     //Setup base specifications of the buttons on the stats panel
-    private JButton createButton(String iconPath) {
+    private JButton createButton(String iconPath,  int x, int y, int gridWidth) {
         ImageIcon icon = (iconPath != null) ? new ImageIcon(iconPath) : null;
         JButton button = new JButton(icon);
-        button.setFocusable(false);
-        button.setOpaque(false);
-        button.setContentAreaFilled(true);
-        button.setBorderPainted(true);
+        button.setFont(new Font("Monospaced", Font.BOLD, 20));
+        button.setBorderPainted(false);
+        button.setHorizontalAlignment(SwingConstants.CENTER);
+        button.setContentAreaFilled(false);
+        
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = x;
+        gbc.gridy = y;
+        gbc.gridwidth = gridWidth;
+        gbc.insets = new Insets(10, 10, 10, 10);
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+
+        this.add(button, gbc);
         return button;
     }
     
-    //Updates the label when user interracts with the stats panel
     public void updatePlayerStats() {
-        // Update basic info
-        nameLabel.setText("__________" + player.getName() + "__________");
-        expLabel.setText("Exp: " + player.getExp());
-        levelLabel.setText("Level: " + player.getLevel());
-        goldLabel.setText("Gold: " + player.getGold());
-        classLabel.setText("Class: " + player.getClasses());
+    // Update basic info
+    nameLabel.setText(player.getName());
+    expLabel.setText("Exp: " + player.getExp());
+    levelLabel.setText("Level: " + player.getLevel());
+    goldLabel.setText("Gold: " + player.getGold());
+    classLabel.setText("Class: " + player.getClasses());
 
-        // Update stats with skill points from PlayerStats
-        damageLabel.setText("Damage: " + player.getbaseDmg() + "[" + playerStats.getDamageSkillPoints() + "]");
-        hpLabel.setText("HP: " + player.getMaxHealth() + "[" + playerStats.getHealthSkillPoints() + "]");
-        rangeLabel.setText("Range: " + player.getAttackRange() + "[" + playerStats.getRangeSkillPoints() + "]");
+    // Update stats with skill points from PlayerStats
+    damageLabel.setText("BaseDamage: " + player.getbaseDmg() + " [+" + playerStats.getDamageSkillPoints() + "]");
+    hpLabel.setText("BaseHealth: " + player.getMaxHealth() + " [+" + playerStats.getHealthSkillPoints() + "]");
+    rangeLabel.setText("BaseRange: " + player.getAttackRange() + " [+" + playerStats.getRangeSkillPoints() + "]");
 
-        skillPointsLeft.setText("SkillpointsLeft: " + player.getskillPoints());
+    skillPointsLeft.setText("Skillpoints Left: " + player.getskillPoints());
 
-        // Refresh the panel to show updated values
-        revalidate();
-        repaint();
-    }
-    
+    // Refresh the panel to show updated values
+    revalidate();
+    repaint();
+}
     
     //Get methods for the button
-    public JButton getdamageButton() { return damageButton; }
-    public JButton gethealthButton() { return healthButton; }
+    public JButton getDamageButton() { return damageButton; }
+    public JButton getHealthButton() { return healthButton; }
     public JButton getRangeButton() { return rangeButton; }
     
     

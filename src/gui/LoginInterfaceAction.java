@@ -49,8 +49,8 @@ public class LoginInterfaceAction implements ActionListener {
                 System.out.println("Logged in");
                 Player player = dbOperationAccounts.getPlayer(result);
                 PlayerStats playerStats = dbOperationStats.getPlayerStats(result);
+                player.setPlayerStats(playerStats);
                 //Testing purposes
-                System.out.println("Before click: Damage = " + playerStats.getDamageSkillPoints());
                 System.out.println(player);
                 System.out.println(playerStats);
                 new MainInterface(player, playerStats);
@@ -68,11 +68,10 @@ public class LoginInterfaceAction implements ActionListener {
                 JOptionPane.showMessageDialog(null, "Username already exists.", "User has entered name already in use!", JOptionPane.ERROR_MESSAGE);
             }
             else {
-                dbOperationAccounts.addPlayer(nameResult, 1, 10, 100, classResult);
+                dbOperationAccounts.addPlayer(nameResult, 1, 0, 0, classResult);
                 dbOperationStats.addPlayerStats(nameResult, 0, 0, 0);
                 Player player = dbOperationAccounts.getPlayer(nameResult);
                 PlayerStats playerStats = dbOperationStats.getPlayerStats(nameResult);
-                System.out.println("Before click: Damage = " + playerStats.getDamageSkillPoints());
                 System.out.println(player);
                 System.out.println(playerStats);
                 new MainInterface(player, playerStats);

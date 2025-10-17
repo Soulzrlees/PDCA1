@@ -39,13 +39,20 @@ public class StatsPanelAction implements ActionListener {
         // Debug: show that this method is being triggered, and from where
 
         if(player.getskillPoints() > 0){
-            if (e.getSource().equals(statsPanel.getdamageButton())) {
+            if (e.getSource().equals(statsPanel.getDamageButton())) {
                 playerStats.setDamageSkillPoints(playerStats.getDamageSkillPoints() + 1);
                 player.removeSkillPoints(1);
             } 
+            if(e.getSource().equals(statsPanel.getHealthButton())){
+                playerStats.setHealthSkillPoints(playerStats.getHealthSkillPoints() + 1);
+                player.removeSkillPoints(1);
+            }
+            if(e.getSource().equals(statsPanel.getRangeButton())){
+                playerStats.setRangeSkillPoints(playerStats.getRangeSkillPoints() + 1);
+                player.removeSkillPoints(1);
+            }
         }
         dbOperationStats.updatePlayerStats(playerStats);
-        statsPanel.updatePlayerStats();
-         
+        statsPanel.updatePlayerStats() ;
     }
 }

@@ -220,13 +220,22 @@ public class Player extends Entity{
         }
     }
 
+    
+//New methods for the GUI___________________________________________________________________________________________
+    
+    
     public String getPlayerImage(Player player) {
         String pClass = player.getClasses();
         return switch (pClass) {
             case "melee" -> "images/Knight_player.png";
-            case "range" -> "images/Ranger_player.png";
+            case "ranger" -> "images/Ranger_player.png";
             case "mage" -> "images/Mage_player.png";
             default -> "-1";
         };
+    }
+    
+    public void setPlayerStats(PlayerStats stats) {
+        this.playerstats = stats;
+        this.skillpoints = this.level - this.playerstats.getUsedSkillPoints();
     }
 }

@@ -47,17 +47,18 @@ public class MainInterface {
                 Image_Character,
                 "images/BTRealm_logo.png"
         );
-        backgroundPanel.setLayout(null);
+        backgroundPanel.setLayout(new BorderLayout());
         frame.add(backgroundPanel, BorderLayout.CENTER);
 
         // Stats panel
         statsPanel = new StatsPanel(backgroundPanel, player, playerstats);
         statsPanel.setVisible(false);
-        backgroundPanel.add(statsPanel);
+        statsPanel.setBackground(new Color(80, 80, 80, 150));
+        backgroundPanel.add(statsPanel, BorderLayout.EAST);
         
         StatsPanelAction statsListener = new StatsPanelAction(statsPanel, player, playerstats);
-        statsPanel.getdamageButton().addActionListener(statsListener);
-        statsPanel.gethealthButton().addActionListener(statsListener);
+        statsPanel.getDamageButton().addActionListener(statsListener);
+        statsPanel.getHealthButton().addActionListener(statsListener);
         statsPanel.getRangeButton().addActionListener(statsListener);
 
         frame.setVisible(true);
@@ -66,7 +67,6 @@ public class MainInterface {
     //Toggle open and close of Stats Panel
     public void toggleStatsPanel() {
         if (statsPanel != null) {
-            statsPanel.updateBounds(); // update size, position before showing
             statsPanel.setVisible(!statsPanel.isVisible());
             backgroundPanel.revalidate();
             backgroundPanel.repaint();

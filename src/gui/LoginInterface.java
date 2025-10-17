@@ -9,7 +9,7 @@ public class LoginInterface {
     JComboBox ComboBox;
     JFrame frame;
     JPanel loginPanel;
-    String[] classes = {"range", "melee", "mage"};
+    String[] classes = {"ranger", "melee", "mage"};
 
     public LoginInterface() {
         frame = new JFrame("Login");
