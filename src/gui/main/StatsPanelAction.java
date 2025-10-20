@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package gui;
+package gui.main;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import entity.Player;
@@ -36,22 +36,24 @@ public class StatsPanelAction implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        // Debug: show that this method is being triggered, and from where
-
+     
+        //The button is only able to operate if the skillPoint is above 0
         if(player.getskillPoints() > 0){
-            if (e.getSource().equals(statsPanel.getDamageButton())) {
+            if (e.getSource().equals(statsPanel.getDamageButton())) { //If this button is clicked the DamageSkillPoint variable would increase and remove a generic skillpoint 
                 playerStats.setDamageSkillPoints(playerStats.getDamageSkillPoints() + 1);
                 player.removeSkillPoints(1);
             } 
-            if(e.getSource().equals(statsPanel.getHealthButton())){
+            if(e.getSource().equals(statsPanel.getHealthButton())){ //If this button is clicked the HealthSkillPoint variable would increase and remove a generic skillpoint 
                 playerStats.setHealthSkillPoints(playerStats.getHealthSkillPoints() + 1);
                 player.removeSkillPoints(1);
             }
-            if(e.getSource().equals(statsPanel.getRangeButton())){
+            if(e.getSource().equals(statsPanel.getRangeButton())){ //If this button is clicked the RangeSkillPoint variable would increase and remove a generic skillpoint 
                 playerStats.setRangeSkillPoints(playerStats.getRangeSkillPoints() + 1);
                 player.removeSkillPoints(1);
             }
         }
+        //Update the playerStats on the database
+        //Refresh the stats panel text
         dbOperationStats.updatePlayerStats(playerStats);
         statsPanel.updatePlayerStats() ;
     }

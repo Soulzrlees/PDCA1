@@ -1,9 +1,8 @@
-package gui;
+package gui.battle;
 
 import entity.Player;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -28,20 +27,13 @@ public class BattleInterface implements ActionListener {
         BattleButtonsPanel battleButtonsPanel = new BattleButtonsPanel();
         battleButtonsPanel.createBattleButtonsPanel(frame);
 
-
-
         // Inventory Panel --------------------------------------------------
-        JPanel inventoryPanel = new JPanel();
-        inventoryPanel.setPreferredSize(new Dimension(100, 100));
-        frame.add(inventoryPanel, BorderLayout.WEST);
-        inventoryPanel.setBackground(Color.decode("#1B3C53"));
-
+        BattleInventoryPanel inventoryPanel = new BattleInventoryPanel();
+        inventoryPanel.createBattleInventoryPanel(frame);
 
         // Battle Log Panel --------------------------------------------------
-        JPanel battleLogPanel = new JPanel();
-        battleLogPanel.setPreferredSize(new Dimension(250, 100));
-        frame.add(battleLogPanel, BorderLayout.EAST);
-        battleLogPanel.setBackground(Color.decode("#1B3C53"));
+        BattleLogPanel logPanel = new BattleLogPanel();
+        logPanel.createBattleLogPanel(frame);
 
 
         // Main Battle Panel --------------------------------------------------
@@ -52,6 +44,7 @@ public class BattleInterface implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
+        
     }
+    
 }

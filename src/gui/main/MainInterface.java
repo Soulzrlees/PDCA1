@@ -1,4 +1,4 @@
-package gui;
+package gui.main;
 
 import javax.swing.*;
 import java.awt.*;
@@ -80,4 +80,12 @@ public class MainInterface {
     public StatsPanel getStatsPanel() {
         return statsPanel;
     }
+    
+    //Removes the MainInterface 
+    public void dispose() {
+        frame.dispose();
+    }
 }
+
+
+

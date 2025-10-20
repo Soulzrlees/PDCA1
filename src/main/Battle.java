@@ -242,5 +242,16 @@ public class Battle implements Runnable {
     public void run() {
         battle_interface();
     }
+    
+   public Enemy getEnemy(){
+       return enemy;
+   }
+   public Entity getPlayer(){
+       return player;
+   }
+
+   public EnemyAction getEnemyAction(){
+       return enemyAction;
+   }
 
 }

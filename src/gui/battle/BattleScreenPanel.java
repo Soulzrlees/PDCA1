@@ -1,4 +1,4 @@
-package gui;
+package gui.battle;
 
 import java.awt.*;
 import javax.swing.*;
@@ -7,7 +7,6 @@ import entity.PlayerStats;
 import main.Battle;
 import entity.Entity;
 import entity.Player;
-import main.Main;
 import entity.Enemy;
 
 public class BattleScreenPanel {
@@ -18,12 +17,8 @@ public class BattleScreenPanel {
         battleScreenPanel.setPreferredSize(new Dimension(100, 100));
         frame.add(battleScreenPanel, BorderLayout.CENTER);
         createBackground(frame);
-
-
-
+        
         //loadCharacters(frame);
-
-        Battle battle = new Battle();
 
     }
 

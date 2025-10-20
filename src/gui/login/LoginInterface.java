@@ -1,4 +1,4 @@
-package gui;
+package gui.login;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,22 +17,22 @@ public class LoginInterface {
     }
 
     private void createLoginInterface() {
-        // === Frame setup ===
+        //Setting up the Frame
         frame.setUndecorated(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         frame.setResizable(false);
         frame.setTitle("BT Realms");
         frame.getContentPane().setBackground(Color.DARK_GRAY);
-        frame.setLayout(new GridBagLayout()); // center panel in frame
+        frame.setLayout(new GridBagLayout()); 
 
-        // === Panel setup ===
+        //Setting up the login panel
         loginPanel = new JPanel(new GridBagLayout());
         loginPanel.setBackground(Color.GRAY);
         loginPanel.setPreferredSize(new Dimension(400, 700));
         loginPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
-        // === Add components to panel ===
+        //Adding the widgets onto the login panel
         addLabel(loginPanel, "Login", 0, 0, 2, 30);
 
         addLabel(loginPanel, "Name :", 0, 1);
@@ -50,12 +50,12 @@ public class LoginInterface {
 
         Button2 = addButton(loginPanel, null, 0, 6, 2);
 
-        // === Add panel to frame ===
         frame.add(loginPanel);
         frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
 
+        //Adding action listener to the buttons in the login panel
         LoginInterfaceAction listener = new LoginInterfaceAction(this);
         Button1.addActionListener(listener);
         Button2.addActionListener(listener);
@@ -66,6 +66,7 @@ public class LoginInterface {
         addLabel(panel, text, x, y, 1, 25);
     }
 
+    //Specify the creation of a label
     private void addLabel(JPanel panel, String text, int x, int y, int gridWidth, int fontSize) {
         JLabel label = new JLabel(text);
         label.setFont(new Font("Monospaced", Font.PLAIN, fontSize));
@@ -82,6 +83,7 @@ public class LoginInterface {
         panel.add(label, gbc);
     }
 
+    //Specifiy the creation of a text field
     private JTextField addTextField(JPanel panel, int x, int y, int columns) {
         JTextField textField = new JTextField(columns);
         textField.setFont(new Font("Monospaced", Font.PLAIN, 20));
@@ -95,7 +97,8 @@ public class LoginInterface {
         panel.add(textField, gbc);
         return textField;
     }
-
+    
+    //Specify the creation of a button
     private JButton addButton(JPanel panel, String text, int x, int y, int gridWidth) {
         JButton button = new JButton(text);
         button.setFont(new Font("Monospaced", Font.BOLD, 20));
@@ -115,6 +118,7 @@ public class LoginInterface {
         return button;
     }
 
+    //Specify the creation of a combo box
     private JComboBox addComboBox(JPanel panel, int x, int y) {
         JComboBox<String> comboBox = new JComboBox<>(classes);
         comboBox.setFont(new Font("Monospaced", Font.PLAIN, 20));
@@ -135,7 +139,11 @@ public class LoginInterface {
     public JTextField getTextField1() { return TextField1; }
     public JTextField getTextField2() { return TextField2; }
     public String getSelectedComboBox() { return (String) ComboBox.getSelectedItem(); }
-    
+
+//Removes the LoginInterface    
+public void dispose() {
+    frame.dispose();
+}
     
     public static void main(String[] args) {
         new LoginInterface();

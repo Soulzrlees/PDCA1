@@ -1,4 +1,4 @@
-package gui;
+package gui.battle;
 
 import javax.swing.*;
 import java.awt.*;
@@ -50,7 +50,7 @@ public class BattleHealthBarPanel {
 
     private void createVisuals(JProgressBar healthBar) {
         healthBar.setStringPainted(true);
-        healthBar.setValue(80);
+        healthBar.setValue(90);
         healthBar.setForeground(Color.RED);
         healthBar.setBackground(Color.WHITE);
         healthBar.setFocusable(false);

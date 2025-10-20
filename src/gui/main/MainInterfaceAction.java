@@ -2,7 +2,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package gui;
+package gui.main;
+import gui.battle.BattleInterface;
 import entity.Player;
 
 import java.awt.event.ActionEvent;
@@ -27,8 +28,8 @@ public class MainInterfaceAction implements ActionListener {
 
         if (source == menu.getInventoryButton()) {
             // TODO: Inventory logic
-            System.out.println("Inventory clicked");
         } else if (source == menu.getBattleButton()) {
+            mainInterface.dispose();
             new BattleInterface().createBattleInterface();
         } else if (source == menu.getStatsButton()) {
             mainInterface.toggleStatsPanel();

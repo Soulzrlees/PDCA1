@@ -1,4 +1,4 @@
-package gui;
+package gui.battle;
 
 import javax.swing.*;
 import java.awt.*;

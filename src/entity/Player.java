@@ -224,6 +224,7 @@ public class Player extends Entity{
 //New methods for the GUI___________________________________________________________________________________________
     
     
+    //Method that switches the image icon depending on the class
     public String getPlayerImage(Player player) {
         String pClass = player.getClasses();
         return switch (pClass) {
@@ -234,6 +235,7 @@ public class Player extends Entity{
         };
     }
     
+    //This loads the skillpoints used from the previous save
     public void setPlayerStats(PlayerStats stats) {
         this.playerstats = stats;
         this.skillpoints = this.level - this.playerstats.getUsedSkillPoints();
