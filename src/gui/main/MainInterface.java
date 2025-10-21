@@ -12,10 +12,15 @@ public class MainInterface {
     private final JFrame frame;
     private BackgroundPanel backgroundPanel;    
     private StatsPanel statsPanel;
+    
+    public final Player player;
+    public final PlayerStats playerStats;
 
-    public MainInterface(Player player, PlayerStats playerstats) {
+    public MainInterface(Player player, PlayerStats playerStats) {
         frame = new JFrame("RPG Game");
-        createMainInterface(player, playerstats);
+        createMainInterface(player, playerStats);
+        this.player = player;
+        this.playerStats = playerStats;
     }
 
     //Setup of the MainInterface
@@ -62,6 +67,14 @@ public class MainInterface {
         statsPanel.getRangeButton().addActionListener(statsListener);
 
         frame.setVisible(true);
+    }
+    
+    public Player getPlayer() {
+        return player;
+    }
+
+    public PlayerStats getPlayerStats() {
+        return playerStats;
     }
 
     //Toggle open and close of Stats Panel

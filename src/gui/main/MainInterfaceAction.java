@@ -5,6 +5,7 @@
 package gui.main;
 import gui.battle.BattleInterface;
 import entity.Player;
+import entity.PlayerStats;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -30,7 +31,7 @@ public class MainInterfaceAction implements ActionListener {
             // TODO: Inventory logic
         } else if (source == menu.getBattleButton()) {
             mainInterface.dispose();
-            new BattleInterface().createBattleInterface();
+            new BattleInterface(mainInterface.getPlayer(), mainInterface.getPlayerStats()).createBattleInterface(mainInterface.getPlayer(), mainInterface.getPlayerStats());
         } else if (source == menu.getStatsButton()) {
             mainInterface.toggleStatsPanel();
         } else if (source == menu.getExitButton()) {

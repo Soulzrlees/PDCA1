@@ -6,10 +6,18 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import entity.PlayerStats;
 
 public class BattleInterface implements ActionListener {
+    private Player player;
+    private PlayerStats playerStats;
 
-    public void createBattleInterface() {
+    public BattleInterface(Player player, PlayerStats playerStats) {
+        this.player = player;
+        this.playerStats = playerStats;
+    }
+    
+    public void createBattleInterface(Player player, PlayerStats playerStats) {
         JFrame frame = new JFrame("Battle");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -37,8 +45,8 @@ public class BattleInterface implements ActionListener {
 
 
         // Main Battle Panel --------------------------------------------------
-        BattleScreenPanel battleScreenPanel = new BattleScreenPanel();
-        battleScreenPanel.createBattleScreen(frame);
+        BattleScreenPanel battleScreenPanel = new BattleScreenPanel(player, playerStats);
+        battleScreenPanel.createBattleScreen(frame, player, playerStats);
     }
 
 
