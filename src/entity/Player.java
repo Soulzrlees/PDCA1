@@ -66,6 +66,10 @@ public class Player extends Entity{
     public int getskillPoints(){
         return this.skillpoints;
     }
+
+    public PlayerStats getPlayerStats(){
+        return this.playerstats;
+    }
     
     //add gold to player
     public void addGold(int money) {

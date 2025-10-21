@@ -1,6 +1,8 @@
 package gui.battle;
 
+import entity.Enemy;
 import entity.Player;
+
 
 import javax.swing.*;
 import java.awt.*;
@@ -8,16 +10,18 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import entity.PlayerStats;
 
-public class BattleInterface implements ActionListener {
+public class BattleInterface{
     private Player player;
+    private Enemy enemy;
     private PlayerStats playerStats;
+    private BattleController controller;    
 
     public BattleInterface(Player player, PlayerStats playerStats) {
         this.player = player;
         this.playerStats = playerStats;
     }
     
-    public void createBattleInterface(Player player, PlayerStats playerStats) {
+        public void createBattleInterface(Player player, PlayerStats playerStats) {
         JFrame frame = new JFrame("Battle");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -47,12 +51,27 @@ public class BattleInterface implements ActionListener {
         // Main Battle Panel --------------------------------------------------
         BattleScreenPanel battleScreenPanel = new BattleScreenPanel(player, playerStats);
         battleScreenPanel.createBattleScreen(frame, player, playerStats);
-    }
 
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
+        controller = new BattleController(player, enemy);
+        // Ensure we have a valid enemy instance before creating the controller        if (this.enemy == null) {
+           // Try using a factory if available
         
+        if (this.enemy == null) {
+           try {
+                this.enemy = Enemy.createEnemy(player);
+            } catch (NoSuchMethodError | NoClassDefFoundError | Exception ex) {
+                this.enemy = new Enemy("Orc", 1, "melee"); // replace with proper constructor if required
+            }
+        }
+        controller = new BattleController(player, this.enemy);
+ 
+        // attach a single BattleInterfaceAction listener (same style as LoginInterface)
+        BattleInterfaceAction listener = new BattleInterfaceAction(controller, battleButtonsPanel);
+        battleButtonsPanel.getAttackButton().addActionListener(listener);
+        battleButtonsPanel.getHealButton().addActionListener(listener);
+        battleButtonsPanel.getMoveForwardButton().addActionListener(listener);
+        battleButtonsPanel.getMoveBackButton().addActionListener(listener);
     }
     
+
 }
