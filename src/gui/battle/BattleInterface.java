@@ -6,8 +6,6 @@ import entity.Player;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import entity.PlayerStats;
 
 public class BattleInterface{
@@ -15,14 +13,20 @@ public class BattleInterface{
     private Enemy enemy;
     private PlayerStats playerStats;
     private BattleController controller;    
+    private JFrame frame;
+    private BattleHealthBarPanel battleHealthBarPanel;
+    private BattleButtonsPanel battleButtonsPanel;
+    private BattleInventoryPanel battleinventoryPanel ;
+    private BattleScreenPanel battleScreenPanel;
+    private BattleLogPanel battleLogPanel;
 
     public BattleInterface(Player player, PlayerStats playerStats) {
         this.player = player;
         this.playerStats = playerStats;
     }
     
-        public void createBattleInterface(Player player, PlayerStats playerStats) {
-        JFrame frame = new JFrame("Battle");
+    public void createBattleInterface(Player player, PlayerStats playerStats) {
+        frame = new JFrame("Battle");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         frame.setResizable(false);
@@ -30,48 +34,53 @@ public class BattleInterface{
         frame.getContentPane().setBackground(Color.BLACK);
 
         frame.setVisible(true);
+        
+        // Create enemy
+        enemy = Enemy.createEnemy(player);
+
+        // Battle Log Panel --------------------------------------------------
+        battleLogPanel = new BattleLogPanel();
+        battleLogPanel.createBattleLogPanel(frame);
+        
+        // Create Battle Controller
+       controller = new BattleController(player, enemy, this);
 
         // Health Bar Panel --------------------------------------------------
-        BattleHealthBarPanel battleHealthBarPanel = new BattleHealthBarPanel();
-        battleHealthBarPanel.createHealthBarPanel(frame);
+        battleHealthBarPanel = new BattleHealthBarPanel(player, enemy);
+        battleHealthBarPanel.createHealthBarPanel(frame, player, enemy);
 
         // Moves Panel --------------------------------------------------
-        BattleButtonsPanel battleButtonsPanel = new BattleButtonsPanel();
+        battleButtonsPanel = new BattleButtonsPanel();
         battleButtonsPanel.createBattleButtonsPanel(frame);
 
         // Inventory Panel --------------------------------------------------
-        BattleInventoryPanel inventoryPanel = new BattleInventoryPanel();
-        inventoryPanel.createBattleInventoryPanel(frame);
-
-        // Battle Log Panel --------------------------------------------------
-        BattleLogPanel logPanel = new BattleLogPanel();
-        logPanel.createBattleLogPanel(frame);
-
+        battleinventoryPanel = new BattleInventoryPanel();
+        battleinventoryPanel.createBattleInventoryPanel(frame);
 
         // Main Battle Panel --------------------------------------------------
-        BattleScreenPanel battleScreenPanel = new BattleScreenPanel(player, playerStats);
+        battleScreenPanel = new BattleScreenPanel(player, playerStats);
         battleScreenPanel.createBattleScreen(frame, player, playerStats);
 
-        controller = new BattleController(player, enemy);
-        // Ensure we have a valid enemy instance before creating the controller        if (this.enemy == null) {
-           // Try using a factory if available
-        
-        if (this.enemy == null) {
-           try {
-                this.enemy = Enemy.createEnemy(player);
-            } catch (NoSuchMethodError | NoClassDefFoundError | Exception ex) {
-                this.enemy = new Enemy("Orc", 1, "melee"); // replace with proper constructor if required
-            }
-        }
-        controller = new BattleController(player, this.enemy);
- 
         // attach a single BattleInterfaceAction listener (same style as LoginInterface)
         BattleInterfaceAction listener = new BattleInterfaceAction(controller, battleButtonsPanel);
         battleButtonsPanel.getAttackButton().addActionListener(listener);
         battleButtonsPanel.getHealButton().addActionListener(listener);
         battleButtonsPanel.getMoveForwardButton().addActionListener(listener);
         battleButtonsPanel.getMoveBackButton().addActionListener(listener);
+        }
+
+    //Remove the BattleInferface frame
+    public void dispose() {
+        frame.dispose();
     }
     
-
+    public void UpdateHealthBar(int playerCurrent, int playerMax, int enemyCurrent, int enemyMax){
+        battleHealthBarPanel.updatePlayerHealth(playerCurrent, playerMax);
+        battleHealthBarPanel.updateEnemyHealth(enemyCurrent, enemyMax);
+    }
+    
+    //Get method for the log 
+    public BattleLogPanel getLogPanel(){
+        return battleLogPanel;
+    }
 }

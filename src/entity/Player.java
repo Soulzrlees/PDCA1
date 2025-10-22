@@ -3,8 +3,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package entity;
-import java.util.InputMismatchException;
-import java.util.Scanner;
 
 import main.exceptions.PlayerNotFoundException;
 import player_management.AccessFile;
@@ -145,86 +143,41 @@ public class Player extends Entity{
     public int hashCode() {
         return this.name.hashCode();
     }
-
-   //Increase base damage after using a skillpoint
-   public void skillpointIncreaseDamage(AccessFile file){
-       if(this.skillpoints > 0){
-           this.setbaseDmg(1 + this.getbaseDmg());
-           //this.removeSkillPoints(1);
-           //this.playerstats.setDamageSkillPoints( this.playerstats.getDamageSkillPoints() + 1);
-           this.file.updateDamagePoints(this.name);
-       }
-       else{
-           System.out.println("Not enough skillpoints\n");
-       }
-   }
-
-   //Increase base max health after using a skillpoint
-    public void skillpointIncreaseHealth(AccessFile file){
-       if(this.skillpoints > 0){
-           this.setMaxHealth(1 + this.getMaxHealth());
-           //this.removeSkillPoints(1);
-           //this.playerstats.setHealthSkillPoints( this.playerstats.getHealthSkillPoints() + 1);
-           this.file.updateHealthPoints(this.name);
-       }
-       else{
-           System.out.println("Not enough skillpoints\n");
-       }
-    }
-
-    //Increase base attack range after using a skillpoint
-    public void skillpointIncreaseRange(AccessFile file){
-        if(this.skillpoints > 0){
-           if(this.getAttackRange() < 8){
-               this.setAttackRange(1 + this.getAttackRange());
-               //this.removeSkillPoints(1);
-               //this.playerstats.setRangeSkillPoints( this.playerstats.getRangeSkillPoints() + 1);
-               this.file.updateRangePoints(this.name);
-           }
-           else{
-               System.out.println("Max base attack Range reached!\n");
-           }
-       }
-       else{
-           System.out.println("Not enough skillpoints\n");
-       }
-   }
-
-    //Checks which base stats the skill point would increase
-    public void CheckSkillPoints(Player player, Scanner scanner, AccessFile file) throws PlayerNotFoundException {
-        while(getSkillPoints(file.loadExistingPlayer(this.getName())) > 0){ // only enter if player has skill points
-            System.out.print("Skillpoints (" + getSkillPoints(file.loadExistingPlayer(this.getName())) + " available) [-1 to exit]: ");
-            int input;
-
-            try {
-                input = scanner.nextInt();
-
-                //Exit the stats interface if input is -1
-                if(input == -1){
-                    break;
-                }
-
-                //Depending on the input number it adds either damage, health or range
-                switch(input){
-                    case 1 -> player.skillpointIncreaseDamage(file);
-                    case 2 -> player.skillpointIncreaseHealth(file);
-                    case 3 -> player.skillpointIncreaseRange(file);
-                    default -> System.out.println("Invalid input! Enter 1, 2, or 3.\n");
-                }
-
-            } catch(InputMismatchException e){
-                System.out.println("Invalid input! Please enter a number.\n");
-                scanner.next(); // clear invalid input
-            }
-        }
-
-        //Exit when there's no skillpoints avialable
-        if(getSkillPoints(file.loadExistingPlayer(this.getName())) == 0){
-            System.out.println("No skill points remaining!\n");
-        }
-    }
-
     
+//Increase base damage after using a skillpoint
+public void skillpointIncreaseDamage() {
+    if (this.skillpoints > 0) {
+        this.setbaseDmg(this.getbaseDmg() + 1);
+        this.removeSkillPoints(1);
+    } else {
+        System.out.println("Not enough skillpoints\n");
+    }
+}
+
+//Increase base max health after using a skillpoint
+public void skillpointIncreaseHealth() {
+    if (this.skillpoints > 0) {
+        this.setMaxHealth(this.getMaxHealth() + 1);
+        this.removeSkillPoints(1);
+    } else {
+        System.out.println("Not enough skillpoints\n");
+    }
+}
+
+//Increase base attack range after using a skillpoint
+public void skillpointIncreaseRange() {
+    if (this.skillpoints > 0) {
+        if (this.getAttackRange() < 8) {
+            this.setAttackRange(this.getAttackRange() + 1);
+            this.removeSkillPoints(1);
+        } else {
+            System.out.println("Max base attack Range reached!\n");
+        }
+    } else {
+        System.out.println("Not enough skillpoints\n");
+    }
+}
+
 //New methods for the GUI___________________________________________________________________________________________
     
     

@@ -51,6 +51,13 @@ public class LoginInterfaceAction implements ActionListener {
                 Player player = dbOperationAccounts.getPlayer(result);
                 PlayerStats playerStats = dbOperationStats.getPlayerStats(result);
                 player.setPlayerStats(playerStats);
+                
+                //setting the base stats of the player with the skillpoints
+                player.setbaseDmg(player.getbaseDmg() + playerStats.getDamageSkillPoints());
+                player.setMaxHealth(player.getMaxHealth()+ playerStats.getHealthSkillPoints());
+                player.setAttackRange(player.getAttackRange() + playerStats.getRangeSkillPoints());
+                player.setHealth(player.getMaxHealth());
+                
                 //Testing purposes
                 System.out.println(player);
                 System.out.println(playerStats);
@@ -70,7 +77,7 @@ public class LoginInterfaceAction implements ActionListener {
                 JOptionPane.showMessageDialog(null, "Username already exists.", "User has entered name already in use!", JOptionPane.ERROR_MESSAGE);
             }
             else { //If there is no such existing player name
-                dbOperationAccounts.addPlayer(nameResult, 1, 0, 0, classResult);
+                dbOperationAccounts.addPlayer(nameResult, 10, 0, 0, classResult);
                 dbOperationStats.addPlayerStats(nameResult, 0, 0, 0);
                 Player player = dbOperationAccounts.getPlayer(nameResult);
                 PlayerStats playerStats = dbOperationStats.getPlayerStats(nameResult);

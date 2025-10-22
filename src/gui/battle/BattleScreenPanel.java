@@ -4,7 +4,6 @@ import java.awt.*;
 import javax.swing.*;
 
 import entity.PlayerStats;
-import main.Battle;
 import entity.Entity;
 import entity.Player;
 import entity.Enemy;
@@ -51,7 +50,7 @@ public class BattleScreenPanel {
                 int panelHeight = getHeight();
 
                 g.drawImage(backgroundImage, 0, 0, panelWidth, panelHeight, this);
-                g.drawImage(playerImage, 0, 0, 40, 70, this);
+                g.drawImage(playerImage, 0, 100, 40, 100, this);
                 g.drawImage(enemyImage, 80, 0, 40, 70, this);
             }
         }

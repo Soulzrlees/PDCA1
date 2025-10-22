@@ -58,7 +58,7 @@ public class MainInterface {
         // Stats panel
         statsPanel = new StatsPanel(backgroundPanel, player, playerstats);
         statsPanel.setVisible(false);
-        statsPanel.setBackground(new Color(80, 80, 80, 150));
+        statsPanel.setBackground(new Color(110, 110, 110, 150));
         backgroundPanel.add(statsPanel, BorderLayout.EAST);
         
         StatsPanelAction statsListener = new StatsPanelAction(statsPanel, player, playerstats);

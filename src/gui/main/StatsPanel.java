@@ -8,6 +8,7 @@ import javax.swing.*;
 import java.awt.*;
 import entity.Player;
 import entity.PlayerStats;
+import java.io.InputStream;
 /**
  *
  * @author Shawn lee
@@ -31,8 +32,8 @@ public class StatsPanel extends JPanel {
         //Create labels
         nameLabel = createLabel(player.getName(), 0, 0, 2);
         expLabel = createLabel("Exp: " + player.getExp(), 0, 1, 1);
-        levelLabel = createLabel("level:" + player.getLevel(), 0, 2, 1);
-        goldLabel = createLabel("Class: " + player.getGold(), 0, 3, 1);
+        levelLabel = createLabel("level: " + player.getLevel(), 0, 2, 1);
+        goldLabel = createLabel("Gold: " + player.getGold(), 0, 3, 1);
         classLabel = createLabel("Class: " + player.getClasses(), 0, 4, 1);
         
         damageLabel = createLabel("BaseDamage: " + player.getbaseDmg() + " [+" + stats.getDamageSkillPoints() + "]",  0, 5, 1);
@@ -51,7 +52,6 @@ public class StatsPanel extends JPanel {
     private JLabel createLabel(String text, int x, int y, int gridWidth) {
         JLabel label = new JLabel(text);
         label.setFont(new Font("Monospaced", Font.PLAIN, 25));
-        label.setForeground(Color.WHITE);
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = x;
         gbc.gridy = y;
@@ -59,6 +59,16 @@ public class StatsPanel extends JPanel {
         gbc.insets = new Insets(10, 10, 25, 10);
         gbc.fill = GridBagConstraints.HORIZONTAL;
         this.add(label, gbc);
+        
+        //Set custom font to the text of the statspanel
+        try {
+            InputStream is = getClass().getResourceAsStream("/fonts/Jersey10-Regular.ttf");
+            Font customFont = Font.createFont(Font.TRUETYPE_FONT, is).deriveFont(25f);
+            is.close();
+            label.setFont(customFont);
+        } catch (Exception e) {
+            label.setFont(new Font("Monospaced", Font.PLAIN, 25));
+        }
         
         return label;
     }

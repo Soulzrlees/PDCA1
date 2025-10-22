@@ -1,10 +1,5 @@
 package entity;
 
-import player_management.AccessFile;
-
-import java.util.InputMismatchException;
-import java.util.Scanner;
-
 public class PlayerStats {
     private String playerName;
     private int damagePoints;

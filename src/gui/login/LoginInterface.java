@@ -1,8 +1,15 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+// */
 package gui.login;
 
 import javax.swing.*;
 import java.awt.*;
-
+/**
+ *
+ * @author Shawn lee
+ */
 public class LoginInterface {
     JTextField TextField1, TextField2;
     JButton Button1, Button2;

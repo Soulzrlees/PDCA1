@@ -2,6 +2,7 @@ package action;
 
 import java.util.Random;
 import entity.Entity;
+import gui.battle.BattleLogPanel;
 
 /**
  *
@@ -11,10 +12,12 @@ import entity.Entity;
 public class PlayerAction implements Action_Interface{
     private Random random;
     private int healCount;
+    private BattleLogPanel battleLogPanel;
 
-    public PlayerAction(){
+    public PlayerAction(BattleLogPanel battleLogPanel){
         this.random = new Random();
         this.healCount = 0;
+        this.battleLogPanel = battleLogPanel;
     }
 
     //Finds the total damage
@@ -22,14 +25,17 @@ public class PlayerAction implements Action_Interface{
     public void attack(Entity enemy, Entity player, int round){
         //Based on the position of the player to the enemy, if it range is less than the Position than attack does not hit.
         if(Entity.calculateDistance(enemy, player) > player.getAttackRange()){
+            battleLogPanel.appendLog("Attack missed due to distance!");
             System.out.println("Attack missed due to distance!");
         }
         //If getEvade is valid than attack will be dodged so no damage taken.
         else if(enemy.getEvade() && round != 1){
+            battleLogPanel.appendLog("Enemy has dodged the attack!");
             System.out.println("Enemy has dodged the attack!");
         }
         else {
             int totalDamage = player.getbaseDmg() + random.nextInt(5);
+            battleLogPanel.appendLog("You dealt " + totalDamage + " damage to the enemy!");
             System.out.println("You dealt " + totalDamage + " damage to the enemy!");
             enemy.damageCalculate(totalDamage);
         }
@@ -43,10 +49,12 @@ public class PlayerAction implements Action_Interface{
         //Making sure that the new Position is under or at 10:
         if(newPosition < 0){
             newPosition = 0;
+            battleLogPanel.appendLog("You can't move further in this direction");
             System.out.println("You can't move further in this direction");
         }
         player.setPosition(newPosition);
         int distance = Entity.calculateDistance(player, enemy);
+        battleLogPanel.appendLog("Moved backwards " + moveDistance + "m");
         System.out.println("Moved backwards " + moveDistance + "m");
     }
 
@@ -65,14 +73,20 @@ public class PlayerAction implements Action_Interface{
             enemy.setPosition(enemyPosition);
             if (enemy.getPosition() > 20) {
                 enemy.setPosition(20);
+                battleLogPanel.appendLog("You have push the enemy to the edge of the arena!");
                 System.out.println("You have push the enemy to the edge of the arena!");
+                
                 if (player.getPosition() > 19) {
                     player.setPosition(19);
+                    battleLogPanel.appendLog("You have cornered the enemy");
                     System.out.println("You have cornered the enemy");
                 } else {
+                    battleLogPanel.appendLog("You moved towards the enemy by: " + difference + "m");
                     System.out.println("You moved towards the enemy by: " + difference + "m");
                 }
             } else {
+                battleLogPanel.appendLog("You have pushed the enemy backwards by: " + toMove + "m");
+                battleLogPanel.appendLog("You moved towards the enemy by: " + difference + "m");
                 System.out.println("You have pushed the enemy backwards by: " + toMove + "m");
                 System.out.println("You moved towards the enemy by: " + difference + "m");
             }
@@ -82,6 +96,7 @@ public class PlayerAction implements Action_Interface{
             if(distance < 1){
                 distance = 1;
             }
+            battleLogPanel.appendLog("Moved forwards " + moveDistance + "m");
             System.out.println("Moved forwards " + moveDistance + "m");
         }
     }
@@ -90,6 +105,7 @@ public class PlayerAction implements Action_Interface{
         int newHealth = player.getHealth();
         int healAmount = 0;
         if (healCount >= 2){
+            battleLogPanel.appendLog("You have used all your heals!");
             System.out.println("You have used all your heals!");
         }
         else{
@@ -103,7 +119,7 @@ public class PlayerAction implements Action_Interface{
                 player.setHealth(newHealth);
             }
         }
-
+        battleLogPanel.appendLog(player.getName() + " HP healed " + healAmount + "+");
         System.out.println(player.getName() + " HP healed " + healAmount + "+");
 
     }

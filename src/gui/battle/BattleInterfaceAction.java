@@ -6,7 +6,6 @@ package gui.battle;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.JButton;
 /**
  *
  * @author Shawn lee

@@ -9,6 +9,7 @@ import action.EnemyAction;
 import collections.LinkedList;
 import java.util.InputMismatchException;
 import entity.Potion;
+import gui.battle.BattleLogPanel;
 import player_management.AccessFile;
 
 /**
@@ -16,6 +17,7 @@ import player_management.AccessFile;
  * @author Shawn lee
  */
 
+/*
 public class Battle implements Runnable {
     private Entity player;
     private Enemy enemy;
@@ -28,33 +30,28 @@ public class Battle implements Runnable {
     private Scanner scanner;
     private int originalBaseDamage;
     private int originalAttackRange;
-
+    
     AccessFile file = new AccessFile();
 
-    public Battle(Player player, Enemy enemy, Scanner scanner){
+    public Battle(Player player, Enemy enemy) {
         this.player = player;
         this.enemy = enemy;
-        this.enemyAction = new EnemyAction();
-        this.playerAction = new PlayerAction();
+        this.enemyAction = new EnemyAction(battleLogPanel);  // pass panel here
+        this.playerAction = new PlayerAction(battleLogPanel); // if you also updated PlayerAction
         playerturn = true;
         this.round = 1;
-        //When playerturn is true the player attacks, if the entity turn is true the enemy attack
-        //Determines if the battle ended
         battleEnded = false;
         this.originalBaseDamage = player.getbaseDmg();
         this.originalAttackRange = player.getAttackRange();
-        //Testing purposes
         this.inventory = new LinkedList<>();
         randomiseInventory(this.inventory);
-
-        this.scanner = scanner;
     }
 
     public Battle() {
         this.player = player;
         this.enemy = enemy;
-        this.enemyAction = new EnemyAction();
-        this.playerAction = new PlayerAction();
+        this.enemyAction = new EnemyAction(battleLogPanel);
+        this.playerAction = new PlayerAction(battleLogPanel);
         playerturn = true;
         this.round = 1;
         //When playerturn is true the player attacks, if the entity turn is true the enemy attack
@@ -255,3 +252,4 @@ public class Battle implements Runnable {
    }
 
 }
+*/

@@ -2,6 +2,7 @@ package gui.battle;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.InputStream;
 
 public class BattleButtonsPanel {
     // expose buttons so callers can attach listeners
@@ -30,17 +31,27 @@ public class BattleButtonsPanel {
 
     private JPanel createCenteredPanel(JButton button) {
         JPanel panel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        button.setPreferredSize(new Dimension(360, 150));
+        button.setPreferredSize(new Dimension(450, 150));
         panel.add(button);
         panel.setOpaque(true);
+        panel.setBackground(Color.DARK_GRAY);
         return panel;
     }
 
     private JButton createButton(String buttonText) {
         JButton button = new JButton(buttonText);
-        button.setBackground(Color.BLACK);
+        button.setBackground(Color.GRAY);
         button.setFocusable(false);
-        button.setForeground(Color.WHITE);
+        
+        //Set custom font to the button text
+        try {
+            InputStream is = getClass().getResourceAsStream("/fonts/Jersey10-Regular.ttf");
+            Font customFont = Font.createFont(Font.TRUETYPE_FONT, is).deriveFont(20f);
+            is.close();
+            button.setFont(customFont);
+        } catch (Exception e) {
+           button.setFont(new Font("Monospaced", Font.PLAIN, 20));
+        }
         return button;
     }
 
