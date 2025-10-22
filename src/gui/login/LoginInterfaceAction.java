@@ -77,7 +77,7 @@ public class LoginInterfaceAction implements ActionListener {
                 JOptionPane.showMessageDialog(null, "Username already exists.", "User has entered name already in use!", JOptionPane.ERROR_MESSAGE);
             }
             else { //If there is no such existing player name
-                dbOperationAccounts.addPlayer(nameResult, 10, 0, 0, classResult);
+                dbOperationAccounts.addPlayer(nameResult, 1, 0, 0, classResult);
                 dbOperationStats.addPlayerStats(nameResult, 0, 0, 0);
                 Player player = dbOperationAccounts.getPlayer(nameResult);
                 PlayerStats playerStats = dbOperationStats.getPlayerStats(nameResult);

@@ -44,11 +44,14 @@ public class StatsPanelAction implements ActionListener {
             } 
             if(e.getSource().equals(statsPanel.getHealthButton())){ //If this button is clicked the HealthSkillPoint variable would increase and remove a generic skillpoint 
                 player.skillpointIncreaseHealth();
+                player.setHealth(player.getMaxHealth());
                 playerStats.setHealthSkillPoints(playerStats.getHealthSkillPoints() + 1);
             }
             if(e.getSource().equals(statsPanel.getRangeButton())){ //If this button is clicked the RangeSkillPoint variable would increase and remove a generic skillpoint 
                 player.skillpointIncreaseRange();
-                playerStats.setRangeSkillPoints(playerStats.getRangeSkillPoints() + 1);
+                if(player.getAttackRange() < 8){
+                    playerStats.setRangeSkillPoints(playerStats.getRangeSkillPoints() + 1);
+                }
             }
             //Update the playerStats on the database
             //Refresh the stats panel text

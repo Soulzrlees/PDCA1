@@ -96,6 +96,7 @@ public class Player extends Entity{
         if (this.exp >= expNeeded){
             this.exp = 0;
             this.level++;
+            this.skillpoints += 1;
         }
     }
 
@@ -197,4 +198,5 @@ public void skillpointIncreaseRange() {
         this.playerstats = stats;
         this.skillpoints = this.level - this.playerstats.getUsedSkillPoints();
     }
+    
 }
