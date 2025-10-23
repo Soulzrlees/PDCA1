@@ -28,17 +28,17 @@ public class EnemyAction implements Action_Interface{
     public void attack(Entity enemy, Entity player, int round){
         //Based on the position of the player to the enemy, if it range is less than the Position than attack does not hit.
         if(Entity.calculateDistance(enemy, player) > enemy.getAttackRange()){
-            battleLogPanel.appendLog("Attack missed due to distance!");
+            battleLogPanel.appendLog("[ " + enemy.getName() + " ] " + "Attack missed due to distance!");
             System.out.println("Attack missed due to distance!");
         }
         //If getEvade return true then attack will be dodged so no damage taken.
         else if(player.getEvade() && round != 1){
-            battleLogPanel.appendLog(player.getName() + " has dodged the attack!");
+            battleLogPanel.appendLog("[ " + player.getName() + " ] " + " Dodged the attack!");
             System.out.println(player.getName() + " has dodged the attack!");
         }
         else {
             int totalDamage = enemy.getbaseDmg() + random.nextInt(5);
-            battleLogPanel.appendLog("Enemy dealt " + totalDamage + " damage to you!");
+            battleLogPanel.appendLog("[ " + enemy.getName() + " ] " + "Dealt " + totalDamage + " damage to you!");
             System.out.println("Enemy dealt " + totalDamage + " damage to you!");
             player.damageCalculate(totalDamage);
         }
@@ -54,10 +54,8 @@ public class EnemyAction implements Action_Interface{
             newPosition = 20;
         }
         enemy.setPosition(newPosition);
-        battleLogPanel.appendLog(player.getPosition() + " " + enemy.getPosition());
-        System.out.println(player.getPosition() + " " + enemy.getPosition());
         int distance = Entity.calculateDistance(player, enemy);
-        battleLogPanel.appendLog("Moved Backwards " + moveDistance + "m");
+        battleLogPanel.appendLog("[ " + enemy.getName() + " ] " + "Moved Backwards " + moveDistance + "m");
         System.out.println("Moved Backwards " + moveDistance + "m");
     }
 
@@ -76,19 +74,19 @@ public class EnemyAction implements Action_Interface{
             player.setPosition(playerPosition);
             if (player.getPosition() < 0) {
                 player.setPosition(0);
-                battleLogPanel.appendLog("Enemy has pushed you to the edge of the arena!");
+                battleLogPanel.appendLog("[ " + enemy.getName() + " ] " + "Has pushed you to the edge of the arena!");
                 System.out.println("Enemy has pushed you to the edge of the arena!");
                 if (enemy.getPosition() < 1) {
                     enemy.setPosition(1);
-                    battleLogPanel.appendLog("Enemy has cornered you");
+                    battleLogPanel.appendLog("[ " + enemy.getName() + " ] " + "Has cornered you");
                     System.out.println("Enemy has cornered you");
                 } else {
-                    battleLogPanel.appendLog("Enemy moved towards you by " + difference + "m");
+                    battleLogPanel.appendLog("[ " + enemy.getName() + " ] " + "Moved towards you by " + difference + "m");
                     System.out.println("Enemy moved towards you by " + difference + "m");
                 }
             } else {
-                battleLogPanel.appendLog("Enemy has pushed you backwards by: " + toMove + "m");
-                battleLogPanel.appendLog("Enemy moved towards you by: " + difference + "m");
+                battleLogPanel.appendLog("[ " + enemy.getName() + " ] " + "Has pushed you backwards by: " + toMove + "m");
+                battleLogPanel.appendLog("[ " + enemy.getName() + " ] " + "Moved towards you by: " + difference + "m");
                 System.out.println("Enemy has pushed you backwards by: " + toMove + "m");
                 System.out.println("Enemy moved towards you by: " + difference + "m");
             }
@@ -98,7 +96,7 @@ public class EnemyAction implements Action_Interface{
             if (distance < 1) {
                 distance = 1;
             }
-            battleLogPanel.appendLog("Moved Forwards " + moveDistance + "m");
+            battleLogPanel.appendLog("[ " + enemy.getName() + " ] " + "Moved Forwards " + moveDistance + "m");
             System.out.println("Moved Forwards " + moveDistance + "m");
         }
     }
@@ -114,7 +112,7 @@ public class EnemyAction implements Action_Interface{
         }
 
         enemy.setHealth(newHealth);
-        battleLogPanel.appendLog(enemy.getName() + " HP healed " + healAmount + "+");
+        battleLogPanel.appendLog("[ " + enemy.getName() + " ] " + "HP healed " + healAmount + "+");
         System.out.println(enemy.getName() + " HP healed " + healAmount + "+");
     }
 

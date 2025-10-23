@@ -60,6 +60,7 @@ public class BattleController {
     public void playerAttack() {
         PlayerAction playerAction = new PlayerAction(battleLogPanel);
         playerAction.attack(enemy, player, round);
+        battleInterface.getScreenPanel().refreshPositions();
         nextTurn();
     }
 
@@ -71,6 +72,7 @@ public class BattleController {
         PlayerAction playerAction = new PlayerAction(battleLogPanel);
         playerAction.heal(player);
         healCount++;
+        battleInterface.getScreenPanel().refreshPositions();
         nextTurn();
     }
 
