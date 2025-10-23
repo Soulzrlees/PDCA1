@@ -49,7 +49,7 @@ public class BattleInterface{
         battleHealthBarPanel = new BattleHealthBarPanel(player, enemy);
         battleHealthBarPanel.createHealthBarPanel(frame, player, enemy);
 
-        // Moves Panel --------------------------------------------------
+        // Button Panel --------------------------------------------------
         battleButtonsPanel = new BattleButtonsPanel();
         battleButtonsPanel.createBattleButtonsPanel(frame);
 
@@ -58,8 +58,8 @@ public class BattleInterface{
         battleinventoryPanel.createBattleInventoryPanel(frame);
 
         // Main Battle Panel --------------------------------------------------
-        battleScreenPanel = new BattleScreenPanel(player, playerStats);
-        battleScreenPanel.createBattleScreen(frame, player, playerStats);
+        battleScreenPanel = new BattleScreenPanel(player, enemy);
+        frame.add(battleScreenPanel, BorderLayout.CENTER);
 
         // attach a single BattleInterfaceAction listener (same style as LoginInterface)
         BattleInterfaceAction listener = new BattleInterfaceAction(controller, battleButtonsPanel);
@@ -82,5 +82,9 @@ public class BattleInterface{
     //Get method for the log 
     public BattleLogPanel getLogPanel(){
         return battleLogPanel;
+    }
+    
+    public BattleScreenPanel getScreenPanel(){
+        return battleScreenPanel;
     }
 }

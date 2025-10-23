@@ -77,12 +77,16 @@ public class BattleController {
     public void playerMoveForward() {
         PlayerAction playerAction = new PlayerAction(battleLogPanel);
         playerAction.moveForward(enemy, player);
+        battleInterface.getScreenPanel().refreshPositions();
+        System.out.println(player.getPosition() + " " + enemy.getPosition());
         nextTurn();
     }
 
     public void playerMoveBackward() {
         PlayerAction playerAction = new PlayerAction(battleLogPanel);
         playerAction.moveBackward(enemy, player);
+        battleInterface.getScreenPanel().refreshPositions();
+        System.out.println(player.getPosition() + " " + enemy.getPosition());
         nextTurn();
     }
 

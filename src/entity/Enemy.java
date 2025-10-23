@@ -23,7 +23,7 @@ public class Enemy extends Entity{
         Random random = new Random();
         int levelToAdd = random.nextInt(3);
         int level = player.getLevel() + levelToAdd;
-        int classNum = random.nextInt(3) + 1;
+        int classNum = random.nextInt(5) + 1;
 
         String enemyClass = "";
         String enemyName = "";
@@ -31,15 +31,27 @@ public class Enemy extends Entity{
         switch (classNum) {
             case 1:
                 enemyClass = "melee";
-                enemyName = "High Orc";
+                enemyName = "Skeleton";
                 break;
             case 2:
-                enemyClass = "ranger";
-                enemyName = "Undead Shooter";
+                enemyClass = "melee";
+                enemyName = "High Orc";
                 break;
             case 3:
+                enemyClass = "ranger";
+                enemyName = "Assassin";
+                break;
+            case 4:
+                enemyClass = "ranger";
+                enemyName = "Monkey";
+                break;
+            case 5:
                 enemyClass = "mage";
-                enemyName = "Ice Elf";
+                enemyName = "Devil";
+                break;
+            case 6:
+                enemyClass = "mage";
+                enemyName = "Witch";
                 break;
             default:
                 break;
@@ -107,9 +119,9 @@ public class Enemy extends Entity{
 
     public String getEnemyImage(Enemy enemy) {
         switch (enemy.getName()) {
-            case "Sleleton":
+            case "Skeleton":
                 return "images/Skeleton_enemy.png";
-            case "Orc":
+            case "High Orc":
                 return "images/Orc_enemy.png";
             case "Assassin":
                 return "images/Assassin_enemy.png";

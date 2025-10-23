@@ -2,61 +2,59 @@ package gui.battle;
 
 import java.awt.*;
 import javax.swing.*;
-
-import entity.PlayerStats;
-import entity.Entity;
 import entity.Player;
 import entity.Enemy;
 
-public class BattleScreenPanel {
-    private Image playerDisplay, enemyDisplay;
-    private Player player;
-    private PlayerStats playerStats;
-    private Enemy enemy;
-    
-    public BattleScreenPanel(Player player, PlayerStats playerStats) {
+public class BattleScreenPanel extends JPanel {
+    private Image playerDisplay;
+    private Image enemyDisplay;
+    private Image backgroundImage;
+    private final Player player;
+    private final Enemy enemy;
+
+    public BattleScreenPanel(Player player, Enemy enemy) {
         this.player = player;
-        this.playerStats = playerStats;
-        enemy = Enemy.createEnemy(player);
+        this.enemy = enemy;
+        loadCharacters();
+        setOpaque(false);
     }
 
-    public void createBattleScreen(JFrame frame, Player player, PlayerStats playerStats) {
-        JPanel battleScreenPanel = new JPanel();
-        battleScreenPanel.setPreferredSize(new Dimension(100, 100));
-        frame.add(battleScreenPanel, BorderLayout.CENTER);
-        createBackground(frame);
+    private void loadCharacters() {
+        backgroundImage = new ImageIcon("images/battle_background.png").getImage();
+        playerDisplay = new ImageIcon(player.getPlayerImage(player)).getImage();
+        enemyDisplay = new ImageIcon(enemy.getEnemyImage(enemy)).getImage();
     }
 
-    public static void loadCharacters(JFrame frame, Player player, Enemy enemy) {
-        String playerImage = player.getPlayerImage(player);
-        String enemyImage = enemy.getEnemyImage(enemy);
-        Image playerDisplay = new ImageIcon(playerImage).getImage();
-        Image EnemyDisplay = new ImageIcon(enemyImage).getImage();
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+
+        int width = getWidth();
+        int height = getHeight();
+
+        // Draw background
+        g.drawImage(backgroundImage, 0, 0, width, height, this);
+
+        int position_pixels = width / 20; // Convert width to 20 segments (0-20)
+        int imgWidth = 120; //The width of the image
+
+        // Player position
+        int playerX = (player.getPosition() * position_pixels) - 50;
+        if (playerX < 0) playerX = 0;                     // clamp left
+        if (playerX > width - imgWidth) playerX = width - imgWidth; // clamp right
+
+        // Enemy position
+        int enemyX = (enemy.getPosition() * position_pixels) + 50;
+        if (enemyX < 0) enemyX = 0;                       // clamp left
+        if (enemyX > width - imgWidth) enemyX = width - imgWidth; // clamp right
+
+        // Draw entities
+        g.drawImage(playerDisplay, playerX, height - 250, imgWidth, 120, this);
+        g.drawImage(enemyDisplay, enemyX, height - 250, imgWidth, 120, this);
     }
 
-    public void createBackground(JFrame frame) {
-        Enemy enemy = Enemy.createEnemy(player);
-        loadCharacters(frame, player, enemy);
-        class BattlePanel extends JPanel {
-            private final Image backgroundImage = new ImageIcon("images/battle_background.png").getImage();
-            private final Image playerImage = new ImageIcon(player.getPlayerImage(player)).getImage();
-            private final Image enemyImage = new ImageIcon(enemy.getEnemyImage(enemy)).getImage();
-
-            @Override
-            protected void paintComponent(Graphics g) {
-                super.paintComponent(g);
-
-                int panelWidth = getWidth();
-                int panelHeight = getHeight();
-
-                g.drawImage(backgroundImage, 0, 0, panelWidth, panelHeight, this);
-                g.drawImage(playerImage, 0, 100, 40, 100, this);
-                g.drawImage(enemyImage, 80, 0, 40, 70, this);
-            }
-        }
-        BattlePanel battledPanel = new BattlePanel();
-        battledPanel.setLayout(null);
-        frame.add(battledPanel,BorderLayout.CENTER);
+    // Redraw screen whenever positions change
+    public void refreshPositions() {
+        repaint();
     }
-
 }

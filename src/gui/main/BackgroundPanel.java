@@ -21,7 +21,7 @@ public class BackgroundPanel extends JPanel {
 
     public BackgroundPanel(String backgroundPath, String characterPath, String LogoPath) {
         backgroundImage = new ImageIcon(backgroundPath).getImage();
-        characterImage = new ImageIcon(characterPath).getImage();
+        characterImage = new ImageIcon(characterPath).getImage();   
         logo = new ImageIcon(LogoPath).getImage();
 
         Timer timer = new Timer(30, e -> updateBounce());
