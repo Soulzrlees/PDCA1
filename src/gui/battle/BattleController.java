@@ -139,13 +139,15 @@ public class BattleController {
         player.addExp(100);
         player.addLevel();
         dbOperationAccounts.updatePlayer(player);
-
+        battleInterface.getButtonPanel().DisableButton();
+        
         RewardsPanel rewards = new RewardsPanel(player, true);
         JFrame rewardsFrame = new JFrame("Rewards");
         rewardsFrame.setContentPane(rewards);
         rewardsFrame.setSize(700, 500);
         rewardsFrame.setLocationRelativeTo(null);
         rewardsFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        rewardsFrame.setUndecorated(true);
         rewardsFrame.setVisible(true);
 
         rewards.addContinueListener(e -> {
@@ -154,16 +156,19 @@ public class BattleController {
         });
     }
 
+
     private void Defeat() {
         player.removeGold(20);
         dbOperationAccounts.updatePlayer(player);
-
+        battleInterface.getButtonPanel().DisableButton();
+        
         RewardsPanel rewards = new RewardsPanel(player, false);
         JFrame rewardsFrame = new JFrame("Rewards");
         rewardsFrame.setContentPane(rewards);
         rewardsFrame.setSize(700, 500);
         rewardsFrame.setLocationRelativeTo(null);
         rewardsFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        rewardsFrame.setUndecorated(true);
         rewardsFrame.setVisible(true);
 
         rewards.addContinueListener(e -> {
@@ -195,6 +200,7 @@ public class BattleController {
         rewardsFrame.setSize(800, 600);
         rewardsFrame.setLocationRelativeTo(null);
         rewardsFrame.add(rewardsPanel);
+        rewardsFrame.setUndecorated(true);
         rewardsFrame.setVisible(true);
 
         // Close battle window

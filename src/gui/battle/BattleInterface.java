@@ -32,6 +32,7 @@ public class BattleInterface{
         frame.setResizable(false);
         frame.setLayout(new BorderLayout(10, 10));
         frame.getContentPane().setBackground(Color.BLACK);
+        frame.setUndecorated(true);
 
         frame.setVisible(true);
         
@@ -86,5 +87,9 @@ public class BattleInterface{
     
     public BattleScreenPanel getScreenPanel(){
         return battleScreenPanel;
+    }
+    
+    public BattleButtonsPanel getButtonPanel(){
+        return battleButtonsPanel;
     }
 }

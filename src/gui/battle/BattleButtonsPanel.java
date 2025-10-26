@@ -60,4 +60,11 @@ public class BattleButtonsPanel {
     public JButton getHealButton() { return healButton; }
     public JButton getMoveBackButton() { return moveBackButton; }
     public JButton getMoveForwardButton() { return moveForwardButton; }
+    
+    public void DisableButton(){
+        attackButton.setEnabled(false);
+        healButton.setEnabled(false);
+        moveBackButton.setEnabled(false);
+        moveForwardButton.setEnabled(false);
+    }
 }
