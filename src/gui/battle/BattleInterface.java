@@ -67,7 +67,7 @@ public class BattleInterface{
         battleButtonsPanel.getHealButton().addActionListener(listener);
         battleButtonsPanel.getMoveForwardButton().addActionListener(listener);
         battleButtonsPanel.getMoveBackButton().addActionListener(listener);
-        }
+    }
 
     //Remove the BattleInferface frame
     public void dispose() {

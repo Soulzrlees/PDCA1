@@ -52,6 +52,10 @@ public class Player extends Entity{
         return this.gold;
     }
     
+    public int getExperienceNeeded() {
+        return 100 * this.level * this.level;
+    }
+    
     //get the exp to the player
     public int getExp(){
         return this.exp;

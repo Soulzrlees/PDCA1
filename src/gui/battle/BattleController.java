@@ -30,6 +30,7 @@ public class BattleController {
     private DBInitialiser dbInitialiser;
     private BattleInterface battleInterface;
     private BattleLogPanel battleLogPanel;
+    private boolean battleWon;
 
     // Track rounds
     private int round = 1;
@@ -112,8 +113,10 @@ public class BattleController {
         // Re-check after enemy turn
         if (enemy.getHealth() <= 0) {
             Victory();
+            battleWon = true;
         } else if (player.getHealth() <= 0) {
             Defeat();
+            battleWon = false;
         }
 
         // Increment round after both player and enemy actions
@@ -136,16 +139,37 @@ public class BattleController {
         player.addExp(100);
         player.addLevel();
         dbOperationAccounts.updatePlayer(player);
-        JOptionPane.showMessageDialog(null, "You defeated the enemy!");
-        endBattle();
+
+        RewardsPanel rewards = new RewardsPanel(player, true);
+        JFrame rewardsFrame = new JFrame("Rewards");
+        rewardsFrame.setContentPane(rewards);
+        rewardsFrame.setSize(700, 500);
+        rewardsFrame.setLocationRelativeTo(null);
+        rewardsFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        rewardsFrame.setVisible(true);
+
+        rewards.addContinueListener(e -> {
+            rewardsFrame.dispose();   // Close rewards frame
+            endBattle();              // Now end the battle and go back to main interface
+        });
     }
 
-    // Handles battle defeat
     private void Defeat() {
         player.removeGold(20);
         dbOperationAccounts.updatePlayer(player);
-        JOptionPane.showMessageDialog(null, "You died!");
-        endBattle();
+
+        RewardsPanel rewards = new RewardsPanel(player, false);
+        JFrame rewardsFrame = new JFrame("Rewards");
+        rewardsFrame.setContentPane(rewards);
+        rewardsFrame.setSize(700, 500);
+        rewardsFrame.setLocationRelativeTo(null);
+        rewardsFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        rewardsFrame.setVisible(true);
+
+        rewards.addContinueListener(e -> {
+            rewardsFrame.dispose();
+            endBattle();
+        });
     }
 
     // Ends battle and returns to main interface
@@ -161,5 +185,25 @@ public class BattleController {
         enemy.setPosition(10);
 
         new MainInterface(player, player.getPlayerStats());
+    }
+    
+    private void showRewardsPanel(boolean playerWon) {
+        JFrame rewardsFrame = new JFrame("Battle Results");
+        RewardsPanel rewardsPanel = new RewardsPanel(player, playerWon);
+
+        rewardsFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        rewardsFrame.setSize(800, 600);
+        rewardsFrame.setLocationRelativeTo(null);
+        rewardsFrame.add(rewardsPanel);
+        rewardsFrame.setVisible(true);
+
+        // Close battle window
+        battleInterface.dispose();
+
+        // Handle continue button action inside RewardsPanel
+        rewardsPanel.addContinueListener(e -> {
+            rewardsFrame.dispose();
+            endBattle();
+        });
     }
 }
