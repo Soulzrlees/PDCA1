@@ -55,7 +55,7 @@ public class BattleInterface{
         battleButtonsPanel.createBattleButtonsPanel(frame);
 
         // Inventory Panel --------------------------------------------------
-        battleinventoryPanel = new BattleInventoryPanel();
+        battleinventoryPanel = new BattleInventoryPanel(player);
         battleinventoryPanel.createBattleInventoryPanel(frame);
 
         // Main Battle Panel --------------------------------------------------
