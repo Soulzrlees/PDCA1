@@ -141,6 +141,10 @@ public class Entity {
     public void setAttackRange(int range){
         this.attackRange = range;
     }
+    
+    public String getClasses(){
+        return this.entityClass;
+    }
 
     // generates random change for the entity to dodge the opponent's attack
     public boolean getEvade(){

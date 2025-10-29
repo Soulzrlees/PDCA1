@@ -34,11 +34,6 @@ public class Player extends Entity{
         this.playerstats = new PlayerStats(this.name, 0, 0, 0);
         this.skillpoints = this.level - this.playerstats.getUsedSkillPoints();
     }
-    // loads current player's stats from the player storage
-    public void loadPlayerStats(AccessFile file) {
-        this.file = file;
-        this.playerstats = file.loadPlayerStats(this.name);
-    }
 
     public String getName(){
         return this.name;
@@ -115,21 +110,7 @@ public class Player extends Entity{
         player = file.loadExistingPlayer(this.name);
         return (player.level - playerstats.getUsedSkillPoints());
     }
-    // displays the player's stats and upgrades
-    public void statsDisplay(Player player) throws PlayerNotFoundException {
-        player = file.loadExistingPlayer(this.name);
-        System.out.println("__________" + this.name + "__________");
-        System.out.println("          Exp: " + player.exp);
-        System.out.println("        Level: " + player.level);
-        System.out.println("         Gold: " + player.gold);
-        System.out.println("        Class: " + player.entityClass);
-        System.out.println();
-
-        System.out.println("       Damage: " + this.getbaseDmg() + "[" + this.playerstats.getDamageSkillPoints() + "+] (type 1 to add skillpoints)");
-        System.out.println("           HP: " + this.getMaxHealth() + "[" + this.playerstats.getHealthSkillPoints() + "+] (type 2 to add skillpoints)");
-        System.out.println("        Range: " + this.getAttackRange() + "[" + this.playerstats.getRangeSkillPoints() + "+] (type 3 to add skillpoints)");
-        System.out.println();
-    }
+    
     // used for file i/o
     @Override
     public String toString() {
