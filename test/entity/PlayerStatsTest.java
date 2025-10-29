@@ -1,13 +1,8 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/UnitTests/JUnit4TestClass.java to edit this template
- */
 package entity;
 
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
-
 /**
  *
  * @author Shawn lee
@@ -18,7 +13,7 @@ public class PlayerStatsTest {
 
     @Before
     public void setUp() {
-        stats = new PlayerStats("Shawn", 5, 10, 3);
+        stats = new PlayerStats("Shawn", 2, 3, 4);
     }
 
     @Test
@@ -27,38 +22,45 @@ public class PlayerStatsTest {
     }
 
     @Test
-    public void testGetAndSetDamageSkillPoints() {
+    public void testGetDamageSkillPoints() {
+        assertEquals(2, stats.getDamageSkillPoints());
+    }
+
+    @Test
+    public void testSetDamageSkillPoints() {
+        stats.setDamageSkillPoints(5);
         assertEquals(5, stats.getDamageSkillPoints());
-        stats.setDamageSkillPoints(8);
-        assertEquals(8, stats.getDamageSkillPoints());
     }
 
     @Test
-    public void testGetAndSetHealthSkillPoints() {
-        assertEquals(10, stats.getHealthSkillPoints());
-        stats.setHealthSkillPoints(12);
-        assertEquals(12, stats.getHealthSkillPoints());
+    public void testGetHealthSkillPoints() {
+        assertEquals(3, stats.getHealthSkillPoints());
     }
 
     @Test
-    public void testGetAndSetRangeSkillPoints() {
-        assertEquals(3, stats.getRangeSkillPoints());
-        stats.setRangeSkillPoints(6);
-        assertEquals(6, stats.getRangeSkillPoints());
+    public void testSetHealthSkillPoints() {
+        stats.setHealthSkillPoints(6);
+        assertEquals(6, stats.getHealthSkillPoints());
+    }
+
+    @Test
+    public void testGetRangeSkillPoints() {
+        assertEquals(4, stats.getRangeSkillPoints());
+    }
+
+    @Test
+    public void testSetRangeSkillPoints() {
+        stats.setRangeSkillPoints(7);
+        assertEquals(7, stats.getRangeSkillPoints());
     }
 
     @Test
     public void testGetUsedSkillPoints() {
-        assertEquals(5 + 10 + 3, stats.getUsedSkillPoints());
-        stats.setDamageSkillPoints(7);
-        stats.setHealthSkillPoints(8);
-        stats.setRangeSkillPoints(5);
-        assertEquals(7 + 8 + 5, stats.getUsedSkillPoints());
+        assertEquals(2 + 3 + 4, stats.getUsedSkillPoints());
     }
 
     @Test
     public void testToString() {
-        String expected = "Shawn 5 10 3";
-        assertEquals(expected, stats.toString());
+        assertEquals("Shawn 2 3 4", stats.toString());
     }
 }

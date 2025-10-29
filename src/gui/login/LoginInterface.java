@@ -147,12 +147,8 @@ public class LoginInterface {
     public JTextField getTextField2() { return TextField2; }
     public String getSelectedComboBox() { return (String) ComboBox.getSelectedItem(); }
 
-//Removes the LoginInterface    
-public void dispose() {
-    frame.dispose();
-}
-    
-    public static void main(String[] args) {
-        new LoginInterface();
+    //Removes the LoginInterface    
+    public void dispose() {
+        frame.dispose();
     }
 }

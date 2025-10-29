@@ -36,13 +36,11 @@ public class Potion{
                 //Adds more damage to the base damage (not including the randomized damage) last for 1 battle
                 int newBaseDamage = player.getbaseDmg() + (statsBuff * player.getLevel());
                 player.setbaseDmg(newBaseDamage);
-                System.out.println(player.getbaseDmg());
                 break;
             case Range:
                 //Adds more attack range to the base attack range last for 1 battle
                 int newAttackRange = player.getAttackRange() + statsBuff;
                 player.setAttackRange(newAttackRange);
-                System.out.println("New attack range:" + player.getAttackRange());
                 break;
 
             default:
