@@ -25,7 +25,7 @@ public class EnemyTest {
         testPlayer = new Player("Hero", 1, 0, 0, "melee");
         testEnemy = new Enemy("Skeleton", 1, "melee");
         BattleLogPanel dummyPanel = new BattleLogPanel();
-        dummyAction = new EnemyAction(dummyPanel) {
+        dummyAction = new  EnemyAction(dummyPanel) {
             @Override
             public void attack(Entity self, Entity target, int round) {}
             @Override

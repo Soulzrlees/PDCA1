@@ -59,4 +59,8 @@ public class BattleLogPanel {
         logTextArea.append(text + "\n\n");
         logTextArea.setCaretPosition(logTextArea.getDocument().getLength());
     }
+    
+    public String getText() {
+        return logTextArea.getText();
+    }
 }

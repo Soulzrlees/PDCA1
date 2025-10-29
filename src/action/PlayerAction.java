@@ -115,9 +115,8 @@ public class PlayerAction implements Action_Interface{
             // Increase health, but don't exceed max
             if (newHealth > player.getMaxHealth()) {
                 newHealth = player.getMaxHealth();
-            } else {
-                player.setHealth(newHealth);
             }
+            player.setHealth(newHealth);
         }
         battleLogPanel.appendLog("[ " + player.getName() + " ] " + "HP healed " + healAmount + "+");
         System.out.println(player.getName() + " HP healed " + healAmount + "+");
