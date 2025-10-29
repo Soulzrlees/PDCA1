@@ -76,6 +76,20 @@ public class PlayerActionTest {
     }
     
     @Test
+    public void testAttack_HitsAndDealsDamage() {
+        testPlayer.setAttackRange(10);
+        testPlayer.setPosition(0);
+        testEnemy.setPosition(1);
+        int initialHealth = testPlayer.getHealth();
+
+        playerAction.attack(testEnemy, testPlayer, 1);
+
+        assertTrue("Enemy should take damage", testEnemy.getHealth() < initialHealth);
+        String log = testBattleLog.getText();
+        assertTrue("Log should mention damage dealt", log.contains("Dealt"));
+    }
+    
+    @Test
     public void testMoveFoward() {
         testPlayer.setPosition(2);
         testEnemy.setPosition(4);
@@ -106,5 +120,27 @@ public class PlayerActionTest {
         
         String log = testBattleLog.getText();
         assertTrue("Heal log should mention HP", log.contains("HP"));
+    }
+    
+    @Test
+    public void testHealLimit() {
+        testPlayer.setHealth(30);
+        testPlayer.setMaxHealth(100);
+
+        playerAction.heal(testPlayer);
+        int healthAfterFirstHeal = testPlayer.getHealth();
+
+        playerAction.heal(testPlayer);
+        int healthAfterSecondHeal = testPlayer.getHealth();
+
+        playerAction.heal(testPlayer);
+        int healthAfterThirdHeal = testPlayer.getHealth();
+
+        assertTrue("Health should increase after first heal", healthAfterFirstHeal > 30);
+        assertTrue("Health should increase after second heal", healthAfterSecondHeal > healthAfterFirstHeal);
+        assertEquals("Health should not increase after third heal (limit 2 heals)", healthAfterSecondHeal, healthAfterThirdHeal);
+
+        String log = testBattleLog.getText();
+        assertTrue("Battle log should mention healing", log.contains("HP"));
     }
 }
