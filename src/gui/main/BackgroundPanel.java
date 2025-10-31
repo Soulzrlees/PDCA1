@@ -20,16 +20,18 @@ public class BackgroundPanel extends JPanel {
     private final int maxBounce = 20;
 
     public BackgroundPanel(String backgroundPath, String characterPath, String LogoPath) {
+        //Create the images of the background, character and logo
         backgroundImage = new ImageIcon(backgroundPath).getImage();
         characterImage = new ImageIcon(characterPath).getImage();   
         logo = new ImageIcon(LogoPath).getImage();
-
+        
+        //Timer of the animations
         Timer timer = new Timer(30, e -> updateBounce());
         timer.start();
     }
 
     @Override
-    //Paint the background image, character image and the logo onto the background panel on main interface
+    //Paints the background image, character image and the logo on the background panel on main interface
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         int panelWidth = getWidth();

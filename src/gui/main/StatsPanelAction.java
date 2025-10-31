@@ -37,7 +37,7 @@ public class StatsPanelAction implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
      
-        if(player.getskillPoints() > 0){
+        if(player.getskillPoints() > 0){ //Check to see if the player has skill points available to spend
             if (e.getSource().equals(statsPanel.getDamageButton())) { //If this button is clicked the DamageSkillPoint variable would increase and remove a generic skillpoint 
                 player.skillpointIncreaseDamage();
                 playerStats.setDamageSkillPoints(playerStats.getDamageSkillPoints() + 1);

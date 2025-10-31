@@ -16,6 +16,7 @@ public class MainInterface {
     public final Player player;
     public final PlayerStats playerStats;
 
+    // Creates the main interface when this object is created
     public MainInterface(Player player, PlayerStats playerStats) {
         frame = new JFrame("RPG Game");
         createMainInterface(player, playerStats);
@@ -32,6 +33,7 @@ public class MainInterface {
         frame.setResizable(false);
         frame.setUndecorated(true);
 
+        //Creates the sidebar with button options
         MenuPanel menuPanel = new MenuPanel(this);
         frame.add(menuPanel, BorderLayout.WEST);
         
@@ -69,10 +71,12 @@ public class MainInterface {
         frame.setVisible(true);
     }
     
+    // Gets the player from the main interface
     public Player getPlayer() {
         return player;
     }
 
+    // Gets the player stats from the main interface
     public PlayerStats getPlayerStats() {
         return playerStats;
     }
@@ -85,11 +89,13 @@ public class MainInterface {
             backgroundPanel.repaint();
         }
     }
-
+    
+    // Returns the background panel
     public BackgroundPanel getBackgroundPanel() {
         return backgroundPanel;
     }
 
+    // Returns the stats panel
     public StatsPanel getStatsPanel() {
         return statsPanel;
     }

@@ -1,20 +1,7 @@
 ----------------------------------------------------------------
-Wed Oct 29 17:19:22 NZDT 2025:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.14.2.0 - (1828579): instance a816c00e-019a-2e31-1dd0-00002f7daab8 
-on database directory /Users/fatehbhular/NetBeansProjects/PDCA1/ACCOUNTDATABASE_Ebd with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@2c854dc5 
-Loaded from file:/Users/fatehbhular/NetBeansProjects/PDCA1/lib/derby.jar
-java.vendor=Oracle Corporation
-java.runtime.version=21.0.7+8-LTS-245
-user.dir=/Users/fatehbhular/NetBeansProjects/PDCA1
-os.name=Mac OS X
-os.arch=aarch64
-os.version=15.6.1
-derby.system.home=null
-Database Class Loader started - derby.database.classpath=''
-----------------------------------------------------------------
-Wed Oct 29 17:19:22 NZDT 2025:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.14.2.0 - (1828579): instance 601a400f-019a-2e31-1dd0-00002f7daab8 
-on database directory /Users/fatehbhular/NetBeansProjects/PDCA1/STATSDATABASE_Ebd with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@2c854dc5 
+Fri Oct 31 12:51:37 NZDT 2025:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.14.2.0 - (1828579): instance a816c00e-019a-3788-b67a-00002f905f08 
+on database directory /Users/fatehbhular/NetBeansProjects/PDCA1/TEST_ACCOUNTS_DB with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@2c854dc5 
 Loaded from file:/Users/fatehbhular/NetBeansProjects/PDCA1/lib/derby.jar
 java.vendor=Oracle Corporation
 java.runtime.version=21.0.7+8-LTS-245

@@ -13,7 +13,7 @@ import java.io.InputStream;
  * @author Shawn lee
  */
 public class MenuPanel extends JPanel {
-
+    //Initialises all the buttons for the side bar in the main interface
     private final JButton inventoryButton, battleButton, statsButton, exitButton;
 
     public MenuPanel(MainInterface mainInterface) {

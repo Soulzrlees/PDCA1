@@ -14,7 +14,7 @@ import java.awt.event.ActionListener;
  * @author Shawn lee
  */
 public class MainInterfaceAction implements ActionListener {
-
+    // Add in the main interface and menu interface for the actions
     private final MenuPanel menu;
     private final MainInterface mainInterface;
 

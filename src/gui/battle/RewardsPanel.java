@@ -32,7 +32,7 @@ public class RewardsPanel extends JPanel{
         calculateRewards();
         createPanel();
     }
-    
+    // Checks to see if player won, and sets rewards based on that
     private void calculateRewards() {
         if (playerWon) {
             experienceGained = 100;
@@ -45,6 +45,7 @@ public class RewardsPanel extends JPanel{
         }
     }
     
+    // Helper method to create labels easier
     private JLabel createLabel(String text, int x, int y, int width) {
         JLabel label = new JLabel(text);
         label.setFont(new Font("Monospaced", Font.PLAIN, 25));
@@ -53,6 +54,7 @@ public class RewardsPanel extends JPanel{
         return label;
     }
     
+    // Creates the whole rewards panel
     private void createPanel() {
         backgroundImage = new ImageIcon("images/rewardsBackground.png").getImage();
         String titleString = playerWon ? "Victory!!!" : "Defeat...";
