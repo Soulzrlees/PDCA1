@@ -117,6 +117,7 @@ public class Enemy extends Entity{
         }
     }
 
+    //This method return a particular image based on the enemy name to the battleinterface
     public String getEnemyImage(Enemy enemy) {
         switch (enemy.getName()) {
             case "Skeleton":
