@@ -18,18 +18,20 @@ public class DBInitialiser {
 
     public static void main(String[] args) {
         System.out.println("Initialising Database...");
-        initialiseAccountsDB();
-        initialiseStatsDB();
+        initialiseAccountsDB(); //calls method 
+        initialiseStatsDB(); // calls initialise method
         System.out.println("Initialisation complete!");
     }
 
+    // Method to initialise the Accounts database
     public static void initialiseAccountsDB() {
         DBManager dbManager = new DBManager(AccountsDB_URL, null, null);
 
-        try {
+        try { // try catch block because there can be an sql exception
             Connection conn = dbManager.getConnection();
             Statement statement = conn.createStatement();
 
+            // Sql command for creating the accounts table
             String sql = """
                     CREATE TABLE ACCOUNTS (
                         USERNAME VARCHAR(30) PRIMARY KEY,
@@ -49,13 +51,15 @@ public class DBInitialiser {
         }
     }
 
+    // Method to initialise the Stats database
     public static void initialiseStatsDB() {
         DBManager dbManager = new DBManager(StatsDB_URL, null, null);
 
-        try {
+        try { // try catch block because there can be an sql exception
             Connection conn = dbManager.getConnection();
             Statement statement = conn.createStatement();
 
+            // Sql command for creating the stats table
             String sql = """
                     CREATE TABLE STATS (
                         USERNAME VARCHAR(30) PRIMARY KEY,

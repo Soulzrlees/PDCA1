@@ -13,10 +13,10 @@ import java.sql.SQLException;
  * @author fatehbhular
  */
 public class DBManager {
-    private final String dbURL;
-    private final String user;
-    private final String password;
-    private Connection conn;
+    private final String dbURL; // url to the database connection
+    private final String user; //username to connect to db
+    private final String password; //pass to connect to db
+    private Connection conn; //this is the connection object
 
     public DBManager(String dbURL, String user, String password) {
         this.dbURL = dbURL;
@@ -25,6 +25,7 @@ public class DBManager {
         connect();
     }
 
+    // establishes a connection to the database using the user, pass and dburl
     private void connect() {
         try {
             conn = DriverManager.getConnection(dbURL, user, password);
@@ -35,6 +36,7 @@ public class DBManager {
         }
     }
 
+    //returns the active databases connection
     public Connection getConnection() {
         try {
             if (conn == null || conn.isClosed()) {
@@ -46,6 +48,7 @@ public class DBManager {
         return conn;
     }
 
+    //closes the current database connection
     public void close() {
         try {
             if (conn != null && !conn.isClosed()) {
@@ -56,7 +59,8 @@ public class DBManager {
             System.err.println("Failed to close connection: " + e.getMessage());
         }
     }
-
+    
+    //commits the current action to make changes permanent
     public void commit() {
         try {
             if (conn != null && !conn.isClosed()) conn.commit();
@@ -65,6 +69,7 @@ public class DBManager {
         }
     }
 
+    // rolls back the currect action to revert any uncommited changes
     public void rollback() {
         try {
             if (conn != null && !conn.isClosed()) conn.rollback();
