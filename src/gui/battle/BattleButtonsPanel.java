@@ -7,7 +7,7 @@ import java.io.InputStream;
 public class BattleButtonsPanel {
     // expose buttons so callers can attach listeners
     private JButton attackButton;
-    private JButton healButton;
+    private JButton healButton; 
     private JButton moveBackButton;
     private JButton moveForwardButton;
 
@@ -29,6 +29,7 @@ public class BattleButtonsPanel {
         frame.add(battleButtonsPanel, BorderLayout.SOUTH);
     }
 
+    //Sets up the button panel
     private JPanel createCenteredPanel(JButton button) {
         JPanel panel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         button.setPreferredSize(new Dimension(450, 150));
@@ -38,6 +39,7 @@ public class BattleButtonsPanel {
         return panel;
     }
 
+    //Sets the specification of each button
     private JButton createButton(String buttonText) {
         JButton button = new JButton(buttonText);
         button.setBackground(Color.GRAY);
@@ -61,6 +63,7 @@ public class BattleButtonsPanel {
     public JButton getMoveBackButton() { return moveBackButton; }
     public JButton getMoveForwardButton() { return moveForwardButton; }
     
+    //This method disables the action button when its called right after the battle ends 
     public void DisableButton(){
         attackButton.setEnabled(false);
         healButton.setEnabled(false);

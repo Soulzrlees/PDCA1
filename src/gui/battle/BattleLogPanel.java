@@ -54,7 +54,7 @@ public class BattleLogPanel {
         logPanel.add(scrollPane, BorderLayout.CENTER);
         frame.add(logPanel, BorderLayout.EAST);
     }
-    
+    //THe method is to add text onto the log panel
     public void appendLog(String text) {
         logTextArea.append(text + "\n\n");
         logTextArea.setCaretPosition(logTextArea.getDocument().getLength());

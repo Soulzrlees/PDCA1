@@ -18,6 +18,7 @@ public class BattleHealthBarPanel {
         this.enemy = enemy;
     }
     
+    //This method is to create the health bar panel
     public void createHealthBarPanel(JFrame frame, Player player, Enemy enemy) {
         JPanel healthBarPanel = new JPanel();
         healthBarPanel.setLayout(new BoxLayout(healthBarPanel, BoxLayout.X_AXIS));
@@ -27,7 +28,7 @@ public class BattleHealthBarPanel {
 
         healthBarPanel.add(Box.createVerticalGlue());
 
-        // Create Health Bars
+        // Create progress bar
         playerHealthBar = new JProgressBar();
         enemyHealthBar = new JProgressBar();
 
@@ -60,6 +61,7 @@ public class BattleHealthBarPanel {
         updateEnemyHealth(enemy.getHealth(), enemy.getMaxHealth());
     }
 
+    //Set the specification of the progress bar
     private void createVisuals(JProgressBar healthBar) {
         healthBar.setStringPainted(true);
         healthBar.setForeground(Color.decode("#457d14"));

@@ -25,6 +25,7 @@ public class BattleInterface{
         this.playerStats = playerStats;
     }
     
+    //Create the base battle interface specfication
     public void createBattleInterface(Player player, PlayerStats playerStats) {
         frame = new JFrame("Battle");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -75,20 +76,18 @@ public class BattleInterface{
         frame.dispose();
     }
     
+    //This method just updates the player and enemy health
     public void UpdateHealthBar(int playerCurrent, int playerMax, int enemyCurrent, int enemyMax){
         battleHealthBarPanel.updatePlayerHealth(playerCurrent, playerMax);
         battleHealthBarPanel.updateEnemyHealth(enemyCurrent, enemyMax);
     }
     
-    //Get method for the log 
     public BattleLogPanel getLogPanel(){
         return battleLogPanel;
     }
-    
     public BattleScreenPanel getScreenPanel(){
         return battleScreenPanel;
     }
-    
     public BattleButtonsPanel getButtonPanel(){
         return battleButtonsPanel;
     }

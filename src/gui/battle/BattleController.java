@@ -57,16 +57,19 @@ public class BattleController {
         this.originalBaseDamage = player.getbaseDmg();
     }
 
-    // Player actions called from GUI
+    // Player action called from GUI
+    
+    //The method for the gui to call the attack method
     public void playerAttack() {
         PlayerAction playerAction = new PlayerAction(battleLogPanel);
         playerAction.attack(enemy, player, round);
         battleInterface.getScreenPanel().refreshPositions();
         nextTurn();
     }
-
+    
+    //Player action (Heal) 
     public void playerHeal() {
-        if(healCount >= maxHealCount){
+        if(healCount >= maxHealCount){//Checks if the user has healed more than 2 times
             JOptionPane.showMessageDialog(null, "Heals used up!");
             return;
         }
@@ -77,6 +80,7 @@ public class BattleController {
         nextTurn();
     }
 
+    //This method is for the gui to call for the player to move forwad
     public void playerMoveForward() {
         PlayerAction playerAction = new PlayerAction(battleLogPanel);
         playerAction.moveForward(enemy, player);
@@ -85,6 +89,7 @@ public class BattleController {
         nextTurn();
     }
 
+    //This method is for the gui to call for the player to move backwards
     public void playerMoveBackward() {
         PlayerAction playerAction = new PlayerAction(battleLogPanel);
         playerAction.moveBackward(enemy, player);
@@ -133,7 +138,7 @@ public class BattleController {
         );
     }
 
-    // Handles battle victory
+    // Handles battle victory 
     private void Victory() {
         player.addGold(20);
         player.addExp(100);
@@ -141,6 +146,7 @@ public class BattleController {
         dbOperationAccounts.updatePlayer(player);
         battleInterface.getButtonPanel().DisableButton();
         
+        //launch the reward panel
         RewardsPanel rewards = new RewardsPanel(player, true);
         JFrame rewardsFrame = new JFrame("Rewards");
         rewardsFrame.setContentPane(rewards);
@@ -157,11 +163,13 @@ public class BattleController {
     }
 
 
+    //Haddles the battle when player is defeated
     private void Defeat() {
         player.removeGold(20);
         dbOperationAccounts.updatePlayer(player);
         battleInterface.getButtonPanel().DisableButton();
         
+        //launch the reward panel
         RewardsPanel rewards = new RewardsPanel(player, false);
         JFrame rewardsFrame = new JFrame("Rewards");
         rewardsFrame.setContentPane(rewards);
@@ -190,26 +198,5 @@ public class BattleController {
         enemy.setPosition(10);
 
         new MainInterface(player, player.getPlayerStats());
-    }
-    
-    private void showRewardsPanel(boolean playerWon) {
-        JFrame rewardsFrame = new JFrame("Battle Results");
-        RewardsPanel rewardsPanel = new RewardsPanel(player, playerWon);
-
-        rewardsFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        rewardsFrame.setSize(800, 600);
-        rewardsFrame.setLocationRelativeTo(null);
-        rewardsFrame.add(rewardsPanel);
-        rewardsFrame.setUndecorated(true);
-        rewardsFrame.setVisible(true);
-
-        // Close battle window
-        battleInterface.dispose();
-
-        // Handle continue button action inside RewardsPanel
-        rewardsPanel.addContinueListener(e -> {
-            rewardsFrame.dispose();
-            endBattle();
-        });
     }
 }

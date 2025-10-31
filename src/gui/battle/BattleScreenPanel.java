@@ -19,6 +19,7 @@ public class BattleScreenPanel extends JPanel {
         setOpaque(false);
     }
 
+    //Specified what images would need to be loaded onto the battleScreen Panel
     private void loadCharacters() {
         backgroundImage = new ImageIcon("images/battle_background.png").getImage();
         playerDisplay = new ImageIcon(player.getPlayerImage(player)).getImage();
@@ -40,12 +41,12 @@ public class BattleScreenPanel extends JPanel {
 
         // Player position
         int playerX = (player.getPosition() * position_pixels) - 50;
-        if (playerX < 0) playerX = 0;                     // clamp left
+        if (playerX < 0) playerX = 0; // clamp left
         if (playerX > width - imgWidth) playerX = width - imgWidth; // clamp right
 
         // Enemy position
         int enemyX = (enemy.getPosition() * position_pixels) + 50;
-        if (enemyX < 0) enemyX = 0;                       // clamp left
+        if (enemyX < 0) enemyX = 0;// clamp left
         if (enemyX > width - imgWidth) enemyX = width - imgWidth; // clamp right
 
         // Draw entities
